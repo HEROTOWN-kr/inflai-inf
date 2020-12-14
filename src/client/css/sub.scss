@@ -1,0 +1,237 @@
+$colorBg: #fefefe;
+$colorBlue: #093c5e;
+$aqua: #23c9cf;
+$white: #ffffff;
+$colorSoftBlue: #7491B4;
+$colorBlack: #000;
+$colorBlack2: #333333;
+$colorRed: #fa4616;
+$colorRed2: #de2e2e;
+$colorGrey: #dfe2e8;
+$colorGreen: #49d049;
+$colorPink: #fbbaba;
+
+.footer {
+  background: $colorBlue;
+  color: $colorBg;
+  .footer-container {
+    max-width: 1024px;
+    margin: 0 auto ;
+  }
+  .footer-logo {
+    text-align: center;
+  }
+}
+
+.navbar {
+  //background: $colorBlue;
+  transition: background 0.5s ease;
+  border-bottom: 1px solid #ddd;
+  .MuiPaper-elevation4 {
+    box-shadow: none;
+  }
+  .bar {
+    .left-side {
+      max-width: 900px;
+    }
+    .right-side {
+      position: relative;
+      .navbarProfileImage {
+        &:hover {
+          cursor: pointer ;
+          border-radius: 100%;
+          border: 3px solid #eb128c;
+        }
+      }
+    }
+    .name-holder {
+      //color: $colorBg;
+      //background: $colorBlue;
+      line-height: 34px;
+      opacity: 0.8;
+      .name-text {
+        width: 100px;
+        text-align: right;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      svg {
+        position: relative;
+        top: 6px;
+        margin-right: 10px;
+      }
+      &:hover {
+        cursor: pointer;
+        opacity: 1;
+      }
+    }
+  }
+  .mobile-link-bar {
+    //background: $colorBlue;
+    padding: 0 30px;
+    a {
+      font-size: 15px;
+    }
+  }
+  .nav-logo {
+
+  }
+  .menu-icon {
+    //color: $colorBg
+  }
+  .link, .scroll-link {
+    font-size: 17px;
+    //font-weight: bold;
+    //color: $colorBg;
+    color: #232323;
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+      color: $aqua;
+    }
+    &.contactUs {
+      height: 48px;
+      line-height: 48px;
+      padding: 0 30px;
+      background-color: $colorBlue;
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+    }
+  }
+  .login-button {
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 3px 20px;
+    color: $colorBg;
+    font-weight: 400;
+    border: 2px solid $colorBg;
+    &:hover {
+      color: $aqua
+    }
+  }
+}
+
+.login-dialog {
+  .signUpForm {
+    max-width: 400px;
+    margin: 48px auto;
+    border: solid 1px #dfe2e8;
+    box-sizing: border-box;
+    .title {
+      text-align: center;
+      h2 {
+
+        font-size: 36px;
+        line-height: 1.11;
+        color: #444041;
+      }
+    }
+    .MuiFormControl-root {
+      .MuiOutlinedInput-input {
+        padding: 11px 14px;
+      }
+      &.MuiFormControl-marginNormal {
+        margin: 0;
+      }
+    }
+  }
+
+  .social-networks {
+    .social-main-container {
+      &:hover {
+        cursor: pointer;
+        opacity: 0.9;
+      }
+    }
+    img {
+      height: 40px;
+      width: 40px;
+      border-radius: 100%;
+    }
+    .button-icon {
+      margin: 5px auto;
+      border-right: #fdfdfd 1px solid;
+      img {
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+      }
+    }
+    .button-text {
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+}
+
+.instagram-dialog {
+  .MuiTypography-h6 {
+    font-weight: 600;
+  }
+  .dialog-text {
+    font-size: 14px;
+  }
+  .facebook-button {
+    background: #1877F2;
+    color: #fefefe;
+    text-transform: none;
+    font-size: 21px;
+    &:hover {
+      background: #2E68F2;
+    }
+  }
+  .google-button {
+    width: 198px;
+    height: 48px;
+    background-image: url("../img/google_button.png" );
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .close-icon {
+    color: $colorGrey;
+    &:hover {
+      cursor: pointer;
+      color: $colorBlack;
+    }
+  }
+}
+
+.user-popmenu {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-top: 0;
+  a {
+    text-decoration: none;
+    color: black;
+    .pop-item {
+      &:hover {
+        cursor: pointer;
+        color: #eb128c;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.not-found-page {
+  text-align: center;
+  .title1 {
+    font-size: 30px;
+  }
+  .title2 {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  .title3 {
+    font-size: 12px;
+    color: #999;
+  }
+}
+
+.profile-menu-link {
+  cursor: pointer;
+  &:hover {
+    background: #f5f6f7;
+  }
+}
