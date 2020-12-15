@@ -59,7 +59,7 @@ function Sns(props) {
         token
       }).then((res) => {
         getUserInfo();
-      }).catch(error => alert(error.response.message));
+      }).catch(error => alert(error.response.data.message));
     } else {
       alert('google auth error');
     }

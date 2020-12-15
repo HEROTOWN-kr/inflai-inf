@@ -6,6 +6,8 @@ import WhiteBlock from '../../containers/WhiteBlock';
 import NotFound from '../main/NotFound';
 import Alert from '../../containers/Alert';
 import UserInfo from './pages/UserInfo';
+import CampaignInfo from './pages/CampaignInfo';
+import Rank from './pages/Rank';
 /* import Rank from './pages/Rank';
 import UserInfo from './pages/UserInfo/UserInfo';
 import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
@@ -36,15 +38,15 @@ function ProfileContent(props) {
           path={`${match.path}/UserInfo`}
           render={renderProps => <UserInfo {...props} setMessage={setMessage} />}
         />
-        {/* <Route
+        <Route
           path={`${match.path}/CampaignInfo`}
-          render={props => <CampaignInfo {...props} />}
+          render={renderProps => <CampaignInfo {...renderProps} />}
         />
         <Route
           path={`${match.path}/Rank`}
-          render={props => <Rank {...props} />}
+          render={renderProps => <Rank {...renderProps} />}
         />
-        <Route
+        {/* <Route
           path={`${match.path}/MembershipInfo`}
           render={renderProps => <MembershipInfo {...props} setMessage={setMessage} />}
         /> */}

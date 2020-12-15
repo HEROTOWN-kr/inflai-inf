@@ -13,25 +13,21 @@ function NavbarLinks(props) {
 
   const menuLinks = [
     {
-      text: '성공사례',
-      link: '/'
+      text: '지역',
+      link: '/CampaignList/Area'
+    },
+    {
+      text: '제품',
+      link: '/CampaignList/Product'
+    },
+    {
+      text: '서비스',
+      link: '/CampaignList/Service'
     },
     /* {
-      text: '촬영서비스',
-      link: '/'
-    }, */
-    {
-      text: '멤버십',
-      link: '/Membership'
-    },
-    {
-      text: '캠페인',
-      link: '/CampaignList'
-    },
-    {
       text: '랭킹',
       link: '/Ranking'
-    },
+    }, */
   ];
 
   function scrollTo() {
@@ -51,9 +47,9 @@ function NavbarLinks(props) {
     <Hidden smDown>
       <Box className="navbar-links">
         <Grid container spacing={8}>
-          <Grid item>
+          {/* <Grid item>
             <a className="scroll-link" onClick={scrollTo}>인플라이소개</a>
-          </Grid>
+          </Grid> */}
           {menuLinks.map(link => (
             <Grid item key={link.text}>
               <Link

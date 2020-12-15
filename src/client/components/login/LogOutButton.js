@@ -12,7 +12,6 @@ function LogOutButton(props) {
     e.preventDefault();
     window.Kakao.Auth.logout((res) => {
       logout();
-      props.history.push('/');
     });
   };
 
@@ -28,7 +27,6 @@ function LogOutButton(props) {
       });
     }
     logout();
-    props.history.push('/');
   };
 
   const googleLogOut = (e) => {
@@ -40,10 +38,8 @@ function LogOutButton(props) {
       if (auth2) {
         auth2.disconnect();
         logout();
-        props.history.push('/');
       } else {
         logout();
-        props.history.push('/');
       }
     });
   };
@@ -60,7 +56,6 @@ function LogOutButton(props) {
               e.preventDefault();
               window.FB.logout();
               logout();
-              props.history.push('/');
             }}
             className="login-button"
           >
@@ -75,7 +70,6 @@ function LogOutButton(props) {
             className="login-button"
             onClick={(e) => {
               logout();
-              props.history.push('/');
             }}
           >
           로그아웃
@@ -86,7 +80,6 @@ function LogOutButton(props) {
             className="login-button"
             onClick={(e) => {
               logout();
-              props.history.push('/');
             }}
           >
             로그아웃

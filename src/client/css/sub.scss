@@ -235,3 +235,32 @@ $colorPink: #fbbaba;
     background: #f5f6f7;
   }
 }
+
+.profile {
+  .sns-button {
+    box-sizing: border-box;
+    cursor: pointer;
+    border: 1px solid rgb(234, 234, 234);
+    &:hover {
+      border: 2px solid red;
+    }
+    &.selected {
+      border: 2px solid red;
+    }
+  }
+}
+
+.error-message {
+  color: red;
+  font-size: 0.75rem;
+  &.mb-10 {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+}
+
+.provide-info {
+  p {
+    overflow-wrap: break-word;
+  }
+}

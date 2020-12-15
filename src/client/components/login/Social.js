@@ -78,7 +78,7 @@ function Social(props) {
             const {
               userPhone, social_type, userToken, userName, userPhoto, regState
             } = res.data;
-            auth.login(userToken, '2', userName, social_type, userPhoto);
+            auth.login(userToken, userName, social_type, userPhoto);
             if (userPhone) {
               history.push('/');
             } else {
@@ -105,7 +105,7 @@ function Social(props) {
             const {
               userPhone, social_type, userToken, userName, userPhoto, regState
             } = res.data;
-            auth.login(userToken, '2', userName, social_type, userPhoto);
+            auth.login(userToken, userName, social_type, userPhoto);
             if (userPhone) {
               history.push('/');
             } else {
@@ -130,21 +130,20 @@ function Social(props) {
       if (response) {
         const {
           email, id, name, profile_image
-        } = response.user;
+        } = response;
         axios.get('/api/TB_INFLUENCER/naverLogin', {
           params: {
             id,
             email,
             name,
             profile_image,
-            type: '2',
             social_type: 'naver'
           }
         }).then((influencerData) => {
           const {
             social_type, userToken, userName, regState, userPhone, userPhoto
           } = influencerData.data;
-          auth.login(userToken, '2', userName, social_type, userPhoto);
+          auth.login(userToken, userName, social_type, userPhoto);
           if (userPhone) {
             history.push('/');
           } else {
@@ -182,7 +181,7 @@ function Social(props) {
                 const {
                   social_type, userToken, userName, userPhone, userPhoto
                 } = influencerData.data;
-                auth.login(userToken, '2', userName, social_type, userPhoto);
+                auth.login(userToken, userName, social_type, userPhoto);
                 if (userPhone) {
                   history.push('/');
                 } else {
@@ -222,7 +221,7 @@ function Social(props) {
           <NaverLogin
                         // clientId="4rBF5bJ4y2jKn0gHoSCf"
             clientId="HddfazOY2WePr9AUHcfh"
-            callbackUrl={`${window.location.origin}/Join/Influencer/Login`}
+            callbackUrl={`${window.location.origin}/Login`}
             render={props => <SocialButton clicked={props.onClick} icon={NaverIcon} text="네이버 로그인" bgColor="#00CE38" textColor="#FFFFFF" />}
             onSuccess={result => responseNaver(result)}
             onFailure={result => responseNaver(result)}

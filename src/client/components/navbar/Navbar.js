@@ -21,7 +21,7 @@ function CustomNavbar(props) {
     <Box px={{ xs: 2, sm: 4, md: 8 }} className="navbar">
       <AppBar position="static" color="transparent" className="navbar-content">
         <Grid container alignItems="center" justify="space-between" className="bar">
-          <Grid item className="left-side" container alignItems="center" justify="space-between">
+          <Grid item className="left-side" container alignItems="center" spacing={8}>
             <Grid item>
               <NavbarLogo />
             </Grid>
