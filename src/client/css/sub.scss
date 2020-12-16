@@ -264,3 +264,16 @@ $colorPink: #fbbaba;
     overflow-wrap: break-word;
   }
 }
+
+.category-tab {
+  padding: 13px 24px;
+  cursor: pointer;
+  border-bottom: 2px solid #ffffff;
+  &.campaign {
+    font-size: 18px;
+  }
+  &.active, &:hover {
+    font-weight: bold;
+    border-bottom: 2px solid rgb(249, 113, 184);
+  }
+}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Snackbar } from '@material-ui/core';
+import {
+  Box, Snackbar, useMediaQuery, useTheme
+} from '@material-ui/core';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Colors } from '../../lib/Сonstants';
 import WhiteBlock from '../../containers/WhiteBlock';
@@ -14,7 +16,7 @@ import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 import MembershipInfo from './pages/MembershipInfo'; */
 
 function ProfileContent(props) {
-  const { match } = props;
+  const { match, isMD } = props;
   const [message, setMessage] = useState({
     open: false,
     text: '',
@@ -30,7 +32,8 @@ function ProfileContent(props) {
 
   return (
     <Box
-      width={{ xs: 200, md: 600, lg: 975 }}
+      // width={{ xs: 200, md: 975 }}
+      width={isMD ? '975px' : '100%'}
       height="100%"
     >
       <Switch>

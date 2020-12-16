@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, useMediaQuery, useTheme } from '@material-ui/core';
 import ReactFormText from './ReactFormText';
 import StyledButton from './StyledButton';
 
@@ -7,6 +7,9 @@ function DaumPostCode(props) {
   const { setValue, register, errors } = props;
   const { daum } = window;
   const [guideText, setGuideText] = useState('');
+
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   function execDaumPostcode() {
     new daum.Postcode({
@@ -66,10 +69,10 @@ function DaumPostCode(props) {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Grid container spacing={1}>
-            <Grid item onClick={execDaumPostcode} style={{ width: '190px' }}>
+            <Grid item onClick={execDaumPostcode} style={{ width: isMD ? '190px' : '50%' }}>
               <ReactFormText register={register} errors={errors} name="postcode" placeholder="우편번호" inputProps={{ readOnly: true }} />
             </Grid>
-            <Grid item style={{ width: '190px' }}>
+            <Grid item style={{ width: isMD ? '190px' : '50%' }}>
               <StyledButton onClick={execDaumPostcode} height="40px">우편번호 찾기</StyledButton>
             </Grid>
           </Grid>

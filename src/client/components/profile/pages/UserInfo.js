@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { Box, Divider, Grid } from '@material-ui/core';
+import {
+  Box, Divider, Grid, Hidden
+} from '@material-ui/core';
 import WhiteBlock from '../../../containers/WhiteBlock';
 import PageTitle from '../PageTitle';
 import StyledText from '../../../containers/StyledText';
@@ -37,7 +39,7 @@ function ImageActionButton(props) {
 
 function UserInfo(props) {
   const {
-    userInfo, setUserInfo, getUserInfo, setMessage
+    userInfo, setUserInfo, getUserInfo, setMessage, isMD
   } = props;
   const [imageUrl, setImageUrl] = useState('');
   const [noticeCheck, setNoticeCheck] = useState(false);
@@ -115,189 +117,189 @@ function UserInfo(props) {
   }
 
   return (
-    <div>
-      <WhiteBlock>
+    <WhiteBlock borderRadius={isMD ? '7px' : '0'}>
+      <Hidden smDown>
         <PageTitle>
           <StyledText fontSize="24">
-              회원정보수정
+            회원정보수정
           </StyledText>
         </PageTitle>
-        <Box py={4} px={6}>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Box py={1}>
-                    <Grid container alignItems="center">
-                      <Grid item xs={2}>
-                        <StyledText fontSize="15">
+      </Hidden>
+      <Box py={4} px={isMD ? 6 : 1}>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Box py={1}>
+                  <Grid container alignItems="center" spacing={2}>
+                    <Grid item xs={12} md={2}>
+                      <StyledText fontSize="15">
                                               이메일 아이디
-                        </StyledText>
-                      </Grid>
-                      <Grid item xs={10}>
-                        <StyledText fontSize="15">
-                          {userInfo.INF_EMAIL || ''}
-                        </StyledText>
-                      </Grid>
+                      </StyledText>
                     </Grid>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container alignItems="center">
-                    <Grid item xs={2}>
+                    <Grid item xs={12} md={10}>
                       <StyledText fontSize="15">
+                        {userInfo.INF_EMAIL || ''}
+                      </StyledText>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" spacing={1}>
+                  <Grid item xs={12} md={2}>
+                    <StyledText fontSize="15">
                                           이름
-                      </StyledText>
-                    </Grid>
-                    <Grid item xs={10}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={4}>
-                          <StyledTextField
-                            fullWidth
-                            name="nickName"
-                            defaultValue={userInfo.INF_NAME || ''}
-                            inputRef={register({ required: true })}
-                            error={!!errors.nickName}
-                            variant="outlined"
-                            helperText={errors.nickName ? (
-                              <span className="error-message">이름을 입력해주세요</span>
-                            ) : null}
-                          />
-                        </Grid>
-                      </Grid>
-                    </Grid>
+                    </StyledText>
                   </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container alignItems="center">
-                    <Grid item xs={2}>
-                      <StyledText fontSize="15">
-                                          전화번호
-                      </StyledText>
-                    </Grid>
-                    <Grid item xs={10}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={4}>
-                          <StyledTextField
-                            fullWidth
-                            name="phone"
-                            defaultValue={userInfo.INF_TEL || ''}
-                            inputRef={register({ required: true })}
-                            error={!!errors.phone}
-                            variant="outlined"
-                            helperText={errors.phone ? (
-                              <span className="error-message">전화번호를 입력해주세요</span>
-                            ) : null}
-                          />
-                        </Grid>
+                  <Grid item xs={12} md={10}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} md={4}>
+                        <StyledTextField
+                          fullWidth
+                          name="nickName"
+                          defaultValue={userInfo.INF_NAME || ''}
+                          inputRef={register({ required: true })}
+                          error={!!errors.nickName}
+                          variant="outlined"
+                          helperText={errors.nickName ? (
+                            <span className="error-message">이름을 입력해주세요</span>
+                          ) : null}
+                        />
                       </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container alignItems="center">
-                    <Grid item xs={2}>
-                      <StyledText fontSize="15">
-                                          주소
-                      </StyledText>
-                    </Grid>
-                    <Grid item xs={10}>
-                      <DaumPostCode setValue={setValue} register={register} errors={errors} />
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Box py={2}>
-                    <Grid container alignItems="center">
-                      <Grid item xs={2}>
-                        <StyledText fontSize="15">
-                                              사진
-                        </StyledText>
-                      </Grid>
-                      <Grid item xs={10}>
-                        <Grid container alignItems="center" spacing={2}>
-                          <Grid item>
-                            <StyledImage
-                              width="110px"
-                              height="110px"
-                              borderRadius="100%"
-                              src={imageUrl || userInfo.INF_PHOTO || defaultAccountImage}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <label htmlFor="picAdd">
-                              <ImageActionButton background="#00a1ff">
-                                                          이미지 등록
-                                <input
-                                  id="picAdd"
-                                  name="photo"
-                                  type="file"
-                                  style={{ display: 'none' }}
-                                                              // multiple
-                                  accept="image/*"
-                                  onChange={(event => addPicture(event))}
-                                />
-                              </ImageActionButton>
-                            </label>
-                            {userInfo.INF_PHOTO ? (
-                              <Box pt={1}>
-                                <ImageActionButton onClick={() => deletePicture(token)}>
-                                                              이미지 삭제
-                                </ImageActionButton>
-                              </Box>
-                            ) : null}
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container alignItems="center">
-                    <Grid item xs={2}>
-                      <StyledText fontSize="15">
-                                          카카오수신동의
-                      </StyledText>
-                    </Grid>
-                    <Grid item xs={10}>
-                      <input id="kakaoCheck" type="checkbox" checked={noticeCheck} onChange={e => onCheckboxClick(e.target.checked)} />
-                      <label htmlFor="kakaoCheck">
-                        {' 카카오톡 통한 캠페인 모집 및 추천, 이벤트 정보 등의 수신에 동의합니다.'}
-                      </label>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Box pt={4}>
-                <Grid container justify="center">
-                  <Grid item xs={3}>
-                    <StyledButton
-                      onClick={handleSubmit(updateProfile)}
-                      background={Colors.skyBlue}
-                      hoverBackground="#1c4dbb"
-                    >
-                                      저장
-                    </StyledButton>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" spacing={1}>
+                  <Grid item xs={12} md={2}>
+                    <StyledText fontSize="15">
+                                          전화번호
+                    </StyledText>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} md={4}>
+                        <StyledTextField
+                          fullWidth
+                          name="phone"
+                          defaultValue={userInfo.INF_TEL || ''}
+                          inputRef={register({ required: true })}
+                          error={!!errors.phone}
+                          variant="outlined"
+                          helperText={errors.phone ? (
+                            <span className="error-message">전화번호를 입력해주세요</span>
+                          ) : null}
+                        />
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              <Box pb={4}>
-                <StyledText fontSize="19" fontWeight="600">SNS</StyledText>
-              </Box>
-              <Sns userInfo={userInfo} getUserInfo={getUserInfo} />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" spacing={1}>
+                  <Grid item xs={12} md={2}>
+                    <StyledText fontSize="15">
+                                          주소
+                    </StyledText>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <DaumPostCode setValue={setValue} register={register} errors={errors} />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Box py={2}>
+                  <Grid container alignItems="center" spacing={1}>
+                    <Grid item xs={12} md={2}>
+                      <StyledText fontSize="15">
+                                              사진
+                      </StyledText>
+                    </Grid>
+                    <Grid item xs={12} md={10}>
+                      <Grid container alignItems="center" spacing={2} justify={isMD ? 'normal' : 'center'}>
+                        <Grid item>
+                          <StyledImage
+                            width="110px"
+                            height="110px"
+                            borderRadius="100%"
+                            src={imageUrl || userInfo.INF_PHOTO || defaultAccountImage}
+                          />
+                        </Grid>
+                        <Grid item>
+                          <label htmlFor="picAdd">
+                            <ImageActionButton background="#00a1ff">
+                                                          이미지 등록
+                              <input
+                                id="picAdd"
+                                name="photo"
+                                type="file"
+                                style={{ display: 'none' }}
+                                                              // multiple
+                                accept="image/*"
+                                onChange={(event => addPicture(event))}
+                              />
+                            </ImageActionButton>
+                          </label>
+                          {userInfo.INF_PHOTO ? (
+                            <Box pt={1}>
+                              <ImageActionButton onClick={() => deletePicture(token)}>
+                                                              이미지 삭제
+                              </ImageActionButton>
+                            </Box>
+                          ) : null}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" spacing={1}>
+                  <Grid item xs={12} md={2}>
+                    <StyledText fontSize="15">
+                                          카카오수신동의
+                    </StyledText>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <input id="kakaoCheck" type="checkbox" checked={noticeCheck} onChange={e => onCheckboxClick(e.target.checked)} />
+                    <label htmlFor="kakaoCheck">
+                      {' 카카오톡 통한 캠페인 모집 및 추천, 이벤트 정보 등의 수신에 동의합니다.'}
+                    </label>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-          <Box px={2} />
-        </Box>
-      </WhiteBlock>
-    </div>
+          <Grid item xs={12}>
+            <Box pt={isMD ? 4 : 0}>
+              <Grid container justify="center">
+                <Grid item xs={6} md={3}>
+                  <StyledButton
+                    onClick={handleSubmit(updateProfile)}
+                    background={Colors.skyBlue}
+                    hoverBackground="#1c4dbb"
+                  >
+                                      저장
+                  </StyledButton>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            <Box pb={4}>
+              <StyledText fontSize="19" fontWeight="600">SNS</StyledText>
+            </Box>
+            <Sns {...props} />
+          </Grid>
+        </Grid>
+        <Box px={2} />
+      </Box>
+    </WhiteBlock>
   );
 }
 

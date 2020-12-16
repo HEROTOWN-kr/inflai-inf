@@ -23,9 +23,13 @@ function Main(props) {
         path="/SignUp"
         render={renderProps => <SignUp {...renderProps} />}
       />
-      <PrivateRoute
+      {/* <PrivateRoute
         path="/Profile"
         component={Profile}
+      /> */}
+      <Route
+        path="/Profile"
+        render={renderProps => <Profile {...renderProps} />}
       />
       <Route
         path="/CampaignList"

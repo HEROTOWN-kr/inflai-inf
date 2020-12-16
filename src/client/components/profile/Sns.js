@@ -17,7 +17,7 @@ import { Colors } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
 
 function Sns(props) {
-  const { userInfo, getUserInfo } = props;
+  const { userInfo, getUserInfo, isMD } = props;
   const { TB_INSTum, TB_YOUTUBE, TB_NAVER } = userInfo;
   const { INS_ID, INS_USERNAME, INS_DT } = TB_INSTum || {};
   const { YOU_ID, YOU_NAME, YOU_DT } = TB_YOUTUBE || {};
@@ -172,13 +172,13 @@ function Sns(props) {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Grid container alignItems="center">
-          <Grid item xs={2}>
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item xs={12} md={2}>
             <StyledText fontSize="15">
                           인스타
             </StyledText>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Box py={2} px={4} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => instagramButtonClick()}>
               <Grid container justify="center" spacing={1}>
                 <Grid item>
@@ -194,9 +194,8 @@ function Sns(props) {
       </Grid>
       {INS_ID ? (
         <Grid item xs={12}>
-          <Grid container alignItems="center">
-            <Grid item xs={2} />
-            <Grid item xs={10}>
+          <Grid container alignItems="center" justify="flex-end">
+            <Grid item xs={12} md={10}>
               <Box pb={2}>
                 <StyledText fontSize="14">
                   {'연결한 계정: '}
@@ -209,13 +208,13 @@ function Sns(props) {
         </Grid>
       ) : null}
       <Grid item xs={12}>
-        <Grid container alignItems="center">
-          <Grid item xs={2}>
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item xs={12} md={2}>
             <StyledText fontSize="15">
                           유튜브
             </StyledText>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Box py={2} px={4} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => youtubeButtonClick()}>
               <Grid container justify="center" spacing={1}>
                 <Grid item>
@@ -231,9 +230,8 @@ function Sns(props) {
       </Grid>
       {YOU_ID ? (
         <Grid item xs={12}>
-          <Grid container alignItems="center">
-            <Grid item xs={2} />
-            <Grid item xs={10}>
+          <Grid container alignItems="center" justify="flex-end">
+            <Grid item xs={12} md={10}>
               <Box pb={2}>
                 <StyledText fontSize="14">
                   {'연결한 채널: '}
@@ -246,15 +244,15 @@ function Sns(props) {
         </Grid>
       ) : null}
       <Grid item xs={12}>
-        <Grid container alignItems="center">
-          <Grid item xs={2}>
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item xs={12} md={2}>
             <StyledText fontSize="15">
                           네이버
             </StyledText>
           </Grid>
-          <Grid item xs={7}>
-            <Grid container alignItems="center" spacing={2}>
-              <Grid item xs={9}>
+          <Grid item xs={12} md={7}>
+            <Grid container alignItems="center" spacing={isMD ? 2 : 1} justify="center">
+              <Grid item xs={12} md={9}>
                 {NAV_ID ? (
                   <React.Fragment>
                     {NAV_URL}
@@ -271,7 +269,7 @@ function Sns(props) {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={6} md={3}>
                 <StyledButton
                   height={38}
                   boxShadow="none"
