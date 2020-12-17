@@ -277,3 +277,37 @@ $colorPink: #fbbaba;
     border-bottom: 2px solid rgb(249, 113, 184);
   }
 }
+
+.percent_bubble_layer {
+  background: #ffffff;
+  border: 1px solid #eb128c;
+  border-radius: 3px;
+  padding: 2px;
+  width: 44px;
+  text-align: center;
+  &:before, &:after {
+    border-top: 0px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #eb128c;
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    margin-left: -5px;
+  }
+  &:after {
+    border-bottom: 5px solid #ffffff;
+    top: -5px;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .footer {
+    margin-bottom: 60px;
+    .footer-text {
+      font-size: 13px;
+      text-align: center;
+    }
+  }
+}

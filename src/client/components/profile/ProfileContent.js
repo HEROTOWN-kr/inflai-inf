@@ -16,7 +16,7 @@ import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 import MembershipInfo from './pages/MembershipInfo'; */
 
 function ProfileContent(props) {
-  const { match, isMD } = props;
+  const { match, isMD, currentMenu, setCurrentMenu } = props;
   const [message, setMessage] = useState({
     open: false,
     text: '',
@@ -39,15 +39,15 @@ function ProfileContent(props) {
       <Switch>
         <Route
           path={`${match.path}/UserInfo`}
-          render={renderProps => <UserInfo {...props} setMessage={setMessage} />}
+          render={renderProps => <UserInfo {...props} setMessage={setMessage} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />}
         />
         <Route
           path={`${match.path}/CampaignInfo`}
-          render={renderProps => <CampaignInfo {...renderProps} />}
+          render={renderProps => <CampaignInfo {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />}
         />
         <Route
           path={`${match.path}/Rank`}
-          render={renderProps => <Rank {...renderProps} />}
+          render={renderProps => <Rank {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />}
         />
         {/* <Route
           path={`${match.path}/MembershipInfo`}

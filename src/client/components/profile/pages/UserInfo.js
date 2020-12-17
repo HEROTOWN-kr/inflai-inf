@@ -125,7 +125,7 @@ function UserInfo(props) {
           </StyledText>
         </PageTitle>
       </Hidden>
-      <Box py={4} px={isMD ? 6 : 1}>
+      <Box py={isMD ? 4 : 1} px={isMD ? 6 : 1}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Grid container spacing={2}>
@@ -218,7 +218,7 @@ function UserInfo(props) {
                       </StyledText>
                     </Grid>
                     <Grid item xs={12} md={10}>
-                      <Grid container alignItems="center" spacing={2} justify={isMD ? 'normal' : 'center'}>
+                      <Grid container alignItems="center" spacing={2} justify={isMD ? 'flex-start' : 'center'}>
                         <Grid item>
                           <StyledImage
                             width="110px"

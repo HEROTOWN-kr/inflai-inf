@@ -1,16 +1,20 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
-import { Box } from '@material-ui/core';
+import { Box, useMediaQuery, useTheme } from '@material-ui/core';
 import Logo from '../../img/logo.png';
+import StyledImage from '../../containers/StyledImage';
 
 function Footer() {
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
+
   return (
-    <Box py={6} className="footer">
+    <Box py={isMD ? 6 : 2} className="footer">
       <Box px={2} className="footer-container">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={3} className="footer-logo">
-            <img src={Logo} />
+            <StyledImage width={isMD ? '80px' : '65px'} src={Logo} />
           </Grid>
           <Grid item xs={12} sm={9} className="footer-text">
             <Grid container spacing={3}>

@@ -9,7 +9,7 @@ import noImage from '../../img/noImage.png';
 
 function CampaignCard(props) {
   const {
-    image, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick
+    image, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD
   } = props;
 
   function calculateDates(date) {
@@ -26,8 +26,8 @@ function CampaignCard(props) {
   return (
     <Box border="1px solid #eaeaea" overflow="hidden" borderRadius="10px" css={{ cursor: 'pointer' }} onClick={onClick}>
       <StyledImage width="100%" height="auto" src={image || noImage} />
-      <Box borderTop="1px solid #eaeaea" p={3}>
-        <Grid container spacing={2}>
+      <Box borderTop="1px solid #eaeaea" p={isMD ? 3 : 1}>
+        <Grid container spacing={isMD ? 2 : 1}>
           <Grid item xs={12}>
             <StyledText overflowHidden>
               <span style={{ color: Colors.pink }}>{`${AdvertiseTypes.mainType[ctg1]}/${AdvertiseTypes.subType[ctg1][ctg2]}`}</span>
@@ -45,7 +45,7 @@ function CampaignCard(props) {
             </StyledText>
           </Grid>
           <Grid item xs={12}>
-            <Box pt={1}>
+            <Box pt={isMD ? 1 : 0}>
               <Grid container alignItems="center" justify="space-between">
                 <Grid item>
                   <div style={{ display: 'flex', alignItems: 'center' }}>

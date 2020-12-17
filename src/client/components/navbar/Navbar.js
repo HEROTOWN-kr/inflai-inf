@@ -41,7 +41,7 @@ function CustomNavbar(props) {
               </Grid>
             </Grid>
           </Grid>
-          <NavbarMobileMenu {...props} />
+          {/* <NavbarMobileMenu {...props} /> */}
         </Grid>
       </AppBar>
     </Box>

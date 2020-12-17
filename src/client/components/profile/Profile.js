@@ -7,10 +7,12 @@ import { Colors } from '../../lib/Сonstants';
 import ProfileMenu from './ProfileMenu';
 import ProfileContent from './ProfileContent';
 import AuthContext from '../../context/AuthContext';
+import MobileProfileMenu from './MobileProfileMenu';
 
 function Profile(props) {
   const { token } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
+  const [currentMenu, setCurrentMenu] = useState(1);
   const theme = useTheme();
   const isXl = useMediaQuery(theme.breakpoints.up('xl'));
   const is1600 = useMediaQuery('(min-width:1600px)');
@@ -47,8 +49,21 @@ function Profile(props) {
               <ProfileMenu {...props} userInfo={userInfo} />
             </Grid>
           </Hidden>
-          <Grid item>
-            <ProfileContent {...props} userInfo={userInfo} setUserInfo={setUserInfo} getUserInfo={getUserInfo} isMD={isMD} />
+          <Hidden lgUp>
+            <Grid item xs={12}>
+              <MobileProfileMenu currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
+            </Grid>
+          </Hidden>
+          <Grid item style={{ width: isMD ? 'auto' : '100%' }}>
+            <ProfileContent
+              {...props}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+              getUserInfo={getUserInfo}
+              isMD={isMD}
+              currentMenu={currentMenu}
+              setCurrentMenu={setCurrentMenu}
+            />
           </Grid>
         </Grid>
       </Box>

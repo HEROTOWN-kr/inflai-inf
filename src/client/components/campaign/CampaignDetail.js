@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Grid, Divider, CircularProgress, Button, Box
+  Grid, Divider, CircularProgress, Button, Box, Hidden
 } from '@material-ui/core';
 import axios from 'axios';
 import {
@@ -43,13 +43,13 @@ function TabComponent(props) {
       css={{ cursor: 'pointer' }}
       onClick={() => setTab(tabNumber)}
     >
-      <StyledText fontSize="16" fontWeight={styles.fontWeight}>{text}</StyledText>
+      <StyledText fontSize="16" fontWeight={styles.fontWeight} textAlign="center">{text}</StyledText>
     </Box>
   );
 }
 
 function ParticipantList(props) {
-  const { adId } = props;
+  const { adId, isMD } = props;
   const [participants, setParticipants] = useState([]);
 
   function getParticipants() {
@@ -87,62 +87,39 @@ function ParticipantList(props) {
           <React.Fragment>
             {participants.map(item => (
               <Box key={item.PAR_ID} py={2} borderBottom={`1px solid ${Colors.grey7}`}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center">
-                      <Grid item xs={2}>
-                        <StyledImage borderRadius="100%" width="90px" height="90px" src={item.INF_PHOTO || defaultAccountImage} />
-                      </Grid>
-                      <Grid item xs={10}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={12}>
-                            <Grid container alignItems="center" spacing={1}>
-                              <Grid item>
-                                <StyledText fontSize={16} fontWeight="bold">{item.PAR_NAME}</StyledText>
-                              </Grid>
-                              {item.PAR_INSTA ? (
-                                <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
-                              ) : null}
-                              {item.PAR_YOUTUBE ? (
-                                <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
-                              ) : null}
-                              {item.PAR_NAVER ? (
-                                <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
-                              ) : null}
-                            </Grid>
+                <Box style={{ display: 'flex', width: '100%' }}>
+                  <Box style={{ width: '90px' }}>
+                    <StyledImage borderRadius="100%" width="90px" height="90px" src={item.INF_PHOTO || defaultAccountImage} />
+                  </Box>
+                  <Box style={{ flex: '1', paddingLeft: '10px' }}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <Grid container alignItems="center" spacing={1}>
+                          <Grid item>
+                            <StyledText fontSize={16} fontWeight="bold">{item.PAR_NAME}</StyledText>
                           </Grid>
-                          <Grid item xs={12}>
-                            <StyledText fontSize={15} lineHeight="1.3em">{item.PAR_MESSAGE}</StyledText>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <StyledText fontSize={15}>
-                              {item.PAR_DT}
-                            </StyledText>
-                          </Grid>
+                          {item.PAR_INSTA ? (
+                            <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
+                          ) : null}
+                          {item.PAR_YOUTUBE ? (
+                            <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
+                          ) : null}
+                          {item.PAR_NAVER ? (
+                            <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
+                          ) : null}
                         </Grid>
                       </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container justify="flex-end" spacing={1}>
-                      {item.PAR_STATUS === '1' ? (
-                        <Grid item>
-                          <StyledButton
-                            fontSize="12px"
-                            height="25px"
-                            padding="0 10px"
-                            onClick={() => selectParticipant(item.PAR_ID)}
-                          >
-                                  리뷰어 선정하기
-                          </StyledButton>
-                        </Grid>
-                      ) : null}
-                      <Grid item>
-                        <StyledButton fontSize="12px" height="25px" padding="0 10px">신청정보 수정</StyledButton>
+                      <Grid item xs={12}>
+                        <StyledText fontSize={15} lineHeight="1.3em">{item.PAR_MESSAGE}</StyledText>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <StyledText fontSize={15}>
+                          {item.PAR_DT}
+                        </StyledText>
                       </Grid>
                     </Grid>
-                  </Grid>
-                </Grid>
+                  </Box>
+                </Box>
               </Box>
             ))}
           </React.Fragment>
@@ -266,54 +243,56 @@ function CampaignDetail(props) {
 
 
   return (
-    <Box width="1160px" margin="0 auto" className="campaign-detail">
+    <Box width={isLG ? '1160px' : 'auto'} margin="0 auto" className="campaign-detail">
       <Grid container>
         <Grid item style={{ width: getWidth() }}>
-          <Box py={6} pr={6}>
+          <Box py={isMD ? 6 : 2} pr={isLG ? 6 : 2} pl={isLG ? 0 : 2}>
             {
               loading ? (
                 <Skeleton variant="text" height={33} />
               ) : (
-                <StyledText fontSize="33">{productData.AD_NAME}</StyledText>
+                <StyledText fontSize={isMD ? '33' : '20'}>{productData.AD_NAME}</StyledText>
               )
             }
 
-            <Box mt={3} mb={5}>
+            <Box mt={isMD ? 3 : 2} mb={isMD ? 5 : 2}>
               {
                 loading ? (
                   <Skeleton variant="text" height={16} />
                 ) : (
-                  <StyledText fontSize="16" color={Colors.grey2}>{ReactHtmlParser(productData.AD_SHRT_DISC)}</StyledText>
+                  <StyledText fontSize={isMD ? '16' : '14'} color={Colors.grey2}>{ReactHtmlParser(productData.AD_SHRT_DISC)}</StyledText>
                 )
               }
             </Box>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Box width="130px" mb={2}>
-                  <Grid container justify="space-between">
-                    <Grid item>
-                      <Favorite />
+            <Hidden smDown>
+              <Grid container justify="flex-end">
+                <Grid item>
+                  <Box width="130px" mb={2}>
+                    <Grid container justify="space-between">
+                      <Grid item>
+                        <Favorite />
+                      </Grid>
+                      <Grid item>
+                        <Share />
+                      </Grid>
+                      <Grid item>
+                        <Print />
+                      </Grid>
+                      <Grid item>
+                        <Error />
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Share />
-                    </Grid>
-                    <Grid item>
-                      <Print />
-                    </Grid>
-                    <Grid item>
-                      <Error />
-                    </Grid>
-                  </Grid>
-                </Box>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
+            </Hidden>
             {loading ? (
               <Skeleton variant="rect" width="100%" height={435} />
             ) : (
-              <StyledImage width="100%" height="435px" src={currentImage || testImage} />
+              <StyledImage width="100%" height={isMD ? '435px' : 'auto'} src={currentImage || testImage} />
             )}
 
-            <Box mt={1} mb={5}>
+            <Box mt={1} mb={isMD ? 5 : 1}>
               <Grid container spacing={1}>
                 {productData.TB_PHOTO_ADs.map(item => (
                   <Grid item xs={2} key={item.PHO_FILE}>
@@ -322,11 +301,11 @@ function CampaignDetail(props) {
                 ))}
               </Grid>
             </Box>
-            <Grid container justify="flex-end" spacing={1}>
-              <Grid item xs={7}>
-                <Box border={`1px solid ${Colors.grey7}`} borderRadius="5px" p={3} pb={6}>
+            <Grid container justify={isMD ? 'flex-end' : 'flex-start'} spacing={1}>
+              <Grid item xs={12} md={7}>
+                <Box border={isMD ? `1px solid ${Colors.grey7}` : null} borderRadius="5px" px={isMD ? 3 : 0} pt={isMD ? 3 : 1} pb={isMD ? 6 : 4}>
                   <StyledText fontSize="16px" fontWeight="bold">리뷰어 신청현황</StyledText>
-                  <Box mt={3}>
+                  <Box mt={isMD ? 3 : 2}>
                     <Grid container alignItems="center" justify="space-between">
                       <Grid item>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -364,9 +343,9 @@ function CampaignDetail(props) {
                   </div>
                 </Box>
               </Grid>
-              <Grid item xs={5}>
-                <Box border={`1px solid ${Colors.grey7}`} borderRadius="5px" p={3}>
-                  <Grid container spacing={3}>
+              <Grid item xs={12} md={5}>
+                <Box border={isMD ? `1px solid ${Colors.grey7}` : null} borderRadius="5px" p={isMD ? 3 : 0} pt={isMD ? 3 : 1}>
+                  <Grid container spacing={isMD ? 3 : 2}>
                     <Grid item xs={12}>
                       <Grid container justify="space-between">
                         <Grid item><StyledText fontWeight="bold">카테고리</StyledText></Grid>
@@ -399,13 +378,13 @@ function CampaignDetail(props) {
                 </Box>
               </Grid>
             </Grid>
-            <Box mt={10} borderBottom={`2px solid ${Colors.grey7}`}>
+            <Box mt={isMD ? 10 : 2} borderBottom={`2px solid ${Colors.grey7}`}>
               <Grid container>
                 <ElementLink name="detail" />
-                <Grid item>
+                <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
                   <TabComponent tab={tab} setTab={setTab} text="상세정보" tabNumber={1} />
                 </Grid>
-                <Grid item>
+                <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
                   <TabComponent tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
                 </Grid>
               </Grid>
@@ -415,9 +394,8 @@ function CampaignDetail(props) {
                 {ReactHtmlParser(productData.AD_DETAIL)}
               </>
             ) : (
-              <ParticipantList adId={adId} />
+              <ParticipantList adId={adId} isMD={isMD} />
             )}
-
             <Grid container spacing={4}>
               <Grid item xs={12}>
                 <Divider />
@@ -425,10 +403,10 @@ function CampaignDetail(props) {
               <Grid item xs={12}>
                 <Grid container>
                   <ElementLink name="provide" />
-                  <Grid item xs={2}>
+                  <Grid item xs={12} md={2}>
                     <Box fontWeight="bold" component="p">제공내역</Box>
                   </Grid>
-                  <Grid item xs={10} className="provide-info">
+                  <Grid item xs={isMD ? 10 : 12} className="provide-info">
                     {ReactHtmlParser(productData.AD_PROVIDE)}
                   </Grid>
                 </Grid>
@@ -541,18 +519,6 @@ function CampaignDetail(props) {
           </Box>
         </Grid>
       </Grid>
-      {/* {Object.keys(productData).length
-        ? (
-
-        )
-        : (
-          <Grid container justify="center">
-            <Grid item>
-              <CircularProgress />
-            </Grid>
-          </Grid>
-        )
-        } */}
     </Box>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, useTheme, useMediaQuery, Grid
+  Box, useTheme, useMediaQuery, Grid, Hidden
 } from '@material-ui/core';
 import axios from 'axios';
 import { Skeleton } from '@material-ui/lab';
@@ -90,7 +90,7 @@ function CampaignInfo(props) {
     } if (isMD) {
       return '33.333%';
     }
-    return '100%';
+    return '50%';
   }
 
   function detailInfo(AD_ID) {
@@ -102,14 +102,16 @@ function CampaignInfo(props) {
   };
 
   return (
-    <WhiteBlock height="100%">
-      <PageTitle>
-        <StyledText fontSize="24">
+    <WhiteBlock height="100%" borderRadius={isMD ? '7px' : '0'}>
+      <Hidden smDown>
+        <PageTitle>
+          <StyledText fontSize="24">
             캠페인 관리
-        </StyledText>
-      </PageTitle>
-      <Box py={4} px={6}>
-        <Box borderBottom={`2px solid ${Colors.grey7}`}>
+          </StyledText>
+        </PageTitle>
+      </Hidden>
+      <Box py={isMD ? 4 : 1} px={isMD ? 6 : 1}>
+        <Box borderBottom={`1px solid ${Colors.grey7}`}>
           <Grid container>
             <Grid item>
               <TabComponent tab={tab} setTab={setTab} text="신청한 캠페인" tabNumber={1} />
@@ -119,7 +121,7 @@ function CampaignInfo(props) {
             </Grid>
           </Grid>
         </Box>
-        <Box my={4}>
+        <Box my={isMD ? 4 : 2}>
           {loading ? (
             <Grid container>
               <Grid item style={{ width: getCardWidth() }}>
@@ -129,9 +131,9 @@ function CampaignInfo(props) {
                   borderRadius="10px"
                   css={{ cursor: 'pointer' }}
                 >
-                  <Skeleton variant="rect" width="100%" height={186} />
-                  <Box p={3}>
-                    <Grid container spacing={2}>
+                  <Skeleton variant="rect" width="100%" height={isMD ? 186 : 138} />
+                  <Box p={isMD ? 3 : 1}>
+                    <Grid container spacing={isMD ? 2 : 1}>
                       <Grid item xs={12}>
                         <Skeleton variant="text" width="50%" />
                       </Grid>
@@ -152,7 +154,7 @@ function CampaignInfo(props) {
           ) : (
             <React.Fragment>
               { campaigns.length > 0 ? (
-                <Grid container spacing={3}>
+                <Grid container spacing={isMD ? 3 : 1}>
                   {campaigns.map((item) => {
                     const {
                       AD_ID, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs,
@@ -170,6 +172,7 @@ function CampaignInfo(props) {
                           cnt={AD_INF_CNT}
                           proportion={proportion}
                           onClick={() => detailInfo(AD_ID)}
+                          isMD={isMD}
                         />
                       </Grid>
                     );
@@ -185,7 +188,7 @@ function CampaignInfo(props) {
             </React.Fragment>
           )}
         </Box>
-        <Box pt={6}>
+        <Box pt={isMD ? 6 : 1}>
           <Grid container justify="center">
             <Grid item>
               <MyPagination
