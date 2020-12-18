@@ -25,15 +25,13 @@ function ApplyFormComponent(componentProps) {
   const { title, children } = componentProps;
   return (
     <Grid container alignItems="center">
-      <Grid item xs={3}>
-        <Box>
-          <div fontWeight="bold" fontSize="16">
-            {title}
-          </div>
+      <Grid item xs={12} md="auto">
+        <Box width={{ xs: '115px', lg: '187px' }} fontWeight="bold" fontSize="16">
+          {title}
         </Box>
       </Grid>
-      <Grid item xs={9}>
-        <Box py={5}>{children}</Box>
+      <Grid item xs={12} md={9}>
+        <Box py={{ xs: 2, md: 5 }}>{children}</Box>
       </Grid>
     </Grid>
   );
@@ -70,6 +68,7 @@ function CampaignApply(props) {
   const is1600 = useMediaQuery('(min-width:1600px)');
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   const schema = Yup.object().shape({
     sns: Yup.string()
@@ -146,7 +145,7 @@ function CampaignApply(props) {
   };
 
   const handleScroll = () => {
-    setSticky(window.pageYOffset > 100);
+    setSticky(window.pageYOffset > 80);
   };
 
   useEffect(() => {
@@ -199,6 +198,7 @@ function CampaignApply(props) {
   }
 
   const onSubmit = async (data) => {
+    console.log('test');
     try {
       const apiObj = {
         ...data,
@@ -240,24 +240,28 @@ function CampaignApply(props) {
   }
 
   return (
-    <Box width="1160px" margin="0 auto" className="campaign-detail">
+    <Box maxWidth="1160px" margin="0 auto" className="campaign-detail">
       <Grid container>
-        <Grid item style={{ width: getWidth() }}>
-          <Box py={6} pr={6}>
-            <StyledText fontSize="28" fontWeight="bold">캠페인 신청하기</StyledText>
-            <Box mt={3} mb={2}>
-              <Divider />
-            </Box>
+        <Grid item xs>
+          <Box py={isMD ? 6 : 2} pr={isMD ? 6 : 2} pl={isLG ? 0 : 2}>
+            {isMD ? (
+              <React.Fragment>
+                <StyledText fontSize="28" fontWeight="bold">캠페인 신청하기</StyledText>
+                <Box mt={3} mb={2}>
+                  <Divider />
+                </Box>
+              </React.Fragment>
+            ) : null}
             <Grid container alignItems="center">
-              <Grid item xs={3}>
-                <Box py={5}>
+              <Grid item xs={12} md="auto">
+                <Box py={{ xs: 0, md: 5 }} width={{ xs: '115px', lg: '187px' }}>
                   <StyledText fontWeight="bold" fontSize="16">
                     SNS
                   </StyledText>
                 </Box>
               </Grid>
-              <Grid item xs={9}>
-                <Box py={5} borderBottom={`1px solid ${Colors.grey7}`}>
+              <Grid item xs>
+                <Box py={{ xs: 2, md: 5 }} borderBottom={{ md: `1px solid ${Colors.grey7}` }}>
                   <Grid container spacing={1} alignItems="center">
                     <Grid item xs={12}>
                       <Grid container alignItems="center">
@@ -266,7 +270,7 @@ function CampaignApply(props) {
                             <StyledCheckBox checked={snsData.insta} onChange={event => setSnsData({ ...snsData, insta: event.target.checked })} disabled={!applyData.instaUserName} />
                           </Box>
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs md={5}>
                           <Box py={2} px={4} border="1px solid #e9ecef">
                             <Grid container justify="center" spacing={1} alignItems="center">
                               <Grid item>
@@ -298,11 +302,11 @@ function CampaignApply(props) {
                     <Grid item xs={12}>
                       <Grid container alignItems="center">
                         <Grid item>
-                          <Box padding="12px" border="1px solid #e9ecef" borderRight="0" borderRight="0">
+                          <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
                             <StyledCheckBox checked={snsData.youtube} onChange={event => setSnsData({ ...snsData, youtube: event.target.checked })} disabled={!applyData.youtubeChannelName} />
                           </Box>
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs md={5}>
                           <Box py={2} px={4} border="1px solid #e9ecef">
                             <Grid container justify="center" spacing={1} alignItems="center">
                               <Grid item>
@@ -338,7 +342,7 @@ function CampaignApply(props) {
                             <StyledCheckBox checked={snsData.naver} onChange={event => setSnsData({ ...snsData, naver: event.target.checked })} disabled={!applyData.naverChannelName} />
                           </Box>
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs md={5}>
                           <Box py={2} px={4} border="1px solid #e9ecef">
                             <Grid container justify="center" spacing={1} alignItems="center">
                               <Grid item>
@@ -416,66 +420,67 @@ function CampaignApply(props) {
             </ApplyFormComponent>
           </Box>
         </Grid>
-        <Grid item style={{ width: '360px', borderLeft: '1px solid #eee' }}>
-          <Box py={6} pl={6} style={isSticky ? fixedStyles : {}}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <StyledImage width="100%" height="300px" src={addData.TB_PHOTO_ADs.length > 0 ? addData.TB_PHOTO_ADs[0].PHO_FILE : noImage} />
-                <Box py={3}><StyledText overflowHidden fontSize="20" fontWeight="bold">{addData.AD_NAME}</StyledText></Box>
-                <StyledText overflowHidden fontSize="15">{addData.AD_SHRT_DISC}</StyledText>
-                <Box pt={2}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={4}>
-                      <SnsBlock color={Colors.pink} text="Instagram" />
+        {isMD ? (
+          <Grid item style={{ borderLeft: '1px solid #eee' }}>
+            <Box width="360px" position="relative">
+              <Box position="absolute" top={isSticky ? '-85px' : '0'} left="0">
+                <Box position={isSticky ? 'fixed' : 'static'}>
+                  <Box py={isMD ? 6 : 2} pl={isLG ? 6 : 2} pr={isLG ? 0 : 2} width="312px">
+                    <Grid container spacing={3}>
+                      <Grid item xs={12}>
+                        <StyledImage width="100%" height="300px" src={addData.TB_PHOTO_ADs.length > 0 ? addData.TB_PHOTO_ADs[0].PHO_FILE : noImage} />
+                        <Box py={3}><StyledText overflowHidden fontSize="20" fontWeight="bold">{addData.AD_NAME}</StyledText></Box>
+                        <StyledText overflowHidden fontSize="15">{addData.AD_SHRT_DISC}</StyledText>
+                        <Box pt={2}>
+                          <Grid container spacing={1}>
+                            <Grid item xs={4}>
+                              <SnsBlock color={Colors.pink} text="Instagram" />
+                            </Grid>
+                            <Grid item xs={4}>
+                              <SnsBlock color="red" text="Youtube" />
+                            </Grid>
+                            <Grid item xs={4}>
+                              <SnsBlock color="#00cdc5" text="Blog" />
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Divider />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <StyledText fontSize="14" fontWeight="bold">리뷰어 신청  2020-11-01 ~ 2020-11-30</StyledText>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Divider />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={handleSubmit(onSubmit)}>
+                            캠페인 신청하기
+                        </StyledButton>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                      <SnsBlock color="red" text="Youtube" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <SnsBlock color="#00cdc5" text="Blog" />
-                    </Grid>
-                  </Grid>
+                  </Box>
                 </Box>
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <StyledText fontSize="14" fontWeight="bold">리뷰어 신청  2020-11-01 ~ 2020-11-30</StyledText>
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={handleSubmit(onSubmit)}>
-                  캠페인 신청하기
-                </StyledButton>
-              </Grid>
-            </Grid>
-          </Box>
-        </Grid>
-      </Grid>
-
-
-      {/* {Object.keys(applyData).length ? (
-        <Grid container>
-          <Grid item style={{ width: getWidth() }}>
-            <Box py={6} pr={6}>
-              test
+              </Box>
             </Box>
           </Grid>
-          <Grid item style={{ width: '360px', borderLeft: '1px solid #eee' }}>
-            <Box py={6} pl={6} style={isSticky ? fixedStyles : {}} />
-          </Grid>
-        </Grid>
-      ) : (
-        <Grid container justify="center">
-          <Grid item>
-            <CircularProgress />
-          </Grid>
-        </Grid>
-      )} */}
-
+        ) : null}
+      </Grid>
+      {
+        isMD ? null : (
+          <Box
+            position="fixed"
+            bottom="0"
+            zIndex="2"
+            borderTop={`1px solid ${Colors.grey7}`}
+            width="100%"
+            css={{ backgroundColor: Colors.white }}
+          >
+            <StyledButton variant="text" height={60} borderRadius="0" onClick={onSubmit}>신청하기</StyledButton>
+          </Box>
+        )
+      }
     </Box>
   );
 }

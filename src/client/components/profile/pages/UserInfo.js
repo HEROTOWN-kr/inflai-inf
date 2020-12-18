@@ -125,7 +125,7 @@ function UserInfo(props) {
           </StyledText>
         </PageTitle>
       </Hidden>
-      <Box py={isMD ? 4 : 1} px={isMD ? 6 : 1}>
+      <Box py={isMD ? 4 : 1} px={isMD ? 6 : 2}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Grid container spacing={2}>

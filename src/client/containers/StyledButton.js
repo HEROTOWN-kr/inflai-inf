@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 
 function StyledButton(props) {
   const {
+    variant,
     className,
     children,
     onClick,
@@ -32,7 +33,7 @@ function StyledButton(props) {
 
   return (
     <Button
-      variant="contained"
+      variant={variant || 'contained'}
       fullWidth
       className={`${classes.root} ${className}`}
       onClick={onClick}

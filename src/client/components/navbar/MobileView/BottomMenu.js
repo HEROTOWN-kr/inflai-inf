@@ -42,6 +42,7 @@ function BottomMenu() {
     <Box
       position="fixed"
       bottom="0"
+      zIndex="1"
       borderTop={`1px solid ${Colors.grey7}`}
       width="100%"
       css={{ backgroundColor: Colors.white }}

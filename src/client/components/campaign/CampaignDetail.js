@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState
+} from 'react';
 import {
   Grid, Divider, CircularProgress, Button, Box, Hidden
 } from '@material-ui/core';
 import axios from 'axios';
 import {
-  Sync, Favorite, Print, Share, Error, SupervisorAccount
+  Sync, Favorite, Print, Share, Error, SupervisorAccount, ExpandMore, ExpandLess
 } from '@material-ui/icons';
 import ReactHtmlParser from 'react-html-parser';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -25,7 +27,7 @@ import AuthContext from '../../context/AuthContext';
 
 function TabComponent(props) {
   const {
-    tab, setTab, text, tabNumber
+    tab, setTab, text, tabNumber, isMD
   } = props;
   const styles = tab === tabNumber ? {
     border: `3px solid ${Colors.pink2}`,
@@ -43,7 +45,7 @@ function TabComponent(props) {
       css={{ cursor: 'pointer' }}
       onClick={() => setTab(tabNumber)}
     >
-      <StyledText fontSize="16" fontWeight={styles.fontWeight} textAlign="center">{text}</StyledText>
+      <StyledText fontSize={isMD ? '16' : '14'} fontWeight={styles.fontWeight} textAlign="center">{text}</StyledText>
     </Box>
   );
 }
@@ -87,12 +89,12 @@ function ParticipantList(props) {
           <React.Fragment>
             {participants.map(item => (
               <Box key={item.PAR_ID} py={2} borderBottom={`1px solid ${Colors.grey7}`}>
-                <Box style={{ display: 'flex', width: '100%' }}>
-                  <Box style={{ width: '90px' }}>
-                    <StyledImage borderRadius="100%" width="90px" height="90px" src={item.INF_PHOTO || defaultAccountImage} />
-                  </Box>
-                  <Box style={{ flex: '1', paddingLeft: '10px' }}>
-                    <Grid container spacing={2}>
+                <Grid container spacing={2} alignItems="center">
+                  <Grid item>
+                    <StyledImage borderRadius="100%" width={isMD ? '90px' : '60px'} height={isMD ? '90px' : '60px'} src={item.INF_PHOTO || defaultAccountImage} />
+                  </Grid>
+                  <Grid item xs>
+                    <Grid container spacing={isMD ? 2 : 1}>
                       <Grid item xs={12}>
                         <Grid container alignItems="center" spacing={1}>
                           <Grid item>
@@ -110,16 +112,16 @@ function ParticipantList(props) {
                         </Grid>
                       </Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize={15} lineHeight="1.3em">{item.PAR_MESSAGE}</StyledText>
+                        <StyledText fontSize={isMD ? 15 : 14} lineHeight="1.3em">{item.PAR_MESSAGE}</StyledText>
                       </Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize={15}>
+                        <StyledText fontSize={isMD ? 15 : 14}>
                           {item.PAR_DT}
                         </StyledText>
                       </Grid>
                     </Grid>
-                  </Box>
-                </Box>
+                  </Grid>
+                </Grid>
               </Box>
             ))}
           </React.Fragment>
@@ -140,40 +142,29 @@ function CampaignDetail(props) {
   const [currentImage, setCurrentImage] = useState('');
   const [isSticky, setSticky] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [tab, setTab] = useState(2);
+  const [showMore, setShowMore] = useState({ visible: false, isOpen: false });
+  const [tab, setTab] = useState(1);
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
   const { token, userRole } = useContext(AuthContext);
   const theme = useTheme();
   const Scroller = Scroll.scroller;
   const ElementLink = Scroll.Element;
 
+  const DetailPageRef = useRef(null);
+
   const isXl = useMediaQuery(theme.breakpoints.up('xl'));
   const is1600 = useMediaQuery('(min-width:1600px)');
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const fixedStyles = {
-    boxSizing: 'border-box',
-    width: '359px',
-    position: 'fixed',
-    left: '1173px',
-    zIndex: '1039',
-    marginTop: '0px',
-    top: '0px',
-  };
+  function toggleShowMore() {
+    setShowMore({ ...showMore, isOpen: !showMore.isOpen });
+  }
 
   const handleScroll = () => {
-    setSticky(window.pageYOffset > 100);
+    setSticky(window.pageYOffset > 90);
   };
-
-  function getWidth() {
-    if (isXl) {
-      return '800px';
-    } if (isLG) {
-      return '800px';
-    }
-    return '100%';
-  }
 
   function scrollTo(target) {
     setTimeout(() => {
@@ -241,12 +232,21 @@ function CampaignDetail(props) {
     };
   }, []);
 
+  useEffect(() => {
+    if (DetailPageRef.current && productData.AD_DETAIL) {
+      setTimeout(() => {
+        const showMoreButton = DetailPageRef.current.clientHeight > 760;
+        if (showMoreButton) setShowMore({ ...showMore, visible: true });
+      }, 200);
+    }
+  }, [productData]);
+
 
   return (
-    <Box width={isLG ? '1160px' : 'auto'} margin="0 auto" className="campaign-detail">
+    <Box maxWidth="1160px" margin="0 auto" className="campaign-detail">
       <Grid container>
-        <Grid item style={{ width: getWidth() }}>
-          <Box py={isMD ? 6 : 2} pr={isLG ? 6 : 2} pl={isLG ? 0 : 2}>
+        <Grid item xs>
+          <Box py={isMD ? 6 : 2} pr={isMD ? 6 : 2} pl={isLG ? 0 : 2}>
             {
               loading ? (
                 <Skeleton variant="text" height={33} />
@@ -378,35 +378,61 @@ function CampaignDetail(props) {
                 </Box>
               </Grid>
             </Grid>
-            <Box mt={isMD ? 10 : 2} borderBottom={`2px solid ${Colors.grey7}`}>
+            <Box mt={isMD ? 10 : 2} borderBottom={`1px solid ${Colors.grey7}`}>
               <Grid container>
                 <ElementLink name="detail" />
                 <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
-                  <TabComponent tab={tab} setTab={setTab} text="상세정보" tabNumber={1} />
+                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="상세정보" tabNumber={1} />
                 </Grid>
                 <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
-                  <TabComponent tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
+                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
                 </Grid>
               </Grid>
             </Box>
             {tab === 1 ? (
-              <>
-                {ReactHtmlParser(productData.AD_DETAIL)}
-              </>
+              <Box
+                style={{
+                  textAlign: 'center',
+                  maxHeight: showMore.isOpen ? 'none' : '760px',
+                  overflow: 'hidden'
+                }}
+              >
+                <div ref={DetailPageRef}>
+                  {ReactHtmlParser(productData.AD_DETAIL)}
+                </div>
+              </Box>
+
             ) : (
               <ParticipantList adId={adId} isMD={isMD} />
             )}
-            <Grid container spacing={4}>
+            {showMore.visible && tab === 1 ? (
+              <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
+                <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
+                  {showMore.isOpen ? (
+                    <React.Fragment>
+                        상세 페이지 주리기
+                      <ExpandLess />
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                        상세 페이지 더보기
+                      <ExpandMore />
+                    </React.Fragment>
+                  )}
+                </StyledButton>
+              </Box>
+            ) : null}
+            <Grid container spacing={isMD ? 4 : 2} style={{ fontSize: isMD ? '16px' : '14px' }}>
               <Grid item xs={12}>
                 <Divider />
               </Grid>
               <Grid item xs={12}>
                 <Grid container>
                   <ElementLink name="provide" />
-                  <Grid item xs={12} md={2}>
-                    <Box fontWeight="bold" component="p">제공내역</Box>
+                  <Grid item>
+                    <Box width="125px" fontWeight="bold" component="p">제공내역</Box>
                   </Grid>
-                  <Grid item xs={isMD ? 10 : 12} className="provide-info">
+                  <Grid item xs={12} sm className="provide-info">
                     {ReactHtmlParser(productData.AD_PROVIDE)}
                   </Grid>
                 </Grid>
@@ -417,11 +443,15 @@ function CampaignDetail(props) {
               <Grid item xs={12}>
                 <Grid container>
                   <ElementLink name="search" />
-                  <Grid item xs={2}>
-                    <StyledText fontWeight="bold" fontSize="16">검색 키워드</StyledText>
+                  <Grid item>
+                    <Box width="125px" fontWeight="bold">
+                      검색 키워드
+                    </Box>
                   </Grid>
-                  <Grid item xs={10} className="provide-info">
-                    <StyledText fontSize="16">{productData.AD_SEARCH_KEY}</StyledText>
+                  <Grid item xs={12} sm className="provide-info">
+                    <Box>
+                      {productData.AD_SEARCH_KEY}
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
@@ -431,11 +461,15 @@ function CampaignDetail(props) {
               <Grid item xs={12}>
                 <Grid container>
                   <ElementLink name="discription" />
-                  <Grid item xs={2}>
-                    <StyledText fontWeight="bold" fontSize="16" lineHeight="2">참여 안내 사항</StyledText>
+                  <Grid item>
+                    <Box width="125px" fontWeight="bold">
+                      참여 안내 사항
+                    </Box>
                   </Grid>
-                  <Grid item xs={10} className="provide-info" style={{ lineHeight: '2' }}>
-                    {ReactHtmlParser(productData.AD_DISC)}
+                  <Grid item xs={12} sm className="provide-info">
+                    <Box>
+                      {ReactHtmlParser(productData.AD_DISC)}
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
@@ -445,35 +479,31 @@ function CampaignDetail(props) {
               <Grid item xs={12}>
                 <Grid container>
                   <ElementLink name="info" />
-                  <Grid item xs={2}>
-                    <StyledText fontWeight="bold" fontSize="16">업체 정보</StyledText>
+                  <Grid item>
+                    <Box width="125px" fontWeight="bold">
+                      업체 정보
+                    </Box>
                   </Grid>
-                  <Grid item xs={10} className="provide-info">
-                    <Grid container spacing={2}>
+                  <Grid item xs={12} sm className="provide-info">
+                    <Grid container>
                       <Grid item xs={12}>
                         <Grid container>
-                          <Grid item xs={2}><StyledText fontSize="16">주소</StyledText></Grid>
-                          <Grid item xs={10}>
-                            <StyledText fontSize="16">
-                              {`(${productData.AD_POST_CODE}) ${productData.AD_ROAD_ADDR} ${productData.AD_DETAIL_ADDR} ${productData.AD_EXTR_ADDR}`}
-                            </StyledText>
+                          <Grid item><Box width="65px" fontWeight="bold">주소</Box></Grid>
+                          <Grid item xs>
+                            {`(${productData.AD_POST_CODE}) ${productData.AD_ROAD_ADDR} ${productData.AD_DETAIL_ADDR} ${productData.AD_EXTR_ADDR}`}
                           </Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={12}>
                         <Grid container>
-                          <Grid item xs={2}><StyledText fontSize="16">연락처</StyledText></Grid>
-                          <Grid item xs={10}>
-                            <StyledText fontSize="16">{productData.AD_TEL}</StyledText>
-                          </Grid>
+                          <Grid item><Box width="65px" fontWeight="bold">연락처</Box></Grid>
+                          <Grid item xs>{productData.AD_TEL}</Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={12}>
                         <Grid container>
-                          <Grid item xs={2}><StyledText fontSize="16">이메일</StyledText></Grid>
-                          <Grid item xs={10}>
-                            <StyledText fontSize="16">{productData.AD_EMAIL}</StyledText>
-                          </Grid>
+                          <Grid item><Box width="65px" fontWeight="bold">이메일</Box></Grid>
+                          <Grid item xs>{productData.AD_EMAIL}</Grid>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -483,42 +513,65 @@ function CampaignDetail(props) {
             </Grid>
           </Box>
         </Grid>
-        <Grid item style={{ width: '360px', borderLeft: '1px solid #eee' }}>
-          <Box py={6} pl={6} style={isSticky ? fixedStyles : {}}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <StyledText fontSize="16" fontWeight="bold">{`리뷰어 신청  ${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}</StyledText>
-              </Grid>
-              <Grid item xs={12}><Divider /></Grid>
-              <Grid item xs={12}>
-                <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('detail')}>캠페인 상세정보</StyledText>
-              </Grid>
-              <Grid item xs={12}><Divider /></Grid>
-              <Grid item xs={12}>
-                <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('provide')}>제공내역</StyledText>
-              </Grid>
-              <Grid item xs={12}><Divider /></Grid>
-              <Grid item xs={12}>
-                <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('search')}>검색 키워드</StyledText>
-              </Grid>
-              <Grid item xs={12}><Divider /></Grid>
-              <Grid item xs={12}>
-                <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('discription')}>참여 안내 사항</StyledText>
-              </Grid>
-              <Grid item xs={12}><Divider /></Grid>
-              <Grid item xs={12}>
-                <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('info')}>업체 정보</StyledText>
-              </Grid>
-              <Grid item xs={12}><Divider /></Grid>
-              <Grid item xs={12}>
-                <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={sendRequest}>
-                  리뷰어 신청하기
-                </StyledButton>
-              </Grid>
-            </Grid>
-          </Box>
-        </Grid>
+        {isMD ? (
+          <Grid item style={{ borderLeft: '1px solid #eee' }}>
+            <Box width="360px" position="relative">
+              <Box position="absolute" top={isSticky ? '-92px' : '0'} left="0">
+                <Box position={isSticky ? 'fixed' : 'static'}>
+                  <Box py={isMD ? 6 : 2} pl={isLG ? 6 : 2} pr={isLG ? 0 : 2} width="312px">
+                    <Grid container spacing={3}>
+                      <Grid item xs={12}>
+                        <StyledText fontSize="16" fontWeight="bold">{`리뷰어 신청  ${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}</StyledText>
+                      </Grid>
+                      <Grid item xs={12}><Divider /></Grid>
+                      <Grid item xs={12}>
+                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('detail')}>캠페인 상세정보</StyledText>
+                      </Grid>
+                      <Grid item xs={12}><Divider /></Grid>
+                      <Grid item xs={12}>
+                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('provide')}>제공내역</StyledText>
+                      </Grid>
+                      <Grid item xs={12}><Divider /></Grid>
+                      <Grid item xs={12}>
+                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('search')}>검색 키워드</StyledText>
+                      </Grid>
+                      <Grid item xs={12}><Divider /></Grid>
+                      <Grid item xs={12}>
+                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('discription')}>참여 안내 사항</StyledText>
+                      </Grid>
+                      <Grid item xs={12}><Divider /></Grid>
+                      <Grid item xs={12}>
+                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('info')}>업체 정보</StyledText>
+                      </Grid>
+                      <Grid item xs={12}><Divider /></Grid>
+                      <Grid item xs={12}>
+                        <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={sendRequest}>
+                            리뷰어 신청하기
+                        </StyledButton>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+        ) : null}
+
       </Grid>
+      {
+        isMD ? null : (
+          <Box
+            position="fixed"
+            bottom="0"
+            zIndex="2"
+            borderTop={`1px solid ${Colors.grey7}`}
+            width="100%"
+            css={{ backgroundColor: Colors.white }}
+          >
+            <StyledButton variant="text" height={60} borderRadius="0" onClick={sendRequest}>신청하기</StyledButton>
+          </Box>
+        )
+      }
     </Box>
   );
 }
