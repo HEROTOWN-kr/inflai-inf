@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import axios from 'axios';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CampaignAll from '../campaign/CampaignAll';
 import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
@@ -8,6 +10,11 @@ import { Colors } from '../../lib/Сonstants';
 function Home(props) {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
+
 
   function getCampaigns() {
     setLoading(true);
@@ -30,7 +37,7 @@ function Home(props) {
         <span style={{ color: Colors.pink }}>최근</span>
         {' 캠페인'}
       </StyledText>
-      <Box mt={6}>
+      <Box mt={{ xs: 2, md: 5 }}>
         <CampaignAll {...props} campaigns={campaigns} loading={loading} />
       </Box>
     </Box>

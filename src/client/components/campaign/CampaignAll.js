@@ -20,6 +20,7 @@ function CampaignAll(props) {
   const is1600 = useMediaQuery('(min-width:1600px)');
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   function getCardWidth() {
     if (isXl) {
@@ -30,8 +31,10 @@ function CampaignAll(props) {
       return '25%';
     } if (isMD) {
       return '33.333%';
+    } if (isSM) {
+      return '33.333%';
     }
-    return '100%';
+    return '50%';
   }
 
   function detailInfo(AD_ID) {
@@ -73,7 +76,7 @@ function CampaignAll(props) {
         <React.Fragment>
           {
             campaigns.length > 0 ? (
-              <Grid container spacing={3}>
+              <Grid container spacing={isMD ? 3 : 1}>
                 {campaigns.map((item) => {
                   const {
                     AD_ID, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs,

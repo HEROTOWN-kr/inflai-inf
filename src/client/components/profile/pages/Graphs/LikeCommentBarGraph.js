@@ -56,6 +56,7 @@ function LikeCommentBarGraph(props) {
   };
 
   const options = {
+    maintainAspectRatio: false,
     responsive: true,
     tooltips: {
       mode: 'label'
@@ -116,8 +117,7 @@ function LikeCommentBarGraph(props) {
       {
         process ? <CircularProgress /> : (
           <Bar
-            width={400}
-            height={250}
+            height={310}
             data={data}
             options={options}
           />

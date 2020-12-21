@@ -21,7 +21,14 @@ function StyledImage(props) {
   const classes = useStyles(props);
 
   return (
-    <img src={src} className={`${classes.common} ${className}`} onMouseOver={onMouseOver} onMouseOut={onMouseOut} alt="noImage" />
+    <img
+      {...props}
+      src={src}
+      className={`${classes.common} ${className}`}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+      alt="noImage"
+    />
   );
 }
 

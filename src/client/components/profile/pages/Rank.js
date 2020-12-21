@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, Hidden } from '@material-ui/core';
 import WhiteBlock from '../../../containers/WhiteBlock';
 import PageTitle from '../PageTitle';
 import StyledText from '../../../containers/StyledText';
@@ -36,28 +36,30 @@ function Rank(props) {
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <WhiteBlock>
-            <PageTitle>
-              <StyledText fontSize="24">
-                            랭킹 정보
-              </StyledText>
-            </PageTitle>
-            <Box py={4} px={6}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Grid container spacing={2}>
-                    {snsTypes.map(item => (
-                      <Grid item key={item.id}>
-                        <SnsButtonComponent snsName={item.name} id={item.id} />
-                      </Grid>
-                    ))}
+        <Hidden smDown>
+          <Grid item xs={12}>
+            <WhiteBlock>
+              <PageTitle>
+                <StyledText fontSize="24">
+                  랭킹 정보
+                </StyledText>
+              </PageTitle>
+              <Box py={4} px={6}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Grid container spacing={2}>
+                      {snsTypes.map(item => (
+                        <Grid item key={item.id}>
+                          <SnsButtonComponent snsName={item.name} id={item.id} />
+                        </Grid>
+                      ))}
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Box>
-          </WhiteBlock>
-        </Grid>
+              </Box>
+            </WhiteBlock>
+          </Grid>
+        </Hidden>
         <Grid item xs={12}>
           <InstagramInfo {...props} />
         </Grid>

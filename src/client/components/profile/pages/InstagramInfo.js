@@ -20,6 +20,7 @@ import MapGraph from './Graphs/MapGraph';
 import AuthContext from '../../../context/AuthContext';
 
 function InstagramInfo(props) {
+  const { isMD, isSM } = props;
   const [instaData, setInstaData] = useState({});
   const { token } = useContext(AuthContext);
 
@@ -43,22 +44,22 @@ function InstagramInfo(props) {
   }, [token]);
 
   return (
-    <div>
+    <Box>
       {instaData.INS_ID ? (
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Grid container spacing={3}>
+        <Grid container spacing={isMD ? 3 : 0}>
+          <Grid item xs={12} md={6}>
+            <Grid container spacing={isMD ? 3 : 0}>
               <Grid item xs={12}>
-                <WhiteBlock borderRadius="25px">
-                  <Box px={3} py={3}>
+                <WhiteBlock borderRadius={isMD ? '25px' : '0'}>
+                  <Box p={{ xs: 2, md: 3 }}>
                     <Grid container alignItems="center" spacing={3}>
-                      <Grid item xs={4}>
-                        <StyledImage width="100%" borderRadius="100%" src={instaData.INS_PROFILE_IMG || defaultAccountImage} />
+                      <Grid item xs={12} sm="auto">
+                        <StyledImage width={isSM ? '125px' : '100px'} height={isSM ? '125px' : '100px'} borderRadius="100%" src={instaData.INS_PROFILE_IMG || defaultAccountImage} />
                       </Grid>
-                      <Grid item xs={8}>
+                      <Grid item xs>
                         <Grid container direction="column" spacing={2}>
                           <Grid item>
-                            <StyledText fontSize="20" fontWeight="bold">{instaData.INS_NAME || instaData.INS_USERNAME}</StyledText>
+                            <StyledText textAlign={isSM ? 'inherit' : 'center'} fontSize="20" fontWeight="bold">{instaData.INS_NAME || instaData.INS_USERNAME}</StyledText>
                           </Grid>
                           <Grid item>
                             <Grid container justify="space-between">
@@ -104,8 +105,8 @@ function InstagramInfo(props) {
                 </WhiteBlock>
               </Grid>
               <Grid item xs={6}>
-                <WhiteBlock borderRadius="25px">
-                  <Box px={2} pt={2} pb={5}>
+                <WhiteBlock borderRadius={isMD ? '25px' : '0'}>
+                  <Box px={2} pt={2} pb={{ xs: 3, md: 5 }}>
                     <Grid container direction="column" spacing={2} alignItems="center">
                       <Grid item container justify="space-between" alignItems="center">
                         <Grid item><StyledText fontSize="14">좋아요 수</StyledText></Grid>
@@ -118,14 +119,14 @@ function InstagramInfo(props) {
                           borderRadius="100%"
                         />
                       </Grid>
-                      <Grid item><StyledText fontSize="30" fontWeight="900">{instaData.INS_LIKES || instaData.INS_LIKES2}</StyledText></Grid>
+                      <Grid item><StyledText fontSize={isMD ? '30' : '24'} fontWeight="900">{instaData.INS_LIKES || instaData.INS_LIKES2}</StyledText></Grid>
                     </Grid>
                   </Box>
                 </WhiteBlock>
               </Grid>
               <Grid item xs={6}>
-                <WhiteBlock borderRadius="25px">
-                  <Box px={2} pt={2} pb={5}>
+                <WhiteBlock borderRadius={isMD ? '25px' : '0'}>
+                  <Box px={2} pt={2} pb={{ xs: 3, md: 5 }}>
                     <Grid container direction="column" spacing={2} alignItems="center">
                       <Grid item container justify="space-between" alignItems="center">
                         <Grid item><StyledText fontSize="14">댓글 수</StyledText></Grid>
@@ -138,15 +139,15 @@ function InstagramInfo(props) {
                           borderRadius="100%"
                         />
                       </Grid>
-                      <Grid item><StyledText fontSize="30" fontWeight="900">{instaData.INS_CMNT || instaData.INS_CMNT2}</StyledText></Grid>
+                      <Grid item><StyledText fontSize={isMD ? '30' : '24'} fontWeight="900">{instaData.INS_CMNT || instaData.INS_CMNT2}</StyledText></Grid>
                     </Grid>
                   </Box>
                 </WhiteBlock>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <WhiteBlock borderRadius="25px" height="100%">
+          <Grid item xs={12} sm={6}>
+            <WhiteBlock borderRadius={isMD ? '25px' : '0'} height="100%">
               <Box px={2} py={2}>
                 <Grid container justify="space-between" spacing={4}>
                   <Grid item xs={12} container justify="space-between" alignItems="center">
@@ -167,52 +168,60 @@ function InstagramInfo(props) {
               </Box>
             </WhiteBlock>
           </Grid>
-          <Grid item xs={6}>
-            <WhiteBlock borderRadius="25px">
-              <Box px={2} py={2}>
-                <Grid container direction="column" spacing={2} alignItems="center">
-                  <Grid item container justify="space-between" alignItems="center">
-                    <Grid item><StyledText fontSize="14">인플루언서 계정의 각 게시물마다 (좋아요, 댓글) 수 비교</StyledText></Grid>
-                    <StyledSvg
-                      component={ImportExportOutlined}
-                      color={Colors.orange}
-                      fontSize="14px"
-                      padding="8px"
-                      background={Colors.orangeBack}
-                      borderRadius="100%"
-                    />
+          <Grid item xs={12} sm={6}>
+            <WhiteBlock borderRadius={isMD ? '25px' : '0'}>
+              <Box p={2}>
+                <Grid container spacing={2} justify="center">
+                  <Grid item xs={12}>
+                    <Grid container>
+                      <Grid item xs><StyledText fontSize="14">인플루언서 계정의 각 게시물마다 (좋아요, 댓글) 수 비교</StyledText></Grid>
+                      <Grid item>
+                        <StyledSvg
+                          component={ImportExportOutlined}
+                          color={Colors.orange}
+                          fontSize="14px"
+                          padding="8px"
+                          background={Colors.orangeBack}
+                          borderRadius="100%"
+                        />
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid item>
+                  <Grid item xs={12}>
                     <LikeCommentBarGraph INS_ID={instaData.INS_ID} />
                   </Grid>
                 </Grid>
               </Box>
             </WhiteBlock>
           </Grid>
-          <Grid item xs={6}>
-            <WhiteBlock borderRadius="25px">
-              <Box px={2} py={2}>
-                <Grid container direction="column" spacing={2} alignItems="center">
-                  <Grid item container justify="space-between" alignItems="center">
-                    <Grid item><StyledText fontSize="14">팔로워의 나이</StyledText></Grid>
-                    <StyledSvg
-                      component={CalendarToday}
-                      color={Colors.blue2}
-                      fontSize="14px"
-                      padding="8px"
-                      background={Colors.blue2Back}
-                      borderRadius="100%"
-                    />
+          <Grid item xs={12} sm={6}>
+            <WhiteBlock borderRadius={isMD ? '25px' : '0'} height="100%">
+              <Box p={2}>
+                <Grid container spacing={2} justify="center">
+                  <Grid item xs={12}>
+                    <Grid container>
+                      <Grid item xs><StyledText fontSize="14">팔로워의 나이</StyledText></Grid>
+                      <Grid item>
+                        <StyledSvg
+                          component={CalendarToday}
+                          color={Colors.blue2}
+                          fontSize="14px"
+                          padding="8px"
+                          background={Colors.blue2Back}
+                          borderRadius="100%"
+                        />
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid item>
+                  <Grid item xs={12}>
                     <AgeGraph INS_ID={instaData.INS_ID} />
                   </Grid>
                 </Grid>
               </Box>
             </WhiteBlock>
           </Grid>
-          <Grid item xs={6}>
-            <WhiteBlock borderRadius="25px">
+          <Grid item xs={12} sm={6}>
+            <WhiteBlock borderRadius={isMD ? '25px' : '0'}>
               <Box px={2} py={2}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} container justify="space-between" alignItems="center">
@@ -241,8 +250,8 @@ function InstagramInfo(props) {
               </Box>
             </WhiteBlock>
           </Grid>
-          <Grid item xs={6}>
-            <WhiteBlock borderRadius="25px">
+          <Grid item xs={12} sm={6}>
+            <WhiteBlock borderRadius={isMD ? '25px' : '0'}>
               <Box px={2} py={2}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} container justify="space-between" alignItems="center">
@@ -271,7 +280,7 @@ function InstagramInfo(props) {
           </Grid>
         </Grid>
       )}
-    </div>
+    </Box>
   );
 }
 

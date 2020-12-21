@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, Button, Grid, InputBase
+  Box, Button, Grid, Hidden, InputBase
 } from '@material-ui/core';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
@@ -17,7 +17,9 @@ import { Colors } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
 
 function Sns(props) {
-  const { userInfo, getUserInfo, isMD } = props;
+  const {
+    LabelComponent, userInfo, getUserInfo, isMD
+  } = props;
   const { TB_INSTum, TB_YOUTUBE, TB_NAVER } = userInfo;
   const { INS_ID, INS_USERNAME, INS_DT } = TB_INSTum || {};
   const { YOU_ID, YOU_NAME, YOU_DT } = TB_YOUTUBE || {};
@@ -173,13 +175,11 @@ function Sns(props) {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Grid container alignItems="center" spacing={1}>
-          <Grid item xs={12} md={2}>
-            <StyledText fontSize="15">
-                          인스타
-            </StyledText>
+          <Grid item>
+            <LabelComponent labelName="인스타" />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Box py={2} px={4} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => instagramButtonClick()}>
+          <Grid item xs={12} md>
+            <Box py={2} px={4} width={{ xs: 'inherit', md: '250px' }} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => instagramButtonClick()}>
               <Grid container justify="center" spacing={1}>
                 <Grid item>
                   <StyledImage width="18px" height="18px" src={instagramIcon} />
@@ -194,8 +194,13 @@ function Sns(props) {
       </Grid>
       {INS_ID ? (
         <Grid item xs={12}>
-          <Grid container alignItems="center" justify="flex-end">
-            <Grid item xs={12} md={10}>
+          <Grid container alignItems="center" spacing={1}>
+            {isMD ? (
+              <Grid item>
+                <LabelComponent labelName="" />
+              </Grid>
+            ) : null}
+            <Grid item xs={12} md>
               <Box pb={2}>
                 <StyledText fontSize="14">
                   {'연결한 계정: '}
@@ -209,13 +214,11 @@ function Sns(props) {
       ) : null}
       <Grid item xs={12}>
         <Grid container alignItems="center" spacing={1}>
-          <Grid item xs={12} md={2}>
-            <StyledText fontSize="15">
-                          유튜브
-            </StyledText>
+          <Grid item>
+            <LabelComponent labelName="유튜브" />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Box py={2} px={4} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => youtubeButtonClick()}>
+          <Grid item xs={12} md>
+            <Box py={2} px={4} width={{ xs: 'inherit', md: '250px' }} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => youtubeButtonClick()}>
               <Grid container justify="center" spacing={1}>
                 <Grid item>
                   <StyledImage width="24px" height="18px" src={youtubeIcon} />
@@ -230,8 +233,13 @@ function Sns(props) {
       </Grid>
       {YOU_ID ? (
         <Grid item xs={12}>
-          <Grid container alignItems="center" justify="flex-end">
-            <Grid item xs={12} md={10}>
+          <Grid container alignItems="center">
+            {isMD ? (
+              <Grid item>
+                <LabelComponent labelName="" />
+              </Grid>
+            ) : null}
+            <Grid item xs={12} md>
               <Box pb={2}>
                 <StyledText fontSize="14">
                   {'연결한 채널: '}
@@ -245,42 +253,44 @@ function Sns(props) {
       ) : null}
       <Grid item xs={12}>
         <Grid container alignItems="center" spacing={1}>
-          <Grid item xs={12} md={2}>
-            <StyledText fontSize="15">
-                          네이버
-            </StyledText>
+          <Grid item>
+            <LabelComponent labelName="네이버" />
           </Grid>
-          <Grid item xs={12} md={7}>
-            <Grid container alignItems="center" spacing={isMD ? 2 : 1} justify="center">
-              <Grid item xs={12} md={9}>
-                {NAV_ID ? (
-                  <React.Fragment>
-                    {NAV_URL}
-                  </React.Fragment>
-                ) : (
-                  <Box py={1} px={2} border="1px solid #e9ecef">
-                    <InputBase
-                      name="naverUrl"
-                      fullWidth
-                      inputRef={register({ required: true })}
-                      placeholder="http://블로그주소 또는 https://블로그주소"
-                      inputProps={{ 'aria-label': 'naked', style: { padding: '0' } }}
-                    />
+          <Grid item xs={12} md>
+            <Box width={{ xs: 'inherit', md: '500px' }}>
+              <Grid container alignItems="center" spacing={isMD ? 2 : 1} justify="center">
+                <Grid item xs={12} md>
+                  {NAV_ID ? (
+                    <React.Fragment>
+                      {NAV_URL}
+                    </React.Fragment>
+                  ) : (
+                    <Box py={1} px={2} border="1px solid #e9ecef">
+                      <InputBase
+                        name="naverUrl"
+                        fullWidth
+                        inputRef={register({ required: true })}
+                        placeholder="http://블로그주소 또는 https://블로그주소"
+                        inputProps={{ 'aria-label': 'naked', style: { padding: '0' } }}
+                      />
+                    </Box>
+                  )}
+                </Grid>
+                <Grid item>
+                  <Box width="130px">
+                    <StyledButton
+                      height={38}
+                      boxShadow="none"
+                      padding="0 10"
+                      background={Colors.blue2}
+                      onClick={naverButtonClick}
+                    >
+                      {NAV_ID ? '연결해제' : '연결하기'}
+                    </StyledButton>
                   </Box>
-                )}
+                </Grid>
               </Grid>
-              <Grid item xs={6} md={3}>
-                <StyledButton
-                  height={38}
-                  boxShadow="none"
-                  padding="0 10"
-                  background={Colors.blue2}
-                  onClick={naverButtonClick}
-                >
-                  {NAV_ID ? '연결해제' : '연결하기'}
-                </StyledButton>
-              </Grid>
-            </Grid>
+            </Box>
           </Grid>
         </Grid>
       </Grid>

@@ -16,7 +16,9 @@ import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 import MembershipInfo from './pages/MembershipInfo'; */
 
 function ProfileContent(props) {
-  const { match, isMD, currentMenu, setCurrentMenu } = props;
+  const {
+    match, isMD, isSM, currentMenu, setCurrentMenu
+  } = props;
   const [message, setMessage] = useState({
     open: false,
     text: '',
@@ -31,11 +33,7 @@ function ProfileContent(props) {
   };
 
   return (
-    <Box
-      // width={{ xs: 200, md: 975 }}
-      width={isMD ? '975px' : '100%'}
-      height="100%"
-    >
+    <Box height="100%">
       <Switch>
         <Route
           path={`${match.path}/UserInfo`}
@@ -47,7 +45,7 @@ function ProfileContent(props) {
         />
         <Route
           path={`${match.path}/Rank`}
-          render={renderProps => <Rank {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />}
+          render={renderProps => <Rank {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} isMD={isMD} isSM={isSM} />}
         />
         {/* <Route
           path={`${match.path}/MembershipInfo`}

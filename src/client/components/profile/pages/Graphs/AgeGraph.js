@@ -53,10 +53,10 @@ function AgeGraph(props) {
               statistics.age && statistics.age.length > 0 ? (
                 <Bar
                   data={data}
-                  width={400}
-                  height={250}
+                  height={310}
                   options={{
-                    maintainAspectRatio: false
+                    maintainAspectRatio: false,
+                    responsive: true
                   }}
                 />
               ) : (

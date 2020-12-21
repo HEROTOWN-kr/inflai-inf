@@ -37,6 +37,17 @@ function ImageActionButton(props) {
   );
 }
 
+function LabelComponent(props) {
+  const { labelName } = props;
+  return (
+    <Box width="175px">
+      <StyledText fontSize="15">
+        {labelName}
+      </StyledText>
+    </Box>
+  );
+}
+
 function UserInfo(props) {
   const {
     userInfo, setUserInfo, getUserInfo, setMessage, isMD
@@ -131,13 +142,11 @@ function UserInfo(props) {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Box py={1}>
-                  <Grid container alignItems="center" spacing={2}>
-                    <Grid item xs={12} md={2}>
-                      <StyledText fontSize="15">
-                                              이메일 아이디
-                      </StyledText>
+                  <Grid container alignItems="center" spacing={1}>
+                    <Grid item>
+                      <LabelComponent labelName="이메일 아이디" />
                     </Grid>
-                    <Grid item xs={12} md={10}>
+                    <Grid item xs={12} md>
                       <StyledText fontSize="15">
                         {userInfo.INF_EMAIL || ''}
                       </StyledText>
@@ -147,12 +156,10 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12}>
                 <Grid container alignItems="center" spacing={1}>
-                  <Grid item xs={12} md={2}>
-                    <StyledText fontSize="15">
-                                          이름
-                    </StyledText>
+                  <Grid item>
+                    <LabelComponent labelName="이름" />
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md>
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={4}>
                         <StyledTextField
@@ -173,12 +180,10 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12}>
                 <Grid container alignItems="center" spacing={1}>
-                  <Grid item xs={12} md={2}>
-                    <StyledText fontSize="15">
-                                          전화번호
-                    </StyledText>
+                  <Grid item>
+                    <LabelComponent labelName="전화번호" />
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md>
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={4}>
                         <StyledTextField
@@ -199,12 +204,10 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12}>
                 <Grid container alignItems="center" spacing={1}>
-                  <Grid item xs={12} md={2}>
-                    <StyledText fontSize="15">
-                                          주소
-                    </StyledText>
+                  <Grid item>
+                    <LabelComponent labelName="주소" />
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md>
                     <DaumPostCode setValue={setValue} register={register} errors={errors} />
                   </Grid>
                 </Grid>
@@ -212,12 +215,10 @@ function UserInfo(props) {
               <Grid item xs={12}>
                 <Box py={2}>
                   <Grid container alignItems="center" spacing={1}>
-                    <Grid item xs={12} md={2}>
-                      <StyledText fontSize="15">
-                                              사진
-                      </StyledText>
+                    <Grid item>
+                      <LabelComponent labelName="사진" />
                     </Grid>
-                    <Grid item xs={12} md={10}>
+                    <Grid item xs={12} md>
                       <Grid container alignItems="center" spacing={2} justify={isMD ? 'flex-start' : 'center'}>
                         <Grid item>
                           <StyledImage
@@ -257,12 +258,10 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12}>
                 <Grid container alignItems="center" spacing={1}>
-                  <Grid item xs={12} md={2}>
-                    <StyledText fontSize="15">
-                                          카카오수신동의
-                    </StyledText>
+                  <Grid item>
+                    <LabelComponent labelName="카카오수신동의" />
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md>
                     <input id="kakaoCheck" type="checkbox" checked={noticeCheck} onChange={e => onCheckboxClick(e.target.checked)} />
                     <label htmlFor="kakaoCheck">
                       {' 카카오톡 통한 캠페인 모집 및 추천, 이벤트 정보 등의 수신에 동의합니다.'}
@@ -275,14 +274,16 @@ function UserInfo(props) {
           <Grid item xs={12}>
             <Box pt={isMD ? 4 : 0}>
               <Grid container justify="center">
-                <Grid item xs={6} md={3}>
-                  <StyledButton
-                    onClick={handleSubmit(updateProfile)}
-                    background={Colors.skyBlue}
-                    hoverBackground="#1c4dbb"
-                  >
-                                      저장
-                  </StyledButton>
+                <Grid item>
+                  <Box width="280px">
+                    <StyledButton
+                      onClick={handleSubmit(updateProfile)}
+                      background={Colors.skyBlue}
+                      hoverBackground="#1c4dbb"
+                    >
+                      저장
+                    </StyledButton>
+                  </Box>
                 </Grid>
               </Grid>
             </Box>
@@ -294,7 +295,7 @@ function UserInfo(props) {
             <Box pb={4}>
               <StyledText fontSize="19" fontWeight="600">SNS</StyledText>
             </Box>
-            <Sns {...props} />
+            <Sns {...props} LabelComponent={LabelComponent} />
           </Grid>
         </Grid>
         <Box px={2} />

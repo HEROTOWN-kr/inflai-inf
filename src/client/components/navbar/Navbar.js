@@ -13,15 +13,14 @@ import NavbarLinks from './NavbarLinks';
 import NavbarLogo from './NavbarLogo';
 import NavbarUserMenu from './NavbarUserMenu';
 import NavbarMobileMenu from './MobileView/NavbarMobileMenu';
+import MobileNavBar from './MobileView/MobileNavBar';
 // import NavbarUserMenu from './NavbarUserMenu';
 // import NavbarMobileMenu from './MobileView/NavbarMobileMenu';
 
-function CustomNavbar(props) {
-  const theme = useTheme();
-  const isMD = useMediaQuery(theme.breakpoints.up('md'));
-
+function NavbarComponent(props) {
+  const { isMD } = props;
   return (
-    <Box px={{ xs: 2, sm: 4, md: 8 }} className="navbar">
+    <Box px={{ xs: 2, md: 8 }} className="navbar">
       <AppBar position="static" color="transparent" className="navbar-content">
         <Grid container alignItems="center" justify="space-between" className="bar">
           <Grid item className="left-side">
@@ -45,6 +44,22 @@ function CustomNavbar(props) {
         </Grid>
       </AppBar>
     </Box>
+  );
+}
+
+function CustomNavbar(props) {
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
+
+  return (
+    <React.Fragment>
+      {isMD ? (
+        <NavbarComponent {...props} isMD={isMD} />
+      ) : (
+        <MobileNavBar />
+      )}
+
+    </React.Fragment>
   );
 }
 
