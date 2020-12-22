@@ -41,19 +41,19 @@ function Profile(props) {
   }, [token]);
 
   return (
-    <Box py={isMD ? 6 : 0} px={isMD ? 1 : 0} css={{ background: Colors.grey3 }} className="profile">
+    <Box py={isMD ? 6 : 0} px={isMD ? 1 : 0} css={{ background: isMD ? Colors.grey3 : '#ffffff' }} className="profile">
       <Box maxWidth={{ xs: 1500 }} css={{ margin: '0 auto' }}>
-        <Grid container spacing={isLG ? 2 : 0}>
-          <Hidden mdDown>
+        <Grid container spacing={isMD ? 2 : 0}>
+          <Hidden smDown>
             <Grid item>
               <ProfileMenu {...props} userInfo={userInfo} />
             </Grid>
           </Hidden>
-          <Hidden lgUp>
+          {/* <Hidden lgUp>
             <Grid item xs={12}>
               <MobileProfileMenu currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
             </Grid>
-          </Hidden>
+          </Hidden> */}
           <Grid item xs>
             <ProfileContent
               {...props}

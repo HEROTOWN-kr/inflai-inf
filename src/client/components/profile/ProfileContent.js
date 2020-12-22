@@ -10,6 +10,7 @@ import Alert from '../../containers/Alert';
 import UserInfo from './pages/UserInfo';
 import CampaignInfo from './pages/CampaignInfo';
 import Rank from './pages/Rank';
+import MyPage from './pages/MyPage';
 /* import Rank from './pages/Rank';
 import UserInfo from './pages/UserInfo/UserInfo';
 import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
@@ -47,10 +48,10 @@ function ProfileContent(props) {
           path={`${match.path}/Rank`}
           render={renderProps => <Rank {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} isMD={isMD} isSM={isSM} />}
         />
-        {/* <Route
-          path={`${match.path}/MembershipInfo`}
-          render={renderProps => <MembershipInfo {...props} setMessage={setMessage} />}
-        /> */}
+        <Route
+          path={`${match.path}/MyPage`}
+          render={renderProps => <MyPage {...props} setMessage={setMessage} />}
+        />
         <Route
           exact
           path={`${match.path}/`}

@@ -79,15 +79,16 @@ function CampaignInfo(props) {
   const is1600 = useMediaQuery('(min-width:1600px)');
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   function getCardWidth() {
     if (isXl) {
       return '25%';
     } if (is1600) {
-      return '33.333%';
+      return '25%';
     } if (isLG) {
       return '33.333%';
-    } if (isMD) {
+    } if (isSM) {
       return '33.333%';
     }
     return '50%';

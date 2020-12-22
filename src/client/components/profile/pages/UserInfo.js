@@ -160,21 +160,19 @@ function UserInfo(props) {
                     <LabelComponent labelName="이름" />
                   </Grid>
                   <Grid item xs={12} md>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} md={4}>
-                        <StyledTextField
-                          fullWidth
-                          name="nickName"
-                          defaultValue={userInfo.INF_NAME || ''}
-                          inputRef={register({ required: true })}
-                          error={!!errors.nickName}
-                          variant="outlined"
-                          helperText={errors.nickName ? (
-                            <span className="error-message">이름을 입력해주세요</span>
-                          ) : null}
-                        />
-                      </Grid>
-                    </Grid>
+                    <Box width={isMD ? '250px' : '100%'}>
+                      <StyledTextField
+                        fullWidth
+                        name="nickName"
+                        defaultValue={userInfo.INF_NAME || ''}
+                        inputRef={register({ required: true })}
+                        error={!!errors.nickName}
+                        variant="outlined"
+                        helperText={errors.nickName ? (
+                          <span className="error-message">이름을 입력해주세요</span>
+                        ) : null}
+                      />
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
@@ -184,21 +182,19 @@ function UserInfo(props) {
                     <LabelComponent labelName="전화번호" />
                   </Grid>
                   <Grid item xs={12} md>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} md={4}>
-                        <StyledTextField
-                          fullWidth
-                          name="phone"
-                          defaultValue={userInfo.INF_TEL || ''}
-                          inputRef={register({ required: true })}
-                          error={!!errors.phone}
-                          variant="outlined"
-                          helperText={errors.phone ? (
-                            <span className="error-message">전화번호를 입력해주세요</span>
-                          ) : null}
-                        />
-                      </Grid>
-                    </Grid>
+                    <Box width={isMD ? '250px' : '100%'}>
+                      <StyledTextField
+                        fullWidth
+                        name="phone"
+                        defaultValue={userInfo.INF_TEL || ''}
+                        inputRef={register({ required: true })}
+                        error={!!errors.phone}
+                        variant="outlined"
+                        helperText={errors.phone ? (
+                          <span className="error-message">전화번호를 입력해주세요</span>
+                        ) : null}
+                      />
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
@@ -208,7 +204,9 @@ function UserInfo(props) {
                     <LabelComponent labelName="주소" />
                   </Grid>
                   <Grid item xs={12} md>
-                    <DaumPostCode setValue={setValue} register={register} errors={errors} />
+                    <Box maxWidth={isMD ? '500px' : 'none'}>
+                      <DaumPostCode setValue={setValue} register={register} errors={errors} />
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>

@@ -28,7 +28,7 @@ const MenuCategory = [
   {
     icon: 'icon: user; ratio: 1.2',
     text: '마이페이지',
-    link: '/Profile/UserInfo'
+    link: '/Profile/MyPage'
   },
 ];
 

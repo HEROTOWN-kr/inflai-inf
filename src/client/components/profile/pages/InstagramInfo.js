@@ -47,7 +47,7 @@ function InstagramInfo(props) {
     <Box>
       {instaData.INS_ID ? (
         <Grid container spacing={isMD ? 3 : 0}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} lg={6}>
             <Grid container spacing={isMD ? 3 : 0}>
               <Grid item xs={12}>
                 <WhiteBlock borderRadius={isMD ? '25px' : '0'}>
