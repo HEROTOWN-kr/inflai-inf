@@ -93,6 +93,7 @@ function CampaignAll(props) {
                         participantsLength={TB_PARTICIPANTs.length}
                         cnt={AD_INF_CNT}
                         proportion={proportion}
+                        isMD={isMD}
                         onClick={() => detailInfo(item.AD_ID)}
                       />
                     </Grid>

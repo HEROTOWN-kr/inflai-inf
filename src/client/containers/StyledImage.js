@@ -16,13 +16,13 @@ const useStyles = makeStyles({
 
 function StyledImage(props) {
   const {
-    className, src, onMouseOver, onMouseOut
+    className, src, onMouseOver, onMouseOut, onClick
   } = props;
   const classes = useStyles(props);
 
   return (
     <img
-      {...props}
+      onClick={onClick || function () {}}
       src={src}
       className={`${classes.common} ${className}`}
       onMouseOver={onMouseOver}
