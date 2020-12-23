@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../../lib/Сonstants';
@@ -13,7 +13,7 @@ const MenuCategory = [
   {
     icon: 'icon: menu; ratio: 1.2',
     text: '카테고리',
-    link: '/'
+
   },
   {
     icon: 'icon: heart; ratio: 1.2',
@@ -35,9 +35,14 @@ const MenuCategory = [
 function BottomMenu() {
   const history = useHistory();
 
-  function clickMenuButton(link) {
-    history.push(link);
+  function clickMenuButton(item) {
+    if (item.link) {
+      history.push(item.link);
+    } else {
+      console.log('test');
+    }
   }
+
   return (
     <Box
       position="fixed"
@@ -50,7 +55,7 @@ function BottomMenu() {
       <Grid container>
         {MenuCategory.map(item => (
           <Grid key={item.text} item style={{ width: '20%' }}>
-            <Box py={1} textAlign="center" onClick={() => clickMenuButton(item.link)}>
+            <Box py={1} textAlign="center" onClick={() => clickMenuButton(item)}>
               <span uk-icon={item.icon} />
               <StyledText fontSize="12" lineHeight="1.4em">{item.text}</StyledText>
             </Box>

@@ -31,7 +31,6 @@ function InstagramInfo(props) {
           token
         }
       });
-      console.log(InstaData);
       const { data } = InstaData.data;
       setInstaData(data);
     } catch (err) {

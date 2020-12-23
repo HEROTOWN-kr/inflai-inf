@@ -18,7 +18,6 @@ function LikeCommentBarGraph(props) {
       params: { INS_ID }
     });
     const { data } = InstaData.data;
-    console.log(data);
     setStatistics(data);
     setProcess(false);
   }

@@ -184,7 +184,7 @@ export const Colors = {
   skyBlue: '#4376e8',
   aqua: '#23c9cf',
   red: '#fa4616',
-  black: '#333333',
+  black: '#333',
   grey: '#dfe2e8',
   grey2: '#999999',
   grey3: '#f5f6f7',

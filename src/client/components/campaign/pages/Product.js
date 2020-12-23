@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { Box, Grid, Snackbar } from '@material-ui/core';
 import axios from 'axios';
 import CampaignAll from '../CampaignAll';
@@ -10,26 +10,133 @@ import { Colors } from '../../../lib/Сonstants';
 import StyledText from '../../../containers/StyledText';
 
 const categories = [
-  { id: 7, name: '전체' },
-  { id: 0, name: '생활' },
-  { id: 1, name: '유아동' },
-  { id: 2, name: '뷰티' },
-  { id: 3, name: '디지털' },
-  { id: 4, name: '패션' },
-  { id: 5, name: '도서' },
-  { id: 6, name: '식품' },
+  { id: 7, name: '전체', link: '/' },
+  { id: 0, name: '생활', link: '/Life' },
+  { id: 1, name: '유아동', link: '/Child' },
+  { id: 2, name: '뷰티', link: '/Beauty' },
+  { id: 3, name: '디지털', link: '/Digital' },
+  { id: 4, name: '패션', link: '/Fashion' },
+  { id: 5, name: '도서', link: '/Book' },
+  { id: 6, name: '식품', link: '/Food' },
 ];
 
-function Product(props) {
-  const [tab, setTab] = useState(7);
+const matchUrl = '/Campaign/Product';
+
+function ProductAll(props) {
+  const {
+    campaigns, loading, setTab, id, name
+  } = props;
+
+  useEffect(() => {
+    setTab({ id, name });
+  }, []);
+  return (
+    <CampaignAll campaigns={campaigns} loading={loading} />
+  );
+}
+
+function Life(props) {
+  const {
+    campaigns, loading, setTab, id, name
+  } = props;
+
+  useEffect(() => {
+    setTab({ id, name });
+  }, []);
+  return (
+    <CampaignAll campaigns={campaigns} loading={loading} />
+  );
+}
+
+function Child(props) {
+  const {
+    campaigns, loading, setTab, id, name
+  } = props;
+
+  useEffect(() => {
+    setTab({ id, name });
+  }, []);
+  return (
+    <CampaignAll campaigns={campaigns} loading={loading} />
+  );
+}
+
+function Beauty(props) {
+  const {
+    campaigns, loading, setTab, id, name
+  } = props;
+
+  useEffect(() => {
+    setTab({ id, name });
+  }, []);
+  return (
+    <CampaignAll campaigns={campaigns} loading={loading} />
+  );
+}
+
+function Digital(props) {
+  const {
+    campaigns, loading, setTab, id, name
+  } = props;
+
+  useEffect(() => {
+    setTab({ id, name });
+  }, []);
+  return (
+    <CampaignAll campaigns={campaigns} loading={loading} />
+  );
+}
+
+function Fashion(props) {
+  const {
+    campaigns, loading, setTab, id, name
+  } = props;
+
+  useEffect(() => {
+    setTab({ id, name });
+  }, []);
+  return (
+    <CampaignAll campaigns={campaigns} loading={loading} />
+  );
+}
+
+function Book(props) {
+  const {
+    campaigns, loading, setTab, id, name
+  } = props;
+
+  useEffect(() => {
+    setTab({ id, name });
+  }, []);
+  return (
+    <CampaignAll campaigns={campaigns} loading={loading} />
+  );
+}
+
+function Food(props) {
+  const {
+    campaigns, loading, setTab, id, name
+  } = props;
+
+  useEffect(() => {
+    setTab({ id, name });
+  }, []);
+  return (
+    <CampaignAll campaigns={campaigns} loading={loading} />
+  );
+}
+
+function Product() {
+  const [tab, setTab] = useState({ id: 5, name: '전체' });
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
   const category = 1;
 
   function getCampaigns() {
     setLoading(true);
     const params = { category };
-    if (tab !== 7) params.subCategory = tab;
+    if (tab.id !== 7) params.subCategory = tab.id;
 
     axios.get('/api/TB_AD/list', { params }).then((res) => {
       const { data } = res.data;
@@ -46,15 +153,15 @@ function Product(props) {
     <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 8 }} maxWidth="1920px" margin="0 auto">
       <StyledText fontSize="25">
         <span style={{ color: Colors.pink }}>제품</span>
-        {' 캠페인'}
+        {` 캠페인 - ${tab.name}`}
       </StyledText>
       <Box my={6} borderBottom={`1px solid ${Colors.grey8}`}>
         <Grid container>
           {categories.map(cat => (
             <Grid item key={cat.id}>
               <Box
-                className={`category-tab${tab === cat.id ? ' active' : ''} campaign`}
-                onClick={() => setTab(cat.id)}
+                className={`category-tab${tab.id === cat.id ? ' active' : ''} campaign`}
+                onClick={() => history.push(matchUrl + cat.link)}
               >
                 {cat.name}
               </Box>
@@ -63,7 +170,118 @@ function Product(props) {
         </Grid>
       </Box>
       <Box mt={6}>
-        <CampaignAll {...props} campaigns={campaigns} loading={loading} />
+        <Switch>
+          <Route
+            exact
+            path={`${matchUrl}/`}
+            render={renderProps => (
+              <ProductAll
+                {...renderProps}
+                campaigns={campaigns}
+                loading={loading}
+                setTab={setTab}
+                id={7}
+                name="전체"
+              />
+            )}
+          />
+          <Route
+            path={`${matchUrl}/Life`}
+            render={renderProps => (
+              <Life
+                {...renderProps}
+                campaigns={campaigns}
+                loading={loading}
+                setTab={setTab}
+                id={0}
+                name="생활"
+              />
+            )}
+          />
+          <Route
+            path={`${matchUrl}/Child`}
+            render={renderProps => (
+              <Child
+                {...renderProps}
+                campaigns={campaigns}
+                loading={loading}
+                setTab={setTab}
+                id={1}
+                name="유아동"
+              />
+            )}
+          />
+          <Route
+            exact
+            path={`${matchUrl}/Beauty`}
+            render={renderProps => (
+              <Beauty
+                {...renderProps}
+                campaigns={campaigns}
+                loading={loading}
+                setTab={setTab}
+                id={2}
+                name="뷰티"
+              />
+            )}
+          />
+          <Route
+            exact
+            path={`${matchUrl}/Digital`}
+            render={renderProps => (
+              <Digital
+                {...renderProps}
+                campaigns={campaigns}
+                loading={loading}
+                setTab={setTab}
+                id={3}
+                name="디지털"
+              />
+            )}
+          />
+          <Route
+            exact
+            path={`${matchUrl}/Fashion`}
+            render={renderProps => (
+              <Fashion
+                {...renderProps}
+                campaigns={campaigns}
+                loading={loading}
+                setTab={setTab}
+                id={4}
+                name="패션"
+              />
+            )}
+          />
+          <Route
+            exact
+            path={`${matchUrl}/Book`}
+            render={renderProps => (
+              <Book
+                {...renderProps}
+                campaigns={campaigns}
+                loading={loading}
+                setTab={setTab}
+                id={5}
+                name="도서"
+              />
+            )}
+          />
+          <Route
+            exact
+            path={`${matchUrl}/Food`}
+            render={renderProps => (
+              <Food
+                {...renderProps}
+                campaigns={campaigns}
+                loading={loading}
+                setTab={setTab}
+                id={6}
+                name="식품"
+              />
+            )}
+          />
+        </Switch>
       </Box>
     </Box>
   );

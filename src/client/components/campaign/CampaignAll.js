@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Grid, Box } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -9,9 +10,8 @@ import { Colors } from '../../lib/Сonstants';
 import CampaignCard from './CampaignCard';
 
 function CampaignAll(props) {
-  const {
-    history, campaigns, loading
-  } = props;
+  const { campaigns, loading } = props;
+  const history = useHistory();
 
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
   const theme = useTheme();
@@ -38,7 +38,7 @@ function CampaignAll(props) {
   }
 
   function detailInfo(AD_ID) {
-    history.push(`/CampaignList/${AD_ID}`);
+    history.push(`/Campaign/detail/${AD_ID}`);
   }
 
   return (

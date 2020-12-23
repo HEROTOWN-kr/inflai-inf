@@ -14,15 +14,15 @@ function NavbarLinks(props) {
   const menuLinks = [
     {
       text: '지역',
-      link: '/CampaignList/Area'
+      link: '/Campaign/Area'
     },
     {
       text: '제품',
-      link: '/CampaignList/Product'
+      link: '/Campaign/Product'
     },
     {
       text: '서비스',
-      link: '/CampaignList/Service'
+      link: '/Campaign/Service'
     },
     /* {
       text: '랭킹',

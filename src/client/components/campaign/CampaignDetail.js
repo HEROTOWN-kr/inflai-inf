@@ -11,6 +11,7 @@ import {
 import ReactHtmlParser from 'react-html-parser';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import { useHistory, useParams } from 'react-router-dom';
 import * as Scroll from 'react-scroll';
 import { Skeleton } from '@material-ui/lab';
 import Common from '../../lib/common';
@@ -24,6 +25,7 @@ import StyledSvg from '../../containers/StyledSvg';
 import StyledButton from '../../containers/StyledButton';
 import defaultAccountImage from '../../img/default_account_image.png';
 import AuthContext from '../../context/AuthContext';
+import TopMenu from './TopMenu';
 
 function TabComponent(props) {
   const {
@@ -59,7 +61,6 @@ function ParticipantList(props) {
       params: { adId }
     }).then((res) => {
       const { data } = res.data;
-      console.log(data);
       setParticipants(data);
     }).catch(err => alert(err.response.data.message));
   }
@@ -131,9 +132,10 @@ function ParticipantList(props) {
   );
 }
 
-function CampaignDetail(props) {
-  const { match, history } = props;
-  const adId = match.params.id;
+function CampaignDetail() {
+  const history = useHistory();
+  const params = useParams();
+  const adId = params.id;
   const [productData, setProductData] = useState({
     TB_PHOTO_ADs: [],
     TB_PARTICIPANTs: [],
@@ -180,14 +182,13 @@ function CampaignDetail(props) {
   function getDetailData() {
     setLoading(true);
     const apiObj = {
-      id: match.params.id,
+      id: adId,
     };
 
     axios.get('/api/TB_AD/campaignDetail', {
       params: apiObj
     }).then((res) => {
       const { data } = res.data;
-      console.log(data);
       setProductData(data);
       setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE);
       setLoading(false);
@@ -205,7 +206,7 @@ function CampaignDetail(props) {
         if (res.status === 201) {
           alert(res.data.data.message);
         } else {
-          history.push(`/CampaignList/apply/${adId}`);
+          history.push(`/Campaign/apply/${adId}`);
         }
       }).catch(error => (error.response.data.message));
     } else {
@@ -244,6 +245,9 @@ function CampaignDetail(props) {
 
   return (
     <Box maxWidth="1160px" margin="0 auto" className="campaign-detail">
+      <Hidden mdUp>
+        <TopMenu title="캠페인 안내" history={history} />
+      </Hidden>
       <Grid container>
         <Grid item xs>
           <Box py={isMD ? 6 : 2} pr={isMD ? 6 : 2} pl={isLG ? 0 : 2}>
@@ -254,7 +258,6 @@ function CampaignDetail(props) {
                 <StyledText fontSize={isMD ? '33' : '20'}>{productData.AD_NAME}</StyledText>
               )
             }
-
             <Box mt={isMD ? 3 : 2} mb={isMD ? 5 : 2}>
               {
                 loading ? (
@@ -269,18 +272,10 @@ function CampaignDetail(props) {
                 <Grid item>
                   <Box width="130px" mb={2}>
                     <Grid container justify="space-between">
-                      <Grid item>
-                        <Favorite />
-                      </Grid>
-                      <Grid item>
-                        <Share />
-                      </Grid>
-                      <Grid item>
-                        <Print />
-                      </Grid>
-                      <Grid item>
-                        <Error />
-                      </Grid>
+                      <Grid item><Favorite /></Grid>
+                      <Grid item><Share /></Grid>
+                      <Grid item><Print /></Grid>
+                      <Grid item><Error /></Grid>
                     </Grid>
                   </Box>
                 </Grid>
@@ -513,6 +508,9 @@ function CampaignDetail(props) {
             </Grid>
           </Box>
         </Grid>
+        {/* <Grid item xs>
+          <Box height="1000px" css={{ background: 'green' }}>test</Box>
+        </Grid> */}
         {isMD ? (
           <Grid item style={{ borderLeft: '1px solid #eee' }}>
             <Box width="360px" position="relative">

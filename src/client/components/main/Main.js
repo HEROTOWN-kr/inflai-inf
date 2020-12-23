@@ -1,17 +1,21 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import '../../css/sub.scss';
 import Home from '../home/home';
 import NotFound from './NotFound';
 import Login from '../login/Login';
 import SignUp from '../signup/SignUp';
-import CampaignList from '../campaign/CampaignList';
 import Profile from '../profile/Profile';
 import PrivateRoute from '../../containers/PrivateRoute';
 import Campaign from '../campaign/Campaign';
 
 
-function Main(props) {
+function Main() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -32,7 +36,7 @@ function Main(props) {
         render={renderProps => <Profile {...renderProps} />}
       />
       <Route
-        path="/CampaignList"
+        path="/Campaign"
         render={renderProps => <Campaign {...renderProps} />}
       />
       {/* <Route

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import StyledImage from '../../../containers/StyledImage';
 import defaultAccountImage from '../../../img/default_account_image.png';
 import StyledText from '../../../containers/StyledText';
 import { Colors } from '../../../lib/Сonstants';
 import myPageBg from '../../../img/myPageBg.jpg';
+import AuthContext from '../../../context/AuthContext';
 
-const arrowIcon = 'icon: chevron-right; ratio: 1.2';
+const arrowIcon = 'icon: chevron-right; ratio: 1';
 
 const mainLinks = [
   {
@@ -42,6 +43,33 @@ const menuLinks = [
 ];
 // backgroundImage: `url(${Logo})`,
 function MyPage(props) {
+  const { logout } = useContext(AuthContext);
+  const { Kakao, gapi, FB } = window;
+
+
+  function clickLogout() {
+    gapi.load('auth2', () => {
+      const auth2 = gapi.auth2.getAuthInstance({
+        client_id: '997274422725-gb40o5tv579csr09ch7q8an63tfmjgfo.apps.googleusercontent.com'
+      });
+      if (auth2) {
+        auth2.disconnect();
+      }
+    });
+    FB.getLoginStatus((response) => {
+      if (response.status === 'connected') {
+        FB.logout();
+      }
+    });
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.Auth.logout(() => {
+        // console.log(Kakao.Auth.getAccessToken());
+      });
+    }
+    logout();
+    history.push('/');
+  }
+
   const { history, userInfo, match } = props;
   return (
     <React.Fragment>
@@ -76,21 +104,31 @@ function MyPage(props) {
           </Grid>
         </Box>
       </Box>
-      <Box borderTop={`1px solid ${Colors.grey8}`} borderBottom={`1px solid ${Colors.grey8}`}>
+      <Box borderTop={`1px solid ${Colors.grey8}`} borderBottom={`1px solid ${Colors.grey8}`} css={{ background: '#fff' }}>
         {menuLinks.map((item, index) => (
           <Box
             key={item.text}
             px={2}
             py={1}
-            borderBottom={menuLinks.length === index + 1 ? 'medium none color' : `1px solid ${Colors.grey8}`}
+            borderBottom={`1px solid ${Colors.grey8}`}
             onClick={() => history.push(item.link)}
           >
-            <Grid container justify="space-between">
-              <Grid item>{item.text}</Grid>
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item><StyledText fontSize="14">{item.text}</StyledText></Grid>
               <Grid item><span uk-icon={arrowIcon} /></Grid>
             </Grid>
           </Box>
         ))}
+        <Box
+          px={2}
+          py={1}
+          onClick={clickLogout}
+        >
+          <Grid container justify="space-between" alignItems="center">
+            <Grid item><StyledText fontSize="14">로그아웃</StyledText></Grid>
+            <Grid item><span uk-icon={arrowIcon} /></Grid>
+          </Grid>
+        </Box>
       </Box>
     </React.Fragment>
   );

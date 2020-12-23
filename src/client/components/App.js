@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Hidden } from '@material-ui/core';
+import { matchPath, useLocation } from 'react-router-dom';
 import Main from './main/Main';
 import CustomNavBar from './navbar/Navbar';
 import Footer from './footer/Footer';
@@ -28,9 +29,6 @@ function App() {
         <div className="app-footer">
           <Footer />
         </div>
-        <Hidden mdUp>
-          <BottomMenu />
-        </Hidden>
       </div>
     </AuthContext.Provider>
   );

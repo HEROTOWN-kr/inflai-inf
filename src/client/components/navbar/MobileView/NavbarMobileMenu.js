@@ -26,7 +26,7 @@ function NavbarMobileMenu(props) {
     },
     {
       text: '캠페인',
-      link: '/CampaignList'
+      link: '/Campaign'
     },
   ];
 

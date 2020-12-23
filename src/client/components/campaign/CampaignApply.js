@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, Checkbox, CircularProgress, Divider, Grid, Snackbar, TextareaAutosize, TextField
+  Box, Checkbox, CircularProgress, Divider, Grid, Hidden, Snackbar, TextareaAutosize, TextField
 } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -20,6 +20,7 @@ import youtubeIcon from '../../img/youtube.png';
 import blogIcon from '../../img/icon_blog_url.png';
 import StyledCheckBox from '../../containers/StyledCheckBox';
 import AuthContext from '../../context/AuthContext';
+import TopMenu from './TopMenu';
 
 function ApplyFormComponent(componentProps) {
   const { title, children } = componentProps;
@@ -161,7 +162,6 @@ function CampaignApply(props) {
       const response = await axios.get('/api/TB_AD/campaignDetail', { params: { id: match.params.id, } });
       const { data } = response.data;
       if (data) {
-        console.log(data);
         setAddData(data);
         setValue('delivery', !!data.AD_DELIVERY);
       }
@@ -175,7 +175,6 @@ function CampaignApply(props) {
       const response = await axios.get('/api/TB_INFLUENCER/getApplicant', { params: { token } });
       const { data } = response.data;
       if (data) {
-        console.log(data);
         setApplyData(data);
         const {
           INF_NAME, INF_EMAIL, INF_TEL, INF_POST_CODE, INF_ROAD_ADDR, INF_DETAIL_ADDR,
@@ -198,7 +197,6 @@ function CampaignApply(props) {
   }
 
   const onSubmit = async (data) => {
-    console.log('test');
     try {
       const apiObj = {
         ...data,
@@ -208,7 +206,7 @@ function CampaignApply(props) {
 
       axios.post('/api/TB_PARTICIPANT/save', apiObj).then((res) => {
         setMessage({ type: 'success', open: true, text: '신청되었습니다' });
-        history.push(`/CampaignList/${match.params.id}`);
+        history.push(`/Campaign/detail/${match.params.id}`);
       }).catch((err) => {
         alert(err.response.data.message);
       });
@@ -241,6 +239,9 @@ function CampaignApply(props) {
 
   return (
     <Box maxWidth="1160px" margin="0 auto" className="campaign-detail">
+      <Hidden mdUp>
+        <TopMenu title="캠페인 신청하기" history={history} />
+      </Hidden>
       <Grid container>
         <Grid item xs>
           <Box py={isMD ? 6 : 2} pr={isMD ? 6 : 2} pl={isLG ? 0 : 2}>

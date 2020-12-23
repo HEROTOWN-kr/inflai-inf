@@ -262,6 +262,7 @@ $colorPink: #fbbaba;
 .provide-info {
   p {
     overflow-wrap: break-word;
+    word-break: break-all;
   }
 }
 

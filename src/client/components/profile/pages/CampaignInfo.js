@@ -95,7 +95,7 @@ function CampaignInfo(props) {
   }
 
   function detailInfo(AD_ID) {
-    history.push(`/CampaignList/${AD_ID}`);
+    history.push(`/Campaign/detail/${AD_ID}`);
   }
 
   const changePage = (event, value) => {

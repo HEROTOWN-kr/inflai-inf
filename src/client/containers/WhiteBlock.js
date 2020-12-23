@@ -6,6 +6,8 @@ function WhiteBlock(props) {
   const {
     children, borderRadius, height
   } = props;
+
+
   return (
     <Box
       css={{ background: Colors.white }}

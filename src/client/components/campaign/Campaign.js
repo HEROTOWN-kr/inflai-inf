@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Box, Snackbar } from '@material-ui/core';
-import CampaignAll from './CampaignAll';
 import CampaignDetail from './CampaignDetail';
 import CampaignApply from './CampaignApply';
-import CampaignList from './CampaignList';
 import Alert from '../../containers/Alert';
 import Area from './pages/Area';
 import Product from './pages/Product';
@@ -18,7 +16,6 @@ function Campaign(props) {
     text: '',
     type: 'success'
   });
-  console.log(match.path);
 
   const messageClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -47,7 +44,7 @@ function Campaign(props) {
           render={renderProps => <CampaignApply {...renderProps} setMessage={setMessage} />}
         />
         <Route
-          path={`${match.path}/:id`}
+          path={`${match.path}/detail/:id`}
           render={renderProps => <CampaignDetail {...renderProps} />}
         />
         <Route

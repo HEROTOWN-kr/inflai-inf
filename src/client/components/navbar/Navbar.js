@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Link,
-  withRouter
+  useLocation, withRouter, matchPath
 } from 'react-router-dom';
 import {
   AppBar,
@@ -14,11 +13,13 @@ import NavbarLogo from './NavbarLogo';
 import NavbarUserMenu from './NavbarUserMenu';
 import NavbarMobileMenu from './MobileView/NavbarMobileMenu';
 import MobileNavBar from './MobileView/MobileNavBar';
+import BottomMenu from './MobileView/BottomMenu';
 // import NavbarUserMenu from './NavbarUserMenu';
 // import NavbarMobileMenu from './MobileView/NavbarMobileMenu';
 
 function NavbarComponent(props) {
   const { isMD } = props;
+
   return (
     <Box px={{ xs: 2, md: 8 }} className="navbar">
       <AppBar position="static" color="transparent" className="navbar-content">
@@ -51,12 +52,52 @@ function CustomNavbar(props) {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
+  const location = useLocation();
+  const [visible, setVisible] = useState({ top: true, bottom: true });
+
+  function checkPath(pathname) {
+    const matchBottomMenu = matchPath(pathname, {
+      path: ['/Campaign/detail/:id', '/Campaign/apply/:id'],
+      exact: true,
+      strict: false
+    });
+
+    const matchMobileNav = matchPath(pathname, {
+      path: ['/Campaign/detail/:id', '/Campaign/apply/:id'],
+      exact: true,
+      strict: false
+    });
+
+    if (matchBottomMenu) {
+      setVisible({ ...visible, bottom: false });
+    } else {
+      setVisible({ ...visible, bottom: true });
+    }
+
+    if (matchMobileNav) {
+      setVisible({ ...visible, top: false });
+    } else {
+      setVisible({ ...visible, top: true });
+    }
+  }
+
+  useEffect(() => {
+    checkPath(location.pathname);
+  }, [location]);
+
+  useEffect(() => {
+    checkPath(location.pathname);
+  }, []);
+
   return (
     <React.Fragment>
       {isMD ? (
         <NavbarComponent {...props} isMD={isMD} />
       ) : (
-        <MobileNavBar />
+        <React.Fragment>
+          { visible.top ? <MobileNavBar /> : null }
+          { visible.bottom ? <BottomMenu /> : null }
+        </React.Fragment>
       )}
 
     </React.Fragment>
