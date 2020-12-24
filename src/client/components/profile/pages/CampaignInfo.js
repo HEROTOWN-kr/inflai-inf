@@ -76,7 +76,7 @@ function CampaignInfo(props) {
 
   const theme = useTheme();
   const isXl = useMediaQuery(theme.breakpoints.up('xl'));
-  const is1600 = useMediaQuery('(min-width:1600px)');
+  const is1300 = useMediaQuery('(min-width:1300px)');
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
@@ -84,9 +84,9 @@ function CampaignInfo(props) {
   function getCardWidth() {
     if (isXl) {
       return '25%';
-    } if (is1600) {
+    } if (is1300) {
       return '25%';
-    } if (isLG) {
+    } if (isMD) {
       return '33.333%';
     } if (isSM) {
       return '33.333%';
@@ -180,7 +180,7 @@ function CampaignInfo(props) {
                   })}
                 </Grid>
               ) : (
-                <Grid container>
+                <Grid container justify="center">
                   <Grid item>
                         신청한 블로그 캠페인이 없습니다.
                   </Grid>
@@ -189,18 +189,20 @@ function CampaignInfo(props) {
             </React.Fragment>
           )}
         </Box>
-        <Box pt={isMD ? 6 : 1}>
-          <Grid container justify="center">
-            <Grid item>
-              <MyPagination
-                itemCount={campaigns.length}
-                page={page}
-                changePage={changePage}
-                perPage={4}
-              />
+        {campaigns.length > 0 ? (
+          <Box pt={isMD ? 6 : 1}>
+            <Grid container justify="center">
+              <Grid item>
+                <MyPagination
+                  itemCount={campaigns.length}
+                  page={page}
+                  changePage={changePage}
+                  perPage={4}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        ) : null}
       </Box>
     </WhiteBlock>
   );

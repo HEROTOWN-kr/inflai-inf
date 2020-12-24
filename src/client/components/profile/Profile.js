@@ -7,20 +7,14 @@ import { Colors } from '../../lib/Сonstants';
 import ProfileMenu from './ProfileMenu';
 import ProfileContent from './ProfileContent';
 import AuthContext from '../../context/AuthContext';
-import MobileProfileMenu from './MobileProfileMenu';
 
 function Profile(props) {
   const { token } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
   const [currentMenu, setCurrentMenu] = useState(1);
   const theme = useTheme();
-  const isXl = useMediaQuery(theme.breakpoints.up('xl'));
-  const is1600 = useMediaQuery('(min-width:1600px)');
-  const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
-  const isXS = useMediaQuery(theme.breakpoints.up('xs'));
-
 
   async function getUserInfo() {
     try {
@@ -49,11 +43,6 @@ function Profile(props) {
               <ProfileMenu {...props} userInfo={userInfo} />
             </Grid>
           </Hidden>
-          {/* <Hidden lgUp>
-            <Grid item xs={12}>
-              <MobileProfileMenu currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
-            </Grid>
-          </Hidden> */}
           <Grid item xs>
             <ProfileContent
               {...props}

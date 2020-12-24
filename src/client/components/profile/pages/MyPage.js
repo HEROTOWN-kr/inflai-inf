@@ -23,7 +23,7 @@ const mainLinks = [
   {
     icon: 'icon: heart; ratio: 1.2',
     text: '스크랩북',
-    link: '/'
+    link: '/Profile/Favorite'
   }
 ];
 

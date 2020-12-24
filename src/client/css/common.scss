@@ -21,6 +21,9 @@ html, body {
 
 a {
   text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .app-block {

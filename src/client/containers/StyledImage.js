@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 function StyledImage(props) {
   const {
-    className, src, onMouseOver, onMouseOut, onClick
+    className, src, onMouseOver, onMouseOut, onClick, onError
   } = props;
   const classes = useStyles(props);
 
@@ -28,6 +28,7 @@ function StyledImage(props) {
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
       alt="noImage"
+      onError={onError}
     />
   );
 }

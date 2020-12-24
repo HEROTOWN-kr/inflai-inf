@@ -267,15 +267,22 @@ $colorPink: #fbbaba;
 }
 
 .category-tab {
-  padding: 13px 24px;
-  cursor: pointer;
-  border-bottom: 2px solid #ffffff;
-  &.campaign {
-    font-size: 18px;
-  }
   &.active, &:hover {
     font-weight: bold;
     border-bottom: 2px solid rgb(249, 113, 184);
+  }
+}
+
+.scrolling-wrapper-flexbox {
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    flex: 0 0 auto;
   }
 }
 

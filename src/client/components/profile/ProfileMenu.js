@@ -12,6 +12,7 @@ function ProfileMenu(props) {
   const links = [
     { text: '내정보 관리', link: '/UserInfo' },
     { text: '캠페인 관리', link: '/CampaignInfo' },
+    { text: '관심 캠페인', link: '/Favorite' },
     { text: '랭킹 정보', link: '/Rank' }
   ];
 

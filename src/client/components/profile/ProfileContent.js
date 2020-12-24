@@ -11,6 +11,7 @@ import UserInfo from './pages/UserInfo';
 import CampaignInfo from './pages/CampaignInfo';
 import Rank from './pages/Rank';
 import MyPage from './pages/MyPage';
+import Favorite from './pages/Favorite';
 /* import Rank from './pages/Rank';
 import UserInfo from './pages/UserInfo/UserInfo';
 import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
@@ -43,6 +44,10 @@ function ProfileContent(props) {
         <Route
           path={`${match.path}/CampaignInfo`}
           render={renderProps => <CampaignInfo {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />}
+        />
+        <Route
+          path={`${match.path}/Favorite`}
+          render={renderProps => <Favorite {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} isMD={isMD} isSM={isSM} />}
         />
         <Route
           path={`${match.path}/Rank`}

@@ -110,21 +110,25 @@ function Service(props) {
     <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 8 }} maxWidth="1920px" margin="0 auto">
       <StyledText fontSize="25">
         <span style={{ color: Colors.pink }}>서비스</span>
-        {` 캠페인 - ${tab.name}`}
+        {` 캠페인 / ${tab.name}`}
       </StyledText>
-      <Box my={6} borderBottom={`1px solid ${Colors.grey8}`}>
-        <Grid container>
+      <Box my={{ xs: 2, md: 6 }} borderBottom={`1px solid ${Colors.grey8}`}>
+        <div className="scrolling-wrapper-flexbox">
           {categories.map(cat => (
-            <Grid item key={cat.id}>
-              <Box
-                className={`category-tab${tab.id === cat.id ? ' active' : ''} campaign`}
-                onClick={() => history.push(matchUrl + cat.link)}
-              >
-                {cat.name}
-              </Box>
-            </Grid>
+            <Box
+              key={cat.id}
+              padding={{ xs: '12px 12px 8px', md: '13px 24px' }}
+              fontSize={{ xs: '14px', md: '18px' }}
+              borderBottom="2px solid #ffffff"
+              css={{ cursor: 'pointer' }}
+              cursor="pointer"
+              className={`category-tab${tab.id === cat.id ? ' active' : ''} card`}
+              onClick={() => history.push(matchUrl + cat.link)}
+            >
+              {cat.name}
+            </Box>
           ))}
-        </Grid>
+        </div>
       </Box>
       <Box mt={6}>
         <Switch>

@@ -6,6 +6,7 @@ import StyledText from '../../containers/StyledText';
 import { AdvertiseTypes, Colors } from '../../lib/Сonstants';
 import StyledSvg from '../../containers/StyledSvg';
 import noImage from '../../img/noImage.png';
+import noFound from '../../img/notFound400_316.png';
 
 function CampaignCard(props) {
   const {
@@ -25,7 +26,7 @@ function CampaignCard(props) {
 
   return (
     <Box border="1px solid #eaeaea" overflow="hidden" borderRadius="10px" css={{ cursor: 'pointer' }} onClick={onClick}>
-      <StyledImage width="100%" height="auto" src={image || noImage} />
+      <StyledImage width="100%" height="auto" src={image || noImage} onError={event => event.target.setAttribute('src', noFound)} />
       <Box borderTop="1px solid #eaeaea" p={isMD ? 3 : 1}>
         <Grid container spacing={isMD ? 2 : 1}>
           <Grid item xs={12}>

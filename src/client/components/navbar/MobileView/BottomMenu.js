@@ -3,6 +3,7 @@ import { Box, Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../../lib/Сonstants';
 import StyledText from '../../../containers/StyledText';
+import CategoryDialog from './CategoryDialog';
 
 const MenuCategory = [
   {
@@ -18,7 +19,7 @@ const MenuCategory = [
   {
     icon: 'icon: heart; ratio: 1.2',
     text: '스크랩북',
-    link: '/'
+    link: '/Profile/Favorite'
   },
   {
     icon: 'icon: info; ratio: 1.2',
@@ -33,13 +34,18 @@ const MenuCategory = [
 ];
 
 function BottomMenu() {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const history = useHistory();
+
+  function toggleDialog() {
+    setDialogOpen(!dialogOpen);
+  }
 
   function clickMenuButton(item) {
     if (item.link) {
       history.push(item.link);
     } else {
-      console.log('test');
+      toggleDialog();
     }
   }
 
@@ -62,6 +68,7 @@ function BottomMenu() {
           </Grid>
         ))}
       </Grid>
+      <CategoryDialog open={dialogOpen} closeDialog={toggleDialog} />
     </Box>
   );
 }

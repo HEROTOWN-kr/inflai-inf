@@ -2,7 +2,7 @@ import React, {
   useContext, useEffect, useRef, useState
 } from 'react';
 import {
-  Grid, Divider, CircularProgress, Button, Box, Hidden
+  Grid, Divider, CircularProgress, Button, Box, Hidden, IconButton, makeStyles
 } from '@material-ui/core';
 import axios from 'axios';
 import {
@@ -132,10 +132,17 @@ function ParticipantList(props) {
   );
 }
 
+const useStyles = makeStyles({
+  root: {
+    color: Colors.pink3
+  },
+});
+
 function CampaignDetail() {
   const history = useHistory();
   const params = useParams();
   const adId = params.id;
+  const classes = useStyles();
   const [productData, setProductData] = useState({
     TB_PHOTO_ADs: [],
     TB_PARTICIPANTs: [],
@@ -146,6 +153,7 @@ function CampaignDetail() {
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState({ visible: false, isOpen: false });
   const [tab, setTab] = useState(1);
+  const [liked, setLiked] = useState(false);
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
   const { token, userRole } = useContext(AuthContext);
   const theme = useTheme();
@@ -189,6 +197,7 @@ function CampaignDetail() {
       params: apiObj
     }).then((res) => {
       const { data } = res.data;
+      console.log(data);
       setProductData(data);
       setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE);
       setLoading(false);
@@ -214,6 +223,38 @@ function CampaignDetail() {
     }
   }
 
+  function checkFavorites() {
+    if (token) {
+      axios.get('/api/TB_FAVORITES/check', {
+        params: {
+          adId,
+          token
+        }
+      }).then((res) => {
+        const { data } = res.data;
+        if (data) {
+          setLiked(true);
+        }
+      }).catch(error => (error.response.data.message));
+    }
+  }
+
+  function addToFavorite() {
+    if (token) {
+      if (!liked) {
+        axios.post('/api/TB_FAVORITES/', { token, adId }).then((res) => {
+          if (res) {
+            checkFavorites();
+          }
+        }).catch(error => (error.response.data.message));
+      } else {
+        console.log('delete');
+      }
+    } else {
+      history.push('/Login');
+    }
+  }
+
   function calculateDates(date) {
     const currentDate = new Date();
     const lastDate = new Date(date);
@@ -224,6 +265,11 @@ function CampaignDetail() {
   useEffect(() => {
     getDetailData();
   }, []);
+
+  useEffect(() => {
+    checkFavorites();
+  }, [token]);
+
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -272,7 +318,7 @@ function CampaignDetail() {
                 <Grid item>
                   <Box width="130px" mb={2}>
                     <Grid container justify="space-between">
-                      <Grid item><Favorite /></Grid>
+                      <Grid item><Favorite onClick={addToFavorite} classes={liked ? { root: classes.root } : null} /></Grid>
                       <Grid item><Share /></Grid>
                       <Grid item><Print /></Grid>
                       <Grid item><Error /></Grid>
