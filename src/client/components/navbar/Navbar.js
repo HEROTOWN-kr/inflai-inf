@@ -25,7 +25,7 @@ function NavbarComponent(props) {
       <AppBar position="static" color="transparent" className="navbar-content">
         <Grid container alignItems="center" justify="space-between" className="bar">
           <Grid item className="left-side">
-            <Grid container alignItems="center" spacing={isMD ? 8 : 0}>
+            <Grid container alignItems="center">
               <Grid item>
                 <NavbarLogo />
               </Grid>

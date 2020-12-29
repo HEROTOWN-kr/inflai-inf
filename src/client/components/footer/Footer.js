@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import { Box, useMediaQuery, useTheme } from '@material-ui/core';
-import Logo from '../../img/logo.png';
+import Logo from '../../img/logo_color.png';
 import StyledImage from '../../containers/StyledImage';
 
 function Footer() {
@@ -21,14 +21,14 @@ function Footer() {
               <Grid item xs={12}>
                 <div className="rules">
                   <Link
-                    className="link"
+                    className="footer-link"
                     to="/Policy/Service"
                   >
                     이용약관
                   </Link>
                   {' | '}
                   <Link
-                    className="link"
+                    className="footer-link"
                     to="/Policy/Privacy"
                   >
                     개인정보 처리방침

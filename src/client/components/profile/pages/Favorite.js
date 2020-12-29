@@ -76,7 +76,7 @@ function Favorite() {
           </StyledText>
         </PageTitle>
       </Hidden>
-      <Box py={{ xs: 1, md: 4 }} px={{ xs: 1, md: 6 }}>
+      <Box py={{ xs: 4, md: 4 }} px={{ xs: 1, md: 6 }}>
         {loading ? (
           <Grid container>
             <Grid item style={{ width: getCardWidth() }}>
@@ -145,7 +145,7 @@ function Favorite() {
           </React.Fragment>
         )}
         {campaigns.length > 0 ? (
-          <Box pt={isMD ? 6 : 1}>
+          <Box pt={isMD ? 6 : 4}>
             <Grid container justify="center">
               <Grid item>
                 <MyPagination

@@ -2,14 +2,14 @@ import React from 'react';
 import {
   Box, ClickAwayListener, Grid, Hidden, Popper
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as Scroll from 'react-scroll';
 
 const Scroller = Scroll.scroller;
 
-function NavbarLinks(props) {
-  const { history } = props;
+function NavbarLinks() {
+  const history = useHistory();
 
   const menuLinks = [
     {
@@ -45,11 +45,8 @@ function NavbarLinks(props) {
 
   return (
     <Hidden smDown>
-      <Box className="navbar-links">
-        <Grid container spacing={8}>
-          {/* <Grid item>
-            <a className="scroll-link" onClick={scrollTo}>인플라이소개</a>
-          </Grid> */}
+      <Box pl={8}>
+        <Grid container spacing={6}>
           {menuLinks.map(link => (
             <Grid item key={link.text}>
               <Link

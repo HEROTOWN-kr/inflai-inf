@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import {
-  Sync, Favorite, Print, Share, Error, SupervisorAccount, ExpandMore, ExpandLess
+  Sync, Favorite, FavoriteBorder, Print, Share, Error, SupervisorAccount, ExpandMore, ExpandLess
 } from '@material-ui/icons';
 import ReactHtmlParser from 'react-html-parser';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -217,7 +217,7 @@ function CampaignDetail() {
         } else {
           history.push(`/Campaign/apply/${adId}`);
         }
-      }).catch(error => (error.response.data.message));
+      }).catch(error => alert(error.response.data.message));
     } else {
       history.push('/Login');
     }
@@ -234,21 +234,23 @@ function CampaignDetail() {
         const { data } = res.data;
         if (data) {
           setLiked(true);
+        } else {
+          setLiked(false);
         }
-      }).catch(error => (error.response.data.message));
+      }).catch(error => alert(error.response.data.message));
     }
   }
 
-  function addToFavorite() {
+  function favoriteClick() {
     if (token) {
       if (!liked) {
         axios.post('/api/TB_FAVORITES/', { token, adId }).then((res) => {
-          if (res) {
-            checkFavorites();
-          }
-        }).catch(error => (error.response.data.message));
+          setLiked(true);
+        }).catch(error => alert(error.response.data.message));
       } else {
-        console.log('delete');
+        axios.post('/api/TB_FAVORITES/delete', { token, adId }).then((res) => {
+          setLiked(false);
+        }).catch(error => alert(error.response.data.message));
       }
     } else {
       history.push('/Login');
@@ -318,7 +320,16 @@ function CampaignDetail() {
                 <Grid item>
                   <Box width="130px" mb={2}>
                     <Grid container justify="space-between">
-                      <Grid item><Favorite onClick={addToFavorite} classes={liked ? { root: classes.root } : null} /></Grid>
+                      <Grid item>
+                        {
+                          liked ? (
+                            <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
+                          ) : (
+                            <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
+                          )
+                        }
+                        {/* <Favorite onClick={favoriteClick} classes={liked ? { root: classes.root } : null} /> */}
+                      </Grid>
                       <Grid item><Share /></Grid>
                       <Grid item><Print /></Grid>
                       <Grid item><Error /></Grid>
@@ -612,7 +623,23 @@ function CampaignDetail() {
             width="100%"
             css={{ backgroundColor: Colors.white }}
           >
-            <StyledButton variant="text" height={60} borderRadius="0" onClick={sendRequest}>신청하기</StyledButton>
+            <Grid container alignItems="center">
+              <Grid item>
+                <Box px={2} color={Colors.pink3}>
+                  {
+                    liked ? (
+                      <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
+                    ) : (
+                      <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
+                    )
+                  }
+                </Box>
+              </Grid>
+              <Grid item xs>
+                <StyledButton variant="text" height={60} borderRadius="0" onClick={sendRequest}>신청하기</StyledButton>
+              </Grid>
+            </Grid>
+
           </Box>
         )
       }

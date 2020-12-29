@@ -15,7 +15,7 @@ function NavbarLogo() {
   };
 
   return (
-    <Box my={3} className="logo">
+    <Box my={2} className="logo">
       <Link
         to="/"
       >

@@ -53,11 +53,6 @@ function UserMenuPopper(props) {
             <IconButton aria-label="delete">
               <Search fontSize="large" />
             </IconButton>
-            {/* <StyledImage
-              width="40px"
-              height="40px"
-              src={defaultAccountImage}
-            /> */}
           </Grid>
         </Grid>
 
@@ -69,7 +64,7 @@ function UserMenuPopper(props) {
           modifiers={{
             offset: {
               enabled: true,
-              offset: '0, 22'
+              offset: '0, 17'
             }
           }}
           className="popper-main"
@@ -81,17 +76,6 @@ function UserMenuPopper(props) {
           </ClickAwayListener>
         </Popper>
       </div>
-
-      {/* <Grid container item aria-describedby={id} className="name-holder" onClick={openUserMenu}>
-        <Grid item>
-          <div className="name-text">{userName}</div>
-        </Grid>
-        <Grid item>
-          <ExpandMoreIcon />
-        </Grid>
-      </Grid> */}
-
-
     </React.Fragment>
   );
 }
