@@ -478,7 +478,7 @@ function CampaignApply(props) {
             width="100%"
             css={{ backgroundColor: Colors.white }}
           >
-            <StyledButton variant="text" height={60} borderRadius="0" onClick={onSubmit}>신청하기</StyledButton>
+            <StyledButton variant="text" height={60} borderRadius="0" onClick={handleSubmit(onSubmit)}>신청하기</StyledButton>
           </Box>
         )
       }

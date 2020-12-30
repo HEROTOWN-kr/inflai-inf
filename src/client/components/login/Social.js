@@ -16,6 +16,10 @@ import InstagramSelectDialog from './InstagramSelectDialog';
 import YoutubeDialog from './YoutubeDialog';
 import AuthContext from '../../context/AuthContext';
 
+function checkLocalHost(hostname) {
+  const result = hostname.indexOf('localhost');
+  return result !== -1;
+}
 
 function Social(props) {
   const { history } = props;
@@ -24,6 +28,9 @@ function Social(props) {
   const [youtubeDialogOpen, setYoutubeDialogOpen] = useState(false);
   const [instaAccounts, setInstaAccounts] = useState([]);
   const [instaSelectDialogOpen, setInstaSelectDialogOpen] = useState(false);
+  const isLocal = checkLocalHost(window.location.origin);
+  const NaverLoginId = isLocal ? 'HddfazOY2WePr9AUHcfh' : 'KyWNbHHgcX4ZcIagGtBg';
+
 
   const GoogleButtonRef = useRef(null);
 
@@ -220,7 +227,7 @@ function Social(props) {
         <Grid item xs={12}>
           <NaverLogin
                         // clientId="4rBF5bJ4y2jKn0gHoSCf"
-            clientId="HddfazOY2WePr9AUHcfh"
+            clientId={NaverLoginId}
             callbackUrl={`${window.location.origin}/Login`}
             render={props => <SocialButton clicked={props.onClick} icon={NaverIcon} text="네이버 로그인" bgColor="#00CE38" textColor="#FFFFFF" />}
             onSuccess={result => responseNaver(result)}
