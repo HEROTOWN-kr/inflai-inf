@@ -43,9 +43,9 @@ const menuLinks = [
 ];
 // backgroundImage: `url(${Logo})`,
 function MyPage(props) {
+  const { history, userInfo, match } = props;
   const { logout } = useContext(AuthContext);
   const { Kakao, gapi, FB } = window;
-
 
   function clickLogout() {
     gapi.load('auth2', () => {
@@ -70,7 +70,6 @@ function MyPage(props) {
     history.push('/');
   }
 
-  const { history, userInfo, match } = props;
   return (
     <React.Fragment>
       <Box

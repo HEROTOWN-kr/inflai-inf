@@ -15,6 +15,7 @@ import StyledButton from '../../../containers/StyledButton';
 import { Colors } from '../../../lib/Сonstants';
 import Sns from '../Sns';
 import defaultAccountImage from '../../../img/default_account_image.png';
+import DaumPostCodeMobile from '../../../containers/DaumPostCodeMobile';
 
 function ImageActionButton(props) {
   const {
@@ -206,6 +207,7 @@ function UserInfo(props) {
                   <Grid item xs={12} md>
                     <Box maxWidth={isMD ? '500px' : 'none'}>
                       <DaumPostCode setValue={setValue} register={register} errors={errors} />
+                      {/* <DaumPostCodeMobile setValue={setValue} register={register} errors={errors} /> */}
                     </Box>
                   </Grid>
                 </Grid>

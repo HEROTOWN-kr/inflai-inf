@@ -1,92 +1,46 @@
-import axios from 'axios';
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import GoogleLogin, { GoogleLogout } from 'react-google-login';
-import Common from '../../lib/common';
 import AuthContext from '../../context/AuthContext';
 
-function LogOutButton(props) {
-  const { socialType, logout } = useContext(AuthContext);
+function LogOutButton() {
+  const { logout } = useContext(AuthContext);
+  const { Kakao, gapi, FB } = window;
+  const history = useHistory();
 
-  const kakaoLogOut = (e) => {
-    e.preventDefault();
-    window.Kakao.Auth.logout((res) => {
-      logout();
-    });
-  };
-
-  const twitchLogOut = (e) => {
-    e.preventDefault();
-    const token = Common.getToken();
-    if (token) {
-      const url = `https://id.twitch.tv/oauth2/revoke?client_id=hnwk0poqnawvjedf2nxzaaznj16e1g&token=${token}`;
-      axios.post(url).then((res) => {
-        if (res) {
-          console.log(res);
+  function clickLogout() {
+    if (gapi) {
+      gapi.load('auth2', () => {
+        const auth2 = gapi.auth2.getAuthInstance({
+          client_id: '997274422725-gb40o5tv579csr09ch7q8an63tfmjgfo.apps.googleusercontent.com'
+        });
+        if (auth2) {
+          auth2.disconnect();
         }
       });
     }
-    logout();
-  };
-
-  const googleLogOut = (e) => {
-    e.preventDefault();
-    window.gapi.load('auth2', () => {
-      const auth2 = window.gapi.auth2.getAuthInstance({
-        client_id: '997274422725-gb40o5tv579csr09ch7q8an63tfmjgfo.apps.googleusercontent.com'
+    if (FB) {
+      FB.getLoginStatus((response) => {
+        if (response.status === 'connected') {
+          FB.logout();
+        }
       });
-      if (auth2) {
-        auth2.disconnect();
-        logout();
-      } else {
-        logout();
+    }
+    if (Kakao) {
+      if (Kakao.Auth.getAccessToken()) {
+        Kakao.Auth.logout(() => {
+          // console.log(Kakao.Auth.getAccessToken());
+        });
       }
-    });
-  };
+    }
+    logout();
+    history.push('/');
+  }
 
   return (
-    <React.Fragment>
-      {
-        {
-          facebook: <Button
-            variant="contained"
-            color="secondary"
-            className="login-button"
-            onClick={(e) => {
-              e.preventDefault();
-              window.FB.logout();
-              logout();
-            }}
-            className="login-button"
-          >
-            로그아웃
-          </Button>,
-          google: <Button variant="contained" color="secondary" className="login-button" onClick={googleLogOut}>로그아웃</Button>,
-          kakao: <Button variant="contained" color="secondary" className="login-button" onClick={kakaoLogOut}>로그아웃</Button>,
-          twitch: <Button variant="contained" color="secondary" className="login-button" onClick={twitchLogOut}>로그아웃</Button>,
-          noSocial: <Button
-            variant="contained"
-            color="secondary"
-            className="login-button"
-            onClick={(e) => {
-              logout();
-            }}
-          >
-          로그아웃
-          </Button>,
-          naver: <Button
-            variant="contained"
-            color="secondary"
-            className="login-button"
-            onClick={(e) => {
-              logout();
-            }}
-          >
-            로그아웃
-          </Button>
-        }[socialType]
-      }
-    </React.Fragment>
+    <Button variant="contained" color="secondary" className="login-button" onClick={clickLogout}>
+        로그아웃
+    </Button>
   );
 }
 

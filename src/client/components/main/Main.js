@@ -27,14 +27,14 @@ function Main() {
         path="/SignUp"
         render={renderProps => <SignUp {...renderProps} />}
       />
-      {/* <PrivateRoute
+      <PrivateRoute
         path="/Profile"
         component={Profile}
-      /> */}
-      <Route
+      />
+      {/* <Route
         path="/Profile"
         render={renderProps => <Profile {...renderProps} />}
-      />
+      /> */}
       <Route
         path="/Campaign"
         render={renderProps => <Campaign {...renderProps} />}
