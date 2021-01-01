@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
-  Box, Divider, Grid, Hidden
+  Box, Button, Divider, Grid, Hidden
 } from '@material-ui/core';
 import WhiteBlock from '../../../containers/WhiteBlock';
 import PageTitle from '../PageTitle';
@@ -16,6 +16,8 @@ import { Colors } from '../../../lib/Сonstants';
 import Sns from '../Sns';
 import defaultAccountImage from '../../../img/default_account_image.png';
 import DaumPostCodeMobile from '../../../containers/DaumPostCodeMobile';
+import CategoryDialog from '../../navbar/MobileView/CategoryDialog';
+import DaumPostCodeDialog from '../../../containers/DaumPostCodeDialog';
 
 function ImageActionButton(props) {
   const {
@@ -206,6 +208,7 @@ function UserInfo(props) {
                   </Grid>
                   <Grid item xs={12} md>
                     <Box maxWidth={isMD ? '500px' : 'none'}>
+                      {/* <Button onClick={toggleDialog}>testDialog</Button> */}
                       <DaumPostCode setValue={setValue} register={register} errors={errors} />
                       {/* <DaumPostCodeMobile setValue={setValue} register={register} errors={errors} /> */}
                     </Box>

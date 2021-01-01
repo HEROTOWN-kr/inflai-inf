@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import { Grid, useMediaQuery, useTheme } from '@material-ui/core';
 import ReactFormText from './ReactFormText';
 import StyledButton from './StyledButton';
+import DaumPostCodeDialog from './DaumPostCodeDialog';
 
 function DaumPostCode(props) {
   const { setValue, register, errors } = props;
   const { daum } = window;
   const [guideText, setGuideText] = useState('');
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  function toggleDialog() {
+    setDialogOpen(!dialogOpen);
+  }
 
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
@@ -41,7 +48,6 @@ function DaumPostCode(props) {
         // 우편번호와 주소 정보를 해당 필드에 넣는다.
         setValue('postcode', zonecode);
         setValue('roadAddress', roadAddr);
-        console.log(roadAddr);
         // setValue('jibunAddress', jibunAddress);
 
         // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
@@ -69,11 +75,11 @@ function DaumPostCode(props) {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Grid container spacing={1}>
-            <Grid item onClick={execDaumPostcode} style={{ width: isMD ? '190px' : '50%' }}>
+            <Grid item onClick={isMD ? execDaumPostcode : toggleDialog} style={{ width: isMD ? '190px' : '50%' }}>
               <ReactFormText register={register} errors={errors} name="postcode" placeholder="우편번호" inputProps={{ readOnly: true }} />
             </Grid>
             <Grid item style={{ width: isMD ? '190px' : '50%' }}>
-              <StyledButton onClick={execDaumPostcode} height="40px">우편번호 찾기</StyledButton>
+              <StyledButton onClick={isMD ? execDaumPostcode : toggleDialog} height="40px">우편번호 찾기</StyledButton>
             </Grid>
           </Grid>
         </Grid>
@@ -105,6 +111,7 @@ function DaumPostCode(props) {
           </Grid>
         </Grid>
       </Grid>
+      <DaumPostCodeDialog open={dialogOpen} closeDialog={toggleDialog} setValue={setValue} />
     </div>
   );
 }

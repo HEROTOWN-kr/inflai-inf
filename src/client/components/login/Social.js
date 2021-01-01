@@ -29,7 +29,7 @@ function Social(props) {
   const [instaAccounts, setInstaAccounts] = useState([]);
   const [instaSelectDialogOpen, setInstaSelectDialogOpen] = useState(false);
   const isLocal = checkLocalHost(window.location.origin);
-  const NaverLoginId = isLocal ? 'HddfazOY2WePr9AUHcfh' : 'KyWNbHHgcX4ZcIagGtBg';
+  const NaverLoginId = isLocal ? 'KyWNbHHgcX4ZcIagGtBg' : 'HddfazOY2WePr9AUHcfh';
 
 
   const GoogleButtonRef = useRef(null);
