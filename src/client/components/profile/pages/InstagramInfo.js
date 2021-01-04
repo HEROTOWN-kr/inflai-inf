@@ -18,6 +18,7 @@ import AgeGraph from './Graphs/AgeGraph';
 import GenderGraph from './Graphs/GenderGraph';
 import MapGraph from './Graphs/MapGraph';
 import AuthContext from '../../../context/AuthContext';
+import MapGraph2 from './Graphs/MapGraph2';
 
 function InstagramInfo(props) {
   const { isMD, isSM } = props;
@@ -265,7 +266,8 @@ function InstagramInfo(props) {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <MapGraph INS_ID={instaData.INS_ID} />
+                    <MapGraph2 INS_ID={instaData.INS_ID} />
+                    {/* <MapGraph INS_ID={instaData.INS_ID} /> */}
                   </Grid>
                 </Grid>
               </Box>

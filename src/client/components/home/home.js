@@ -18,7 +18,8 @@ function Home(props) {
 
   function getCampaigns() {
     setLoading(true);
-    const params = { limit: 6 };
+    // const params = { limit: 6 };
+    const params = { limit: null };
 
     axios.get('/api/TB_AD/list', { params }).then((res) => {
       const { data } = res.data;
