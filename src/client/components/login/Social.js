@@ -17,7 +17,7 @@ import YoutubeDialog from './YoutubeDialog';
 import AuthContext from '../../context/AuthContext';
 
 function checkLocalHost(hostname) {
-  const result = hostname.indexOf('localhost');
+  const result = hostname.indexOf('127.0.0.1');
   return result !== -1;
 }
 
