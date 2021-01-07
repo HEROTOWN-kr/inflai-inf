@@ -1,14 +1,35 @@
 import React from 'react';
 import {
-  Dialog, DialogContent, DialogTitle, Divider, Grid, Button, Box
+  Dialog, Divider, Grid, Button, Box, makeStyles, useTheme, useMediaQuery
 } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { Clear, WarningRounded, Close } from '@material-ui/icons';
 import StyledText from '../../containers/StyledText';
+import { Colors } from '../../lib/Сonstants';
+
+const useStyles = makeStyles({
+  root: {
+    position: 'absolute',
+    top: '15px',
+    right: '14px',
+    fontSize: '28px',
+    color: '#b9b9b9de',
+    cursor: 'pointer'
+  },
+  paper: {
+    margin: '12px',
+    width: '100%',
+    borderRadius: '2px'
+  }
+});
 
 function InstagramDialog(props) {
   const {
     closeDialog, open, facebookLogin, userPage
   } = props;
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+  const classes = useStyles();
 
   const data = {
     instagram: {
@@ -39,14 +60,49 @@ function InstagramDialog(props) {
 
   return (
     <Dialog
-      fullWidth
-      maxWidth="sm"
+      // fullScreen={fullScreen}
+      maxWidth="md"
       onClose={closeDialog}
       aria-labelledby="simple-dialog-title"
       open={open}
       className="instagram-dialog"
     >
-      <DialogTitle id="simple-dialog-title">
+      <Box>
+        <Box padding="20px" fontSize="18px" fontWeight="400" lineHeight="18px" position="relative" borderBottom={`1px solid ${Colors.grey8}`}>
+          {text.title}
+          <Clear onClick={closeDialog} classes={{ root: classes.root }} />
+        </Box>
+      </Box>
+      <Divider />
+      <Box padding="20px">
+        <StyledText fontSize="16" fontWeight="500">{text.title2}</StyledText>
+        <Box mt={2}>
+          <StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule1}</StyledText>
+          <StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule2}</StyledText>
+          <StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule3}</StyledText>
+          <StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.title2}</StyledText>
+          {text.rule4 ? (<StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule4}</StyledText>) : null}
+          {text.rule5 ? (<StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule5}</StyledText>) : null}
+          {text.rule6 ? (<StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule6}</StyledText>) : null}
+        </Box>
+        <Box my={2} p={2} width="120px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('https://blog.naver.com/msinvestment/222199864625', '_blank')}>
+          <StyledText>연결방법 (필독)</StyledText>
+        </Box>
+        <Divider />
+        <Box mt={1}>
+          <Grid container justify="center">
+            <Grid item>
+              <Button
+                className="facebook-button"
+                onClick={loginFacebook}
+              >
+                Login with Facebook
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+      {/* <DialogTitle id="simple-dialog-title">
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
             {text.title}
@@ -72,7 +128,7 @@ function InstagramDialog(props) {
               {text.rule6 ? (<Grid item>{text.rule6}</Grid>) : null}
             </Grid>
           </Grid>
-          {/* <Grid item xs={12} className="dialog-text">단, 기존에 레뷰 서비스에 연결한 인스타그램 계정이 있는 경우, 동일한 계정을 선택해 연결해주셔야 정상적으로 서비스를 이용하실 수 있습니다. 계정 전환 방법과 연결 방법은 아래 버튼을 눌러 확인해주세요.</Grid> */}
+          <Grid item xs={12} className="dialog-text">단, 기존에 레뷰 서비스에 연결한 인스타그램 계정이 있는 경우, 동일한 계정을 선택해 연결해주셔야 정상적으로 서비스를 이용하실 수 있습니다. 계정 전환 방법과 연결 방법은 아래 버튼을 눌러 확인해주세요.</Grid>
           <Grid item xs={12}>
             <Divider />
           </Grid>
@@ -86,7 +142,7 @@ function InstagramDialog(props) {
             </Button>
           </Grid>
         </Grid>
-      </DialogContent>
+      </DialogContent> */}
     </Dialog>
   );
 }

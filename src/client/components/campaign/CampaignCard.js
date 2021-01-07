@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { SupervisorAccount } from '@material-ui/icons';
 import StyledImage from '../../containers/StyledImage';
@@ -26,7 +26,7 @@ function CampaignCard(props) {
 
   return (
     <Box border="1px solid #eaeaea" overflow="hidden" borderRadius="10px" css={{ cursor: 'pointer' }} onClick={onClick}>
-      <StyledImage width="100%" height="auto" src={image || noImage} onError={event => event.target.setAttribute('src', noFound)} />
+      <StyledImage width="100%" height="auto" src={image || noFound} onError={event => event.target.setAttribute('src', noFound)} />
       <Box borderTop="1px solid #eaeaea" p={isMD ? 3 : 1}>
         <Grid container spacing={isMD ? 2 : 1}>
           <Grid item xs={12}>

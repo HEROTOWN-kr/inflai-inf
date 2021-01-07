@@ -179,16 +179,26 @@ function Sns(props) {
             <LabelComponent labelName="인스타" />
           </Grid>
           <Grid item xs={12} md>
-            <Box py={2} px={4} width={{ xs: 'inherit', md: '250px' }} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => instagramButtonClick()}>
-              <Grid container justify="center" spacing={1}>
-                <Grid item>
-                  <StyledImage width="18px" height="18px" src={instagramIcon} />
-                </Grid>
-                <Grid item>
-                  <StyledText>{INS_ID ? '인스타그램 연결 해제' : '인스타그램 연결하기'}</StyledText>
-                </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs md="auto">
+                <Box py={2} px={2} width={{ xs: 'inherit', md: '250px' }} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => instagramButtonClick()}>
+                  <Grid container justify="center" spacing={1}>
+                    <Grid item>
+                      <StyledImage width="18px" height="18px" src={instagramIcon} />
+                    </Grid>
+                    <Grid item>
+                      <StyledText>{INS_ID ? '인스타그램 연결 해제' : '인스타그램 연결하기'}</StyledText>
+                    </Grid>
+                  </Grid>
+                </Box>
               </Grid>
-            </Box>
+              <Grid item>
+                <Box py={2} px={2} height="52px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('https://blog.naver.com/msinvestment/222199864625', '_blank')}>
+                  <StyledText>연결방법 (필독)</StyledText>
+                </Box>
+              </Grid>
+            </Grid>
+
           </Grid>
         </Grid>
       </Grid>
@@ -218,7 +228,7 @@ function Sns(props) {
             <LabelComponent labelName="유튜브" />
           </Grid>
           <Grid item xs={12} md>
-            <Box py={2} px={4} width={{ xs: 'inherit', md: '250px' }} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => youtubeButtonClick()}>
+            <Box py={2} px={2} width={{ xs: 'inherit', md: '250px' }} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => youtubeButtonClick()}>
               <Grid container justify="center" spacing={1}>
                 <Grid item>
                   <StyledImage width="24px" height="18px" src={youtubeIcon} />

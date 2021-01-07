@@ -264,114 +264,120 @@ function CampaignApply(props) {
               <Grid item xs>
                 <Box py={{ xs: 2, md: 5 }} borderBottom={{ md: `1px solid ${Colors.grey7}` }}>
                   <Grid container spacing={1} alignItems="center">
-                    <Grid item xs={12}>
-                      <Grid container alignItems="center">
-                        <Grid item>
-                          <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
-                            <StyledCheckBox checked={snsData.insta} onChange={event => setSnsData({ ...snsData, insta: event.target.checked })} disabled={!applyData.instaUserName} />
-                          </Box>
-                        </Grid>
-                        <Grid item xs md={5}>
-                          <Box py={2} px={4} border="1px solid #e9ecef">
-                            <Grid container justify="center" spacing={1} alignItems="center">
-                              <Grid item>
-                                <StyledImage width="18px" height="18px" src={instagramIcon} />
+                    {addData.AD_INSTA === 1 ? (
+                      <Grid item xs={12}>
+                        <Grid container alignItems="center">
+                          <Grid item>
+                            <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
+                              <StyledCheckBox checked={snsData.insta} onChange={event => setSnsData({ ...snsData, insta: event.target.checked })} disabled={!applyData.instaUserName} />
+                            </Box>
+                          </Grid>
+                          <Grid item xs md={5}>
+                            <Box py={2} px={4} border="1px solid #e9ecef">
+                              <Grid container justify="center" spacing={1} alignItems="center">
+                                <Grid item>
+                                  <StyledImage width="18px" height="18px" src={instagramIcon} />
+                                </Grid>
+                                <Grid item>
+                                  <StyledText>{applyData.instaUserName || '인스타그램'}</StyledText>
+                                </Grid>
                               </Grid>
-                              <Grid item>
-                                <StyledText>{applyData.instaUserName || '인스타그램'}</StyledText>
-                              </Grid>
-                            </Grid>
-                          </Box>
+                            </Box>
+                          </Grid>
+                          {
+                              applyData.instaUserName ? null : (
+                                <Grid item>
+                                  <Box
+                                    padding="18px"
+                                    border="1px solid #e9ecef"
+                                    borderLeft="0"
+                                    css={{ cursor: 'pointer' }}
+                                    onClick={() => history.push('/Profile/UserInfo')}
+                                  >
+                                    <StyledText>연결하기</StyledText>
+                                  </Box>
+                                </Grid>
+                              )
+                            }
                         </Grid>
-                        {
-                          applyData.instaUserName ? null : (
-                            <Grid item>
-                              <Box
-                                padding="18px"
-                                border="1px solid #e9ecef"
-                                borderLeft="0"
-                                css={{ cursor: 'pointer' }}
-                                onClick={() => history.push('/Profile/UserInfo')}
-                              >
-                                <StyledText>연결하기</StyledText>
-                              </Box>
-                            </Grid>
-                          )
-                        }
                       </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container alignItems="center">
-                        <Grid item>
-                          <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
-                            <StyledCheckBox checked={snsData.youtube} onChange={event => setSnsData({ ...snsData, youtube: event.target.checked })} disabled={!applyData.youtubeChannelName} />
-                          </Box>
-                        </Grid>
-                        <Grid item xs md={5}>
-                          <Box py={2} px={4} border="1px solid #e9ecef">
-                            <Grid container justify="center" spacing={1} alignItems="center">
-                              <Grid item>
-                                <StyledImage width="18px" height="18px" src={youtubeIcon} />
+                    ) : null}
+                    {addData.AD_YOUTUBE === 1 ? (
+                      <Grid item xs={12}>
+                        <Grid container alignItems="center">
+                          <Grid item>
+                            <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
+                              <StyledCheckBox checked={snsData.youtube} onChange={event => setSnsData({ ...snsData, youtube: event.target.checked })} disabled={!applyData.youtubeChannelName} />
+                            </Box>
+                          </Grid>
+                          <Grid item xs md={5}>
+                            <Box py={2} px={4} border="1px solid #e9ecef">
+                              <Grid container justify="center" spacing={1} alignItems="center">
+                                <Grid item>
+                                  <StyledImage width="18px" height="18px" src={youtubeIcon} />
+                                </Grid>
+                                <Grid item>
+                                  <StyledText>{applyData.youtubeChannelName || '유튜브'}</StyledText>
+                                </Grid>
                               </Grid>
-                              <Grid item>
-                                <StyledText>{applyData.youtubeChannelName || '유튜브'}</StyledText>
-                              </Grid>
-                            </Grid>
-                          </Box>
+                            </Box>
+                          </Grid>
+                          {
+                              applyData.youtubeChannelName ? null : (
+                                <Grid item>
+                                  <Box
+                                    padding="18px"
+                                    border="1px solid #e9ecef"
+                                    borderLeft="0"
+                                    css={{ cursor: 'pointer' }}
+                                    onClick={() => history.push('/Profile/UserInfo')}
+                                  >
+                                    <StyledText>연결하기</StyledText>
+                                  </Box>
+                                </Grid>
+                              )
+                            }
                         </Grid>
-                        {
-                          applyData.youtubeChannelName ? null : (
-                            <Grid item>
-                              <Box
-                                padding="18px"
-                                border="1px solid #e9ecef"
-                                borderLeft="0"
-                                css={{ cursor: 'pointer' }}
-                                onClick={() => history.push('/Profile/UserInfo')}
-                              >
-                                <StyledText>연결하기</StyledText>
-                              </Box>
-                            </Grid>
-                          )
-                        }
                       </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container alignItems="center">
-                        <Grid item>
-                          <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
-                            <StyledCheckBox checked={snsData.naver} onChange={event => setSnsData({ ...snsData, naver: event.target.checked })} disabled={!applyData.naverChannelName} />
-                          </Box>
-                        </Grid>
-                        <Grid item xs md={5}>
-                          <Box py={2} px={4} border="1px solid #e9ecef">
-                            <Grid container justify="center" spacing={1} alignItems="center">
-                              <Grid item>
-                                <StyledImage width="18px" height="18px" src={blogIcon} />
+                    ) : null}
+                    {addData.AD_YOUTUBE === 1 ? (
+                      <Grid item xs={12}>
+                        <Grid container alignItems="center">
+                          <Grid item>
+                            <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
+                              <StyledCheckBox checked={snsData.naver} onChange={event => setSnsData({ ...snsData, naver: event.target.checked })} disabled={!applyData.naverChannelName} />
+                            </Box>
+                          </Grid>
+                          <Grid item xs md={5}>
+                            <Box py={2} px={4} border="1px solid #e9ecef">
+                              <Grid container justify="center" spacing={1} alignItems="center">
+                                <Grid item>
+                                  <StyledImage width="18px" height="18px" src={blogIcon} />
+                                </Grid>
+                                <Grid item>
+                                  <StyledText overflowHidden>{applyData.naverChannelName || '블로그'}</StyledText>
+                                </Grid>
                               </Grid>
-                              <Grid item>
-                                <StyledText overflowHidden>{applyData.naverChannelName || '블로그'}</StyledText>
-                              </Grid>
-                            </Grid>
-                          </Box>
+                            </Box>
+                          </Grid>
+                          {
+                              applyData.naverChannelName ? null : (
+                                <Grid item>
+                                  <Box
+                                    padding="18px"
+                                    border="1px solid #e9ecef"
+                                    borderLeft="0"
+                                    css={{ cursor: 'pointer' }}
+                                    onClick={() => history.push('/Profile/UserInfo')}
+                                  >
+                                    <StyledText>연결하기</StyledText>
+                                  </Box>
+                                </Grid>
+                              )
+                            }
                         </Grid>
-                        {
-                          applyData.naverChannelName ? null : (
-                            <Grid item>
-                              <Box
-                                padding="18px"
-                                border="1px solid #e9ecef"
-                                borderLeft="0"
-                                css={{ cursor: 'pointer' }}
-                                onClick={() => history.push('/Profile/UserInfo')}
-                              >
-                                <StyledText>연결하기</StyledText>
-                              </Box>
-                            </Grid>
-                          )
-                        }
                       </Grid>
-                    </Grid>
+                    ) : null}
                     {
                       errors.sns ? (
                         <div className="error-message">

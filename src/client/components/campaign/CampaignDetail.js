@@ -419,9 +419,15 @@ function CampaignDetail() {
                         <Grid item><StyledText fontWeight="bold">모집희망SNS</StyledText></Grid>
                         <Grid item>
                           <Grid container spacing={1}>
-                            <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
-                            <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
-                            <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
+                            {productData.AD_INSTA === 1 ? (
+                              <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
+                            ) : null}
+                            {productData.AD_YOUTUBE === 1 ? (
+                              <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
+                            ) : null}
+                            {productData.AD_NAVER === 1 ? (
+                              <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
+                            ) : null}
                           </Grid>
                         </Grid>
                       </Grid>
