@@ -218,9 +218,9 @@ function Social(props) {
   return (
     <React.Fragment>
       <Grid container spacing={1}>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <SocialButton clicked={toggleYoutubeDialog} icon={GoogleIcon} text="구글 로그인" bgColor="#f5f5f5" textColor="#3f51b5" />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <SocialButton clicked={toggleInstaDialog} icon={FacebookIcon} text="페이스북 로그인" bgColor="#3B5998" textColor="#FFFFFF" />
         </Grid>
@@ -245,8 +245,8 @@ function Social(props) {
         instaAccounts={instaAccounts}
         connectAccount={addInstagram}
       />
-      <YoutubeDialog open={youtubeDialogOpen} closeDialog={toggleYoutubeDialog} googleLogin={GoogleLoginFunction} />
-      <GoogleLogin
+      {/* <YoutubeDialog open={youtubeDialogOpen} closeDialog={toggleYoutubeDialog} googleLogin={GoogleLoginFunction} /> */}
+      {/* <GoogleLogin
         clientId="997274422725-gb40o5tv579csr09ch7q8an63tfmjgfo.apps.googleusercontent.com" // CLIENTID                buttonText="LOGIN WITH GOOGLE"
         scope="profile email https://www.googleapis.com/auth/youtube.readonly"
         responseType="code"
@@ -257,7 +257,7 @@ function Social(props) {
         )}
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
-      />
+      /> */}
     </React.Fragment>
   );
 }

@@ -113,9 +113,9 @@ a {
 }*/
 
 .slick-dots {
-  position: static;
-  margin-top: 75px;
-  li {
+  //position: static;
+  margin-top: 10px;
+  /*li {
     padding: 0 10px;
     button {
       &:before {
@@ -131,8 +131,23 @@ a {
         }
       }
     }
+  }*/
+}
+
+.slick-arrow {
+  &.slick-prev, &.slick-next {
+    //background: red;
+    width: 50px;
+    height: 50px;
+    z-index: 1;
+    &:before {
+      color: #aba0a0;
+      font-size: 58px;
+    }
   }
 }
+
+
 
 
 .form {
