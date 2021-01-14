@@ -264,7 +264,7 @@ function CampaignApply(props) {
               <Grid item xs>
                 <Box py={{ xs: 2, md: 5 }} borderBottom={{ md: `1px solid ${Colors.grey7}` }}>
                   <Grid container spacing={1} alignItems="center">
-                    {addData.AD_INSTA === 1 ? (
+                    {addData.AD_TYPE === '1' ? (
                       <Grid item xs={12}>
                         <Grid container alignItems="center">
                           <Grid item>
@@ -302,7 +302,7 @@ function CampaignApply(props) {
                         </Grid>
                       </Grid>
                     ) : null}
-                    {addData.AD_YOUTUBE === 1 ? (
+                    {addData.AD_TYPE === '2' ? (
                       <Grid item xs={12}>
                         <Grid container alignItems="center">
                           <Grid item>
@@ -340,7 +340,7 @@ function CampaignApply(props) {
                         </Grid>
                       </Grid>
                     ) : null}
-                    {addData.AD_YOUTUBE === 1 ? (
+                    {addData.AD_TYPE === '3' ? (
                       <Grid item xs={12}>
                         <Grid container alignItems="center">
                           <Grid item>
