@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import axios from 'axios';
-import Slider from 'react-slick';
+import { useHistory } from 'react-router-dom';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import StyledText from '../../../containers/StyledText';
 import { Colors } from '../../../lib/Сonstants';
 import CampaignAll from '../../campaign/CampaignAll';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import CampaignCard from '../../campaign/CampaignCard';
-import { useHistory } from 'react-router-dom';
-import CampaignCardHome from './CampaignCardHome';
-import { Skeleton } from '@material-ui/lab';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-
 
 function HomeCampaigns(props) {
   const history = useHistory();

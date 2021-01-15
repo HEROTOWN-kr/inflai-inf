@@ -25,6 +25,10 @@ function Sns(props) {
   const { YOU_ID, YOU_NAME, YOU_DT } = TB_YOUTUBE || {};
   const { NAV_ID, NAV_URL, NAV_DT } = TB_NAVER || {};
   const { token } = useContext(AuthContext);
+  const [fbData, setFbData] = useState({
+    isConnect: false,
+    data: {}
+  });
 
   const {
     register, handleSubmit, watch, errors, setValue, control, getValues
@@ -128,7 +132,7 @@ function Sns(props) {
           instaId: data[0].instagram_business_account.id
         }).then((res) => {
           getUserInfo();
-        }).catch(err => alert(err.response.data));
+        }).catch(err => alert(err.response.data.message));
       }
     });
   }
@@ -136,7 +140,21 @@ function Sns(props) {
   async function facebookLogin() {
     const { FB } = window;
 
-    FB.getLoginStatus((loginRes) => {
+    if (fbData.isConnect) {
+      const { accessToken, userID } = fbData.data;
+      findInstagramAccounts(accessToken, userID);
+    } else {
+      FB.login((loginRes2) => {
+        if (loginRes2.status === 'connected') {
+          const { accessToken, userID } = loginRes2.authResponse;
+          findInstagramAccounts(accessToken, userID);
+        } else {
+          alert('not connected');
+        }
+      }, { scope: 'public_profile, email, manage_pages, instagram_basic, instagram_manage_insights' });
+    }
+
+    /* FB.getLoginStatus((loginRes) => {
       if (loginRes.status === 'connected') {
         const { accessToken, userID } = loginRes.authResponse;
         findInstagramAccounts(accessToken, userID);
@@ -150,25 +168,38 @@ function Sns(props) {
           }
         }, { scope: 'public_profile, email, manage_pages, instagram_basic, instagram_manage_insights' });
       }
-    }, true);
+    }, true); */
   }
 
+  function getFacebookLoginStatus() {
+    const { FB } = window;
+    if (FB) {
+      FB.getLoginStatus((loginRes) => {
+        if (loginRes.status === 'connected') {
+          setFbData({ isConnect: true, data: loginRes.authResponse });
+        }
+      }, true);
+    }
+  }
+
+  useEffect(() => {
+    getFacebookLoginStatus();
+  }, [window.FB]);
+
   async function addInstagram(selectedId) {
-    window.FB.getLoginStatus((response) => {
-      if (response.status === 'connected') {
-        const { accessToken, userID } = response.authResponse;
-        axios.post('/api/TB_INSTA/add', {
-          facebookToken: accessToken,
-          facebookUserId: userID,
-          token,
-          instaId: selectedId
-        }).then((res) => {
-          getUserInfo();
-        }).catch(err => alert(err.response.data));
-      } else {
-        alert('The user isn\'t logged in to Facebook');
-      }
-    });
+    if (fbData.isConnect) {
+      const { accessToken, userID } = fbData.data;
+      axios.post('/api/TB_INSTA/add', {
+        facebookToken: accessToken,
+        facebookUserId: userID,
+        token,
+        instaId: selectedId
+      }).then((res) => {
+        getUserInfo();
+      }).catch(err => alert(err.response.data));
+    } else {
+      alert('The user isn\'t logged in to Facebook');
+    }
   }
 
   return (

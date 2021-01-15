@@ -347,7 +347,7 @@ function CampaignDetail() {
             {loading ? (
               <Skeleton variant="rect" width="100%" height={435} />
             ) : (
-              <StyledImage width="100%" height={isMD ? '435px' : 'auto'} src={currentImage || testImage} />
+              <StyledImage width="550px" height={isMD ? '435px' : 'auto'} src={currentImage || testImage} />
             )}
 
             <Box mt={1} mb={isMD ? 5 : 1}>
