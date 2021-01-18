@@ -70,7 +70,7 @@ function HomeVideoTitle() {
             zIndex: '-1',
           }}
           id="videoBG"
-          objectFit="cover"
+          // objectFit="cover"
           poster="/attach/video/bgImage.png"
           autoPlay
           muted

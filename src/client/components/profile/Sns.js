@@ -224,7 +224,7 @@ function Sns(props) {
                 </Box>
               </Grid>
               <Grid item>
-                <Box py={2} px={2} height="52px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('https://blog.naver.com/msinvestment/222199864625', '_blank')}>
+                <Box py={2} px={2} height="52px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('http://pf.kakao.com/_AYxeUxb/62492911', '_blank')}>
                   <StyledText>연결방법 (필독)</StyledText>
                 </Box>
               </Grid>

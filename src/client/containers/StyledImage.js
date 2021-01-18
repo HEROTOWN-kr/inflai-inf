@@ -3,32 +3,29 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   common: ({
-    width, margin, height, borderRadius, border
+    width, margin, height, borderRadius, border, cursor
   }) => ({
     display: 'block',
     margin: margin || '0 auto',
     width: `${width}` || 'auto',
     height: `${height}` || 'auto',
     borderRadius: borderRadius || 0,
-    border: border || 'medium none color'
+    border: border || 'medium none color',
+    cursor: cursor || 'default'
   }),
 });
 
 function StyledImage(props) {
   const {
-    className, src, onMouseOver, onMouseOut, onClick, onError
+    className, width, margin, height, borderRadius, border, cursor, ...rest
   } = props;
   const classes = useStyles(props);
 
   return (
     <img
-      onClick={onClick || function () {}}
-      src={src}
       className={`${classes.common} ${className}`}
-      onMouseOver={onMouseOver}
-      onMouseOut={onMouseOut}
       alt="noImage"
-      onError={onError}
+      {...rest}
     />
   );
 }

@@ -85,9 +85,18 @@ function InstagramDialog(props) {
           {text.rule5 ? (<StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule5}</StyledText>) : null}
           {text.rule6 ? (<StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule6}</StyledText>) : null}
         </Box>
-        <Box my={2} p={2} width="120px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('https://blog.naver.com/msinvestment/222199864625', '_blank')}>
-          <StyledText>연결방법 (필독)</StyledText>
-        </Box>
+        <Grid container spacing={1}>
+          <Grid item>
+            <Box my={2} p={2} width="120px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('http://pf.kakao.com/_AYxeUxb/62492911', '_blank')}>
+              <StyledText>연결방법 (필독)</StyledText>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box my={2} p={2} width="120px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('http://pf.kakao.com/_AYxeUxb', '_blank')}>
+              <StyledText textAlign="center">1:1문의</StyledText>
+            </Box>
+          </Grid>
+        </Grid>
         <Divider />
         <Box mt={1}>
           <Grid container justify="center">
