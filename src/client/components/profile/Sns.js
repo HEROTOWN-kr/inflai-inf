@@ -117,13 +117,27 @@ function Sns(props) {
     FB.api('/me', 'GET', {
       fields: 'accounts{instagram_business_account{id,username,profile_picture_url}}'
     }, (response) => {
+      console.log(response);
       const { data } = response.accounts;
+
       if (!data) {
         alert('페이스북 페이지에 연결된 인스타그램 계정이 없습니다');
       } else if (data && data.length > 1) {
-        const accounts = data.map(item => item.instagram_business_account);
-        setInstaAccounts(accounts);
-        selectAccountDialog();
+        const businesAccs = data.filter(item => item.instagram_business_account);
+        if (businesAccs.length > 1) {
+          const accounts = businesAccs.map(item => item.instagram_business_account);
+          setInstaAccounts(accounts);
+          selectAccountDialog();
+        } else {
+          axios.post('/api/TB_INSTA/add', {
+            facebookToken: accessToken,
+            facebookUserId: userID,
+            token,
+            instaId: businesAccs[0].instagram_business_account.id
+          }).then((res) => {
+            getUserInfo();
+          }).catch(err => alert(err.response.data.message));
+        }
       } else {
         axios.post('/api/TB_INSTA/add', {
           facebookToken: accessToken,
@@ -187,19 +201,24 @@ function Sns(props) {
   }, [window.FB]);
 
   async function addInstagram(selectedId) {
-    if (fbData.isConnect) {
-      const { accessToken, userID } = fbData.data;
-      axios.post('/api/TB_INSTA/add', {
-        facebookToken: accessToken,
-        facebookUserId: userID,
-        token,
-        instaId: selectedId
-      }).then((res) => {
-        getUserInfo();
-      }).catch(err => alert(err.response.data));
-    } else {
-      alert('The user isn\'t logged in to Facebook');
-    }
+    const { FB } = window;
+
+    FB.getLoginStatus((loginRes) => {
+      if (loginRes.status === 'connected') {
+        const { accessToken, userID } = loginRes.authResponse;
+
+        axios.post('/api/TB_INSTA/add', {
+          facebookToken: accessToken,
+          facebookUserId: userID,
+          token,
+          instaId: selectedId
+        }).then((res) => {
+          getUserInfo();
+        }).catch(err => alert(err.response.data));
+      } else {
+        alert('The user isn\'t logged in to Facebook');
+      }
+    });
   }
 
   return (

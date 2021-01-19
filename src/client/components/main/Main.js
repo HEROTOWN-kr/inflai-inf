@@ -12,9 +12,9 @@ import Campaign from '../campaign/Campaign';
 
 function Main() {
   const { pathname } = useLocation();
-  /* useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]); */
+  }, [pathname]);
 
   return (
     <Switch>

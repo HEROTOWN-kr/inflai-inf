@@ -59,7 +59,7 @@ function Footer() {
                   <Box mt={{ xs: 2, md: 0 }}>
                     <Grid container justify={isMD ? 'flex-end' : 'center'} spacing={1}>
                       {snsButtons.map(item => (
-                        <Grid item>
+                        <Grid item key={item.url}>
                           <StyledImage
                             cursor="pointer"
                             width="30px"
