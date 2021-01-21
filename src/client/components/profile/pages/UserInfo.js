@@ -198,6 +198,9 @@ function UserInfo(props) {
                         ) : null}
                       />
                     </Box>
+                    <Box fontSize="13px" color={Colors.grey2}>
+                      ※ 전화번호는 한번만 기입하시면 캠페인신청카톡알림 및 상품수령시 계속 사용이 됩니다. 정확한 전화번호로 기입해주세요.
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
@@ -210,6 +213,10 @@ function UserInfo(props) {
                     <Box maxWidth={isMD ? '500px' : 'none'}>
                       {/* <Button onClick={toggleDialog}>testDialog</Button> */}
                       <DaumPostCode setValue={setValue} register={register} errors={errors} />
+                      <Box fontSize="13px" color={Colors.grey2}>
+                        ※ 주소는 한번만 기입하시면 향후 제품수령시 자동으로 사용이 됩니다. 정확하게 기입해주세요.
+                      </Box>
+
                       {/* <DaumPostCodeMobile setValue={setValue} register={register} errors={errors} /> */}
                     </Box>
                   </Grid>

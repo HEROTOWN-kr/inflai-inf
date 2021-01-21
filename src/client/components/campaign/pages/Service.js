@@ -20,65 +20,35 @@ const categories = [
 const matchUrl = '/Campaign/Service';
 
 function ServiceAll(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Shopping(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Web(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Event(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Education(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );

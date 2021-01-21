@@ -23,111 +23,63 @@ const categories = [
 const matchUrl = '/Campaign/Product';
 
 function ProductAll(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Life(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Child(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Beauty(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Digital(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Fashion(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Book(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Food(props) {
-  const {
-    campaigns, loading, setTab, id, name
-  } = props;
-
-  useEffect(() => {
-    setTab({ id, name });
-  }, []);
+  const { campaigns, loading } = props;
   return (
     <CampaignAll campaigns={campaigns} loading={loading} />
   );
 }
 
 function Product() {
-  const [tab, setTab] = useState({ id: 5, name: '전체' });
+  const [tab, setTab] = useState({ id: 7, name: '전체' });
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -143,6 +95,11 @@ function Product() {
       setCampaigns(data);
       setLoading(false);
     }).catch(err => alert(err.response.data.message));
+  }
+
+  function changeTab(selectedTab) {
+    setTab({ id: selectedTab.id, name: selectedTab.name });
+    history.push(matchUrl + selectedTab.link);
   }
 
   useEffect(() => {
@@ -166,7 +123,7 @@ function Product() {
               css={{ cursor: 'pointer' }}
               cursor="pointer"
               className={`category-tab${tab.id === cat.id ? ' active' : ''} card`}
-              onClick={() => history.push(matchUrl + cat.link)}
+              onClick={() => changeTab(cat)}
             >
               {cat.name}
             </Box>

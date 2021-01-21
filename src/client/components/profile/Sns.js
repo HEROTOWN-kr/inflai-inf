@@ -119,7 +119,6 @@ function Sns(props) {
     }, (response) => {
       console.log(response);
       const { data } = response.accounts;
-
       if (!data) {
         alert('페이스북 페이지에 연결된 인스타그램 계정이 없습니다');
       } else if (data && data.length > 1) {
@@ -206,7 +205,6 @@ function Sns(props) {
     FB.getLoginStatus((loginRes) => {
       if (loginRes.status === 'connected') {
         const { accessToken, userID } = loginRes.authResponse;
-
         axios.post('/api/TB_INSTA/add', {
           facebookToken: accessToken,
           facebookUserId: userID,
@@ -214,7 +212,7 @@ function Sns(props) {
           instaId: selectedId
         }).then((res) => {
           getUserInfo();
-        }).catch(err => alert(err.response.data));
+        }).catch(err => alert(err.response.data.message));
       } else {
         alert('The user isn\'t logged in to Facebook');
       }
