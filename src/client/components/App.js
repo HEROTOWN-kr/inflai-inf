@@ -14,6 +14,11 @@ function App() {
   } = useAuth();
   const isAuthenticated = !!token;
 
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  const isInstagram = (ua.indexOf('Instagram') > -1);
+
+  if (isInstagram) window.open('https://influencer.inflai.com/', '_system');
+
   return (
     <AuthContext.Provider value={{
       token, login, logout, userDataUpdate, userPhoto, socialType, userName, isAuthenticated
@@ -26,6 +31,9 @@ function App() {
         <div className="app-body">
           <Main />
         </div>
+        {isInstagram ? (
+          <Box textAlign="center">webView</Box>
+        ) : null}
         <div className="app-footer">
           <Footer />
         </div>
