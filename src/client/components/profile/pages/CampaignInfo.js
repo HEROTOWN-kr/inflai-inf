@@ -11,6 +11,8 @@ import { Colors } from '../../../lib/Сonstants';
 import AuthContext from '../../../context/AuthContext';
 import CampaignCard from '../../campaign/CampaignCard';
 import MyPagination from '../../../containers/MyPagination';
+import CampaignSelectedCard from './CampaignSelectedCard';
+import ReviewInfoDialog from './ReviewInfoDialog';
 
 function TabComponent(props) {
   const {
@@ -31,18 +33,35 @@ function TabComponent(props) {
       css={{ cursor: 'pointer' }}
       onClick={() => setTab(tabNumber)}
     >
-      <StyledText fontSize="16" fontWeight={styles.fontWeight}>{text}</StyledText>
+      <StyledText fontSize="16px" fontWeight={styles.fontWeight}>{text}</StyledText>
     </Box>
   );
 }
 
 function CampaignInfo(props) {
   const { history, match } = props;
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(2);
   const [loading, setLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const { token } = useContext(AuthContext);
+
+  const [reviewDialog, setReviewDialog] = useState(false);
+  const [currentAd, setCurrentAd] = useState(0);
+
+  function toggleReviewDialog() {
+    setReviewDialog(!reviewDialog);
+  }
+
+  function saveReviewInfo(url) {
+    console.log(currentAd);
+    console.log(url);
+  }
+
+  function writeReview(adId) {
+    setCurrentAd(adId);
+    toggleReviewDialog();
+  }
 
   function getCampaigns(status) {
     setLoading(true);
@@ -106,7 +125,7 @@ function CampaignInfo(props) {
     <WhiteBlock height="100%" borderRadius={isMD ? '7px' : '0'}>
       <Hidden smDown>
         <PageTitle>
-          <StyledText fontSize="24">
+          <StyledText fontSize="24px">
             캠페인 관리
           </StyledText>
         </PageTitle>
@@ -161,21 +180,40 @@ function CampaignInfo(props) {
                       AD_ID, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs,
                     } = item;
                     return (
-                      <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
-                        <CampaignCard
-                          image={TB_PHOTO_ADs[0].PHO_FILE}
-                          ctg1={AD_CTG}
-                          ctg2={AD_CTG2}
-                          srchEnd={AD_SRCH_END}
-                          name={AD_NAME}
-                          shrtDisc={AD_SHRT_DISC}
-                          participantsLength={TB_PARTICIPANTs.length}
-                          cnt={AD_INF_CNT}
-                          proportion={proportion}
-                          onClick={() => detailInfo(AD_ID)}
-                          isMD={isMD}
-                        />
-                      </Grid>
+                      tab === 1 ? (
+                        <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
+                          <CampaignCard
+                            image={TB_PHOTO_ADs[0].PHO_FILE}
+                            ctg1={AD_CTG}
+                            ctg2={AD_CTG2}
+                            srchEnd={AD_SRCH_END}
+                            name={AD_NAME}
+                            shrtDisc={AD_SHRT_DISC}
+                            participantsLength={TB_PARTICIPANTs.length}
+                            cnt={AD_INF_CNT}
+                            proportion={proportion}
+                            onClick={() => detailInfo(AD_ID)}
+                            isMD={isMD}
+                          />
+                        </Grid>
+                      ) : (
+                        <Grid item xs={12} md="auto" key={AD_ID}>
+                          <CampaignSelectedCard
+                            image={TB_PHOTO_ADs[0].PHO_FILE}
+                            ctg1={AD_CTG}
+                            ctg2={AD_CTG2}
+                            srchEnd={AD_SRCH_END}
+                            name={AD_NAME}
+                            shrtDisc={AD_SHRT_DISC}
+                            participantsLength={TB_PARTICIPANTs.length}
+                            cnt={AD_INF_CNT}
+                            proportion={proportion}
+                            onClick={() => detailInfo(AD_ID)}
+                            writeReview={() => writeReview(AD_ID)}
+                            isMD={isMD}
+                          />
+                        </Grid>
+                      )
                     );
                   })}
                 </Grid>
@@ -204,6 +242,11 @@ function CampaignInfo(props) {
           </Box>
         ) : null}
       </Box>
+      <ReviewInfoDialog
+        open={reviewDialog}
+        closeDialog={toggleReviewDialog}
+        onConfirm={saveReviewInfo}
+      />
     </WhiteBlock>
   );
 }

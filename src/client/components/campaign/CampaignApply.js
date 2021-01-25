@@ -27,7 +27,7 @@ function ApplyFormComponent(componentProps) {
   return (
     <Grid container alignItems="center">
       <Grid item xs={12} md="auto">
-        <Box width={{ xs: '115px', lg: '187px' }} fontWeight="bold" fontSize="16">
+        <Box width={{ xs: '115px', lg: '187px' }} fontWeight="bold" fontSize="16px">
           {title}
         </Box>
       </Grid>
@@ -39,19 +39,6 @@ function ApplyFormComponent(componentProps) {
 }
 
 function CampaignApply(props) {
-  const applyConstant = {
-    INF_DETAIL_ADDR: '502호',
-    INF_EMAIL: 'andriantsoy@gmail.com',
-    INF_EXTR_ADDR: ' (대조동)',
-    INF_NAME: 'Andrian',
-    INF_POST_CODE: '03387',
-    INF_ROAD_ADDR: '서울 은평구 연서로20길 25',
-    INF_TEL: '01026763937',
-    TB_INSTum: null,
-    TB_NAVER: null,
-    TB_YOUTUBE: null,
-  };
-
   const { match, history, setMessage } = props;
   const [applyData, setApplyData] = useState({});
   const [snsData, setSnsData] = useState({
@@ -83,22 +70,22 @@ function CampaignApply(props) {
       .required('신청한마디를 입력해주세요'),
     receiverName: Yup.string()
       .when(['delivery'], {
-        is: delivery => delivery,
+        is: delivery => delivery === '1',
         then: Yup.string().required('제공상품 수령인을 입력해주세요'),
       }),
     postcode: Yup.string()
       .when(['delivery'], {
-        is: delivery => delivery,
+        is: delivery => delivery === '1',
         then: Yup.string().required('우편번호를 입력해주세요'),
       }),
     roadAddress: Yup.string()
       .when(['delivery'], {
-        is: delivery => delivery,
+        is: delivery => delivery === '1',
         then: Yup.string().required('도로명주소를 입력해주세요'),
       }),
     detailAddress: Yup.string()
       .when(['delivery'], {
-        is: delivery => delivery,
+        is: delivery => delivery === '1',
         then: Yup.string().required('상세주소를 입력해주세요'),
       }),
     phone: Yup.string()
@@ -108,42 +95,28 @@ function CampaignApply(props) {
       .required('이메일을 입력해주세요'),
   });
 
+  const defaultValues = {
+    insta: false,
+    youtube: false,
+    naver: false,
+    name: '',
+    receiverName: '',
+    phone: '',
+    email: '',
+    postcode: '',
+    roadAddress: '',
+    detailAddress: '',
+    extraAddress: '',
+    delivery: ''
+  };
+
   const {
-    register, handleSubmit, handleBlur, watch, errors, setValue, control, getValues
+    register, handleSubmit, reset, watch, errors, setValue, control, getValues
   } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(schema),
-    defaultValues: {
-      insta: false,
-      youtube: false,
-      naver: false
-    }
-    // shouldUnregister: false
+    defaultValues
   });
-
-  useEffect(() => {
-    setValue('insta', snsData.insta);
-    setValue('youtube', snsData.youtube);
-    setValue('naver', snsData.naver);
-  }, [snsData]);
-
-  function getWidth() {
-    if (isXl) {
-      return '800px';
-    } if (isLG) {
-      return '800px';
-    }
-    return '100%';
-  }
-  const fixedStyles = {
-    boxSizing: 'border-box',
-    width: '359px',
-    position: 'fixed',
-    left: '1173px',
-    zIndex: '1039',
-    marginTop: '0px',
-    top: '0px',
-  };
 
   const handleScroll = () => {
     setSticky(window.pageYOffset > 80);
@@ -163,7 +136,7 @@ function CampaignApply(props) {
       const { data } = response.data;
       if (data) {
         setAddData(data);
-        setValue('delivery', !!data.AD_DELIVERY);
+        setValue('delivery', data.AD_DELIVERY.toString());
       }
     } catch (err) {
       alert(err.message);
@@ -180,16 +153,20 @@ function CampaignApply(props) {
           INF_NAME, INF_EMAIL, INF_TEL, INF_POST_CODE, INF_ROAD_ADDR, INF_DETAIL_ADDR,
           INF_EXTR_ADDR
         } = data;
-        setValue('name', INF_NAME);
-        setValue('receiverName', INF_NAME);
-        setValue('phone', INF_TEL);
-        setValue('email', INF_EMAIL);
-        setValue('postcode', INF_POST_CODE);
-        setValue('test', INF_POST_CODE);
-        setValue('test2', INF_POST_CODE);
-        setValue('roadAddress', INF_ROAD_ADDR);
-        setValue('detailAddress', INF_DETAIL_ADDR);
-        setValue('extraAddress', INF_EXTR_ADDR);
+
+        const resetObj = {
+          ...defaultValues,
+          name: INF_NAME,
+          receiverName: INF_NAME,
+          phone: INF_TEL,
+          email: INF_EMAIL,
+          postcode: INF_POST_CODE,
+          roadAddress: INF_ROAD_ADDR,
+          detailAddress: INF_DETAIL_ADDR,
+          extraAddress: INF_EXTR_ADDR
+        };
+
+        reset(resetObj);
       }
     } catch (err) {
       alert(err.message);
@@ -217,12 +194,8 @@ function CampaignApply(props) {
 
   useEffect(() => {
     if (token) {
-      getAddInfo();
       getApplicantInfo();
-      register({ name: 'insta' });
-      register({ name: 'youtube' });
-      register({ name: 'naver' });
-      register({ name: 'delivery' });
+      getAddInfo();
     }
   }, [token]);
 
@@ -232,7 +205,7 @@ function CampaignApply(props) {
 
     return (
       <Box p={1} border={`1px solid ${color}`}>
-        <StyledText textAlign="center" fontSize="13" color={color} fontWeight="bold">{text}</StyledText>
+        <StyledText textAlign="center" fontSize="13px" color={color} fontWeight="bold">{text}</StyledText>
       </Box>
     );
   }
@@ -247,7 +220,7 @@ function CampaignApply(props) {
           <Box py={isMD ? 6 : 2} pr={isMD ? 6 : 2} pl={isLG ? 0 : 2}>
             {isMD ? (
               <React.Fragment>
-                <StyledText fontSize="28" fontWeight="bold">캠페인 신청하기</StyledText>
+                <StyledText fontSize="28px" fontWeight="bold">캠페인 신청하기</StyledText>
                 <Box mt={3} mb={2}>
                   <Divider />
                 </Box>
@@ -256,20 +229,30 @@ function CampaignApply(props) {
             <Grid container alignItems="center">
               <Grid item xs={12} md="auto">
                 <Box py={{ xs: 0, md: 5 }} width={{ xs: '115px', lg: '187px' }}>
-                  <StyledText fontWeight="bold" fontSize="16">
+                  <StyledText fontWeight="bold" fontSize="16px">
                     SNS
                   </StyledText>
                 </Box>
               </Grid>
               <Grid item xs>
                 <Box py={{ xs: 2, md: 5 }} borderBottom={{ md: `1px solid ${Colors.grey7}` }}>
-                  <Grid container spacing={1} alignItems="center">
+                  <Grid container alignItems="center">
                     {addData.AD_TYPE === '1' ? (
                       <Grid item xs={12}>
                         <Grid container alignItems="center">
                           <Grid item>
-                            <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
-                              <StyledCheckBox checked={snsData.insta} onChange={event => setSnsData({ ...snsData, insta: event.target.checked })} disabled={!applyData.instaUserName} />
+                            <Box p="4px" border="1px solid #e9ecef" borderRight="0">
+                              <Controller
+                                name="insta"
+                                control={control}
+                                render={checkBoxProps => (
+                                  <Checkbox
+                                    onChange={e => checkBoxProps.onChange(e.target.checked)}
+                                    checked={checkBoxProps.value}
+                                  />
+                                )}
+                              />
+                              {/* <StyledCheckBox checked={snsData.insta} onChange={event => setSnsData({ ...snsData, insta: event.target.checked })} disabled={!applyData.instaUserName} /> */}
                             </Box>
                           </Grid>
                           <Grid item xs md={5}>
@@ -306,8 +289,17 @@ function CampaignApply(props) {
                       <Grid item xs={12}>
                         <Grid container alignItems="center">
                           <Grid item>
-                            <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
-                              <StyledCheckBox checked={snsData.youtube} onChange={event => setSnsData({ ...snsData, youtube: event.target.checked })} disabled={!applyData.youtubeChannelName} />
+                            <Box p="4px" border="1px solid #e9ecef" borderRight="0">
+                              <Controller
+                                name="youtube"
+                                control={control}
+                                render={checkBoxProps => (
+                                  <Checkbox
+                                    onChange={e => checkBoxProps.onChange(e.target.checked)}
+                                    checked={checkBoxProps.value}
+                                  />
+                                )}
+                              />
                             </Box>
                           </Grid>
                           <Grid item xs md={5}>
@@ -344,8 +336,17 @@ function CampaignApply(props) {
                       <Grid item xs={12}>
                         <Grid container alignItems="center">
                           <Grid item>
-                            <Box padding="12px" border="1px solid #e9ecef" borderRight="0">
-                              <StyledCheckBox checked={snsData.naver} onChange={event => setSnsData({ ...snsData, naver: event.target.checked })} disabled={!applyData.naverChannelName} />
+                            <Box p="4px" border="1px solid #e9ecef" borderRight="0">
+                              <Controller
+                                name="naver"
+                                control={control}
+                                render={checkBoxProps => (
+                                  <Checkbox
+                                    onChange={e => checkBoxProps.onChange(e.target.checked)}
+                                    checked={checkBoxProps.value}
+                                  />
+                                )}
+                              />
                             </Box>
                           </Grid>
                           <Grid item xs md={5}>
@@ -394,6 +395,15 @@ function CampaignApply(props) {
                         opacity: '0', width: '0', padding: '0', border: '0', height: '0'
                       }}
                     />
+                    <input
+                      type="text"
+                      readOnly
+                      name="delivery"
+                      ref={register}
+                      style={{
+                        opacity: '0', width: '0', padding: '0', border: '0', height: '0'
+                      }}
+                    />
                   </Grid>
                 </Box>
               </Grid>
@@ -436,8 +446,8 @@ function CampaignApply(props) {
                     <Grid container spacing={3}>
                       <Grid item xs={12}>
                         <StyledImage width="100%" height="300px" src={addData.TB_PHOTO_ADs.length > 0 ? addData.TB_PHOTO_ADs[0].PHO_FILE : noImage} />
-                        <Box py={3}><StyledText overflowHidden fontSize="20" fontWeight="bold">{addData.AD_NAME}</StyledText></Box>
-                        <StyledText overflowHidden fontSize="15">{addData.AD_SHRT_DISC}</StyledText>
+                        <Box py={3}><StyledText overflowHidden fontSize="20px" fontWeight="bold">{addData.AD_NAME}</StyledText></Box>
+                        <StyledText overflowHidden fontSize="15px">{addData.AD_SHRT_DISC}</StyledText>
                         <Box pt={2}>
                           <Grid container spacing={1}>
                             <Grid item xs={4}>
@@ -456,7 +466,7 @@ function CampaignApply(props) {
                         <Divider />
                       </Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize="14" fontWeight="bold">리뷰어 신청  2020-11-01 ~ 2020-11-30</StyledText>
+                        <StyledText fontSize="14px" fontWeight="bold">리뷰어 신청  2020-11-01 ~ 2020-11-30</StyledText>
                       </Grid>
                       <Grid item xs={12}>
                         <Divider />

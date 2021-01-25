@@ -78,7 +78,7 @@ function Service(props) {
   }, [tab]);
   return (
     <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 8 }} maxWidth="1920px" margin="0 auto">
-      <StyledText fontSize="25">
+      <StyledText fontSize="25px">
         <span style={{ color: Colors.pink }}>서비스</span>
         {` 캠페인 / ${tab.name}`}
       </StyledText>

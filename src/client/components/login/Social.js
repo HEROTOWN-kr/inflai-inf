@@ -101,7 +101,7 @@ function Social(props) {
 
   function facebookLogin() {
     window.FB.login((loginRes) => {
-      if (loginRes.status === 'connected') {
+      if (loginRes.authResponse) {
         const { accessToken, userID } = loginRes.authResponse;
 
         axios.post('/api/TB_INFLUENCER/facebookLogin', {

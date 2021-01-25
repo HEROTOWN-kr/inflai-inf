@@ -24,7 +24,7 @@ function ProfileMenu(props) {
             <Box py={5} borderBottom={`1px solid ${Colors.grey4}`} textAlign="center">
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <StyledText fontWeight="500" fontSize="24">
+                  <StyledText fontWeight="500" fontSize="24px">
                           마이페이지
                   </StyledText>
                 </Grid>
@@ -34,12 +34,12 @@ function ProfileMenu(props) {
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledText fontSize="16" fontWeight="600">
+                  <StyledText fontSize="16px" fontWeight="600">
                     {userInfo.INF_NAME}
                   </StyledText>
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledText fontSize="14">
+                  <StyledText fontSize="14px">
                     {`${userInfo.INF_BLOG_TYPE} 로그인`}
                   </StyledText>
                 </Grid>
@@ -61,7 +61,7 @@ function ProfileMenu(props) {
                 onClick={event => history.push(match.path + item.link)}
                 className="profile-menu-link"
               >
-                <StyledText fontSize="18">
+                <StyledText fontSize="18px">
                   {item.text}
                 </StyledText>
               </Box>

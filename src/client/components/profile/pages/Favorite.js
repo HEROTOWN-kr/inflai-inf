@@ -71,7 +71,7 @@ function Favorite() {
     <WhiteBlock height="100%" borderRadius={isMD ? '7px' : '0'}>
       <Hidden smDown>
         <PageTitle>
-          <StyledText fontSize="24">
+          <StyledText fontSize="24px">
             관심 캠페인
           </StyledText>
         </PageTitle>

@@ -52,12 +52,12 @@ function CampaignCardHome(props) {
             </StyledText>
           </Grid>
           <Grid item xs={12}>
-            <StyledText overflowHidden fontWeight="bold" fontSize="16">
+            <StyledText overflowHidden fontWeight="bold" fontSize="16px">
               {name}
             </StyledText>
           </Grid>
           <Grid item xs={12}>
-            <StyledText overflowHidden fontSize="13" color={Colors.grey5}>
+            <StyledText overflowHidden fontSize="13px" color={Colors.grey5}>
               {shrtDisc}
             </StyledText>
           </Grid>
@@ -71,14 +71,14 @@ function CampaignCardHome(props) {
                       color={Colors.grey5}
                       fontSize="20px"
                     />
-                    <StyledText overflowHidden fontSize="13" color={Colors.grey5}>
+                    <StyledText overflowHidden fontSize="13px" color={Colors.grey5}>
                       <span style={{ color: Colors.pink }}>{participantsLength}</span>
                       {`/${cnt}명`}
                     </StyledText>
                   </div>
                 </Grid>
                 <Grid item>
-                  <StyledText overflowHidden fontSize="13" color={Colors.grey5}>
+                  <StyledText overflowHidden fontSize="13px" color={Colors.grey5}>
                     {`${proportion}%`}
                   </StyledText>
                 </Grid>

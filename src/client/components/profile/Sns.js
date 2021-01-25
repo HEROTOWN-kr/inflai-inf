@@ -158,7 +158,7 @@ function Sns(props) {
       findInstagramAccounts(accessToken, userID);
     } else {
       FB.login((loginRes2) => {
-        if (loginRes2.status === 'connected') {
+        if (loginRes2.authResponse) {
           const { accessToken, userID } = loginRes2.authResponse;
           findInstagramAccounts(accessToken, userID);
         } else {
@@ -260,12 +260,12 @@ function Sns(props) {
             ) : null}
             <Grid item xs={12} md>
               <Box pb={2}>
-                <StyledText fontSize="14">
+                <StyledText fontSize="14px">
                   {'연결한 계정: '}
                   <b>{INS_USERNAME}</b>
                 </StyledText>
               </Box>
-              <StyledText fontSize="13">{`${INS_DT}에 연결되었습니다`}</StyledText>
+              <StyledText fontSize="13px">{`${INS_DT}에 연결되었습니다`}</StyledText>
             </Grid>
           </Grid>
         </Grid>
@@ -299,12 +299,12 @@ function Sns(props) {
             ) : null}
             <Grid item xs={12} md>
               <Box pb={2}>
-                <StyledText fontSize="14">
+                <StyledText fontSize="14px">
                   {'연결한 채널: '}
                   <b>{YOU_NAME}</b>
                 </StyledText>
               </Box>
-              <StyledText fontSize="13">{`${YOU_DT}에 연결되었습니다`}</StyledText>
+              <StyledText fontSize="13px">{`${YOU_DT}에 연결되었습니다`}</StyledText>
             </Grid>
           </Grid>
         </Grid>

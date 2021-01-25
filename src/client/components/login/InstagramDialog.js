@@ -75,15 +75,15 @@ function InstagramDialog(props) {
       </Box>
       <Divider />
       <Box padding="20px">
-        <StyledText fontSize="16" fontWeight="500">{text.title2}</StyledText>
+        <StyledText fontSize="16px" fontWeight="500">{text.title2}</StyledText>
         <Box mt={2}>
-          <StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule1}</StyledText>
-          <StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule2}</StyledText>
-          <StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule3}</StyledText>
-          <StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.title2}</StyledText>
-          {text.rule4 ? (<StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule4}</StyledText>) : null}
-          {text.rule5 ? (<StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule5}</StyledText>) : null}
-          {text.rule6 ? (<StyledText fontSize="14" fontWeight="400" lineHeight="1.6em">{text.rule6}</StyledText>) : null}
+          <StyledText fontSize="14px" fontWeight="400" lineHeight="1.6em">{text.rule1}</StyledText>
+          <StyledText fontSize="14px" fontWeight="400" lineHeight="1.6em">{text.rule2}</StyledText>
+          <StyledText fontSize="14px" fontWeight="400" lineHeight="1.6em">{text.rule3}</StyledText>
+          <StyledText fontSize="14px" fontWeight="400" lineHeight="1.6em">{text.title2}</StyledText>
+          {text.rule4 ? (<StyledText fontSize="14px" fontWeight="400" lineHeight="1.6em">{text.rule4}</StyledText>) : null}
+          {text.rule5 ? (<StyledText fontSize="14px" fontWeight="400" lineHeight="1.6em">{text.rule5}</StyledText>) : null}
+          {text.rule6 ? (<StyledText fontSize="14px" fontWeight="400" lineHeight="1.6em">{text.rule6}</StyledText>) : null}
         </Box>
         <Grid container spacing={1}>
           <Grid item>
@@ -125,7 +125,7 @@ function InstagramDialog(props) {
       <DialogContent>
         <Grid container spacing={2} justify="center">
           <Grid item xs={12} className="dialog-text">
-            <Box pt={1}><StyledText fontSize="16" fontWeight="700">{text.title2}</StyledText></Box>
+            <Box pt={1}><StyledText fontSize="16px" fontWeight="700">{text.title2}</StyledText></Box>
           </Grid>
           <Grid item xs={12} className="dialog-text">
             <Grid container spacing={1}>

@@ -32,11 +32,11 @@ export default function ConfirmDialog(props) {
       >
         <DialogTitle id="responsive-dialog-title">
           {/* INFLAI */}
-          <StyledText textAlign="center" fontSize="14">INFLAI</StyledText>
+          <StyledText textAlign="center" fontSize="14px">INFLAI</StyledText>
         </DialogTitle>
         <DialogContent>
           {/* {dialogText} */}
-          <StyledText textAlign="center" fontSize="14">{dialogText}</StyledText>
+          <StyledText textAlign="center" fontSize="14px">{dialogText}</StyledText>
         </DialogContent>
         <DialogActions>
           <StyledButton onClick={handleClose}>

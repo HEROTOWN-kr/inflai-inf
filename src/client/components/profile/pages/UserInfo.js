@@ -44,7 +44,7 @@ function LabelComponent(props) {
   const { labelName } = props;
   return (
     <Box width="175px">
-      <StyledText fontSize="15">
+      <StyledText fontSize="15px">
         {labelName}
       </StyledText>
     </Box>
@@ -134,7 +134,7 @@ function UserInfo(props) {
     <WhiteBlock borderRadius={isMD ? '7px' : '0'}>
       <Hidden smDown>
         <PageTitle>
-          <StyledText fontSize="24">
+          <StyledText fontSize="24px">
             회원정보수정
           </StyledText>
         </PageTitle>
@@ -150,7 +150,7 @@ function UserInfo(props) {
                       <LabelComponent labelName="이메일 아이디" />
                     </Grid>
                     <Grid item xs={12} md>
-                      <StyledText fontSize="15">
+                      <StyledText fontSize="15px">
                         {userInfo.INF_EMAIL || ''}
                       </StyledText>
                     </Grid>
@@ -303,7 +303,7 @@ function UserInfo(props) {
           </Grid>
           <Grid item xs={12}>
             <Box pb={4}>
-              <StyledText fontSize="19" fontWeight="600">SNS</StyledText>
+              <StyledText fontSize="19px" fontWeight="600">SNS</StyledText>
             </Box>
             <Sns {...props} LabelComponent={LabelComponent} />
           </Grid>

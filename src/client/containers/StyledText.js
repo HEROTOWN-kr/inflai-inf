@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import { textAlign } from '@material-ui/system';
 import { Colors } from '../lib/Сonstants';
 
@@ -7,7 +7,7 @@ const useStyles = makeStyles({
   common: ({
     fontSize, lineHeight, color, fontWeight, textAlign, overflowHidden, cursor
   }) => ({
-    fontSize: fontSize ? `${fontSize}px` : '14px',
+    fontSize: fontSize || '14px',
     lineHeight: lineHeight || '1em',
     color: color || Colors.black,
     fontWeight: fontWeight || 'normal',
@@ -25,14 +25,17 @@ text-overflow: ellipsis; */
 
 function StyledText(props) {
   const {
-    className, children, onClick
+    children, fontSize, lineHeight, color, fontWeight, textAlign, overflowHidden, cursor, ...rest
   } = props;
   const classes = useStyles(props);
 
   return (
-    <div className={`${classes.common} ${className}`} onClick={onClick}>
+    <Box
+      classes={{ root: classes.common }}
+      {...rest}
+    >
       {children}
-    </div>
+    </Box>
   );
 }
 

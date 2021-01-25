@@ -7,7 +7,7 @@ import StyledImage from '../../../containers/StyledImage';
 function HomePartners() {
   return (
     <Box padding="50px 0" textAlign="center">
-      <StyledText fontSize="36">Partners</StyledText>
+      <StyledText fontSize="36px">Partners</StyledText>
       <Box margin="0 auto" mt={6} maxWidth="1100px">
         <StyledImage width="100%" src={Partners} />
       </Box>

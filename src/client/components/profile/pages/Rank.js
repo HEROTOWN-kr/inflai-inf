@@ -40,7 +40,7 @@ function Rank(props) {
           <Grid item xs={12}>
             <WhiteBlock>
               <PageTitle>
-                <StyledText fontSize="24">
+                <StyledText fontSize="24px">
                   랭킹 정보
                 </StyledText>
               </PageTitle>

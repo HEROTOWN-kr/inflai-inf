@@ -105,7 +105,7 @@ function HomeCampaigns(props) {
 
   return (
     <React.Fragment>
-      <StyledText fontSize="25">
+      <StyledText fontSize="25px">
         <span style={{ color: Colors.pink }}>최근</span>
         {' 캠페인'}
       </StyledText>
