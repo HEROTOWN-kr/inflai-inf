@@ -34,22 +34,21 @@ const defaultValues = {
 };
 
 const schema = Yup.object().shape({
-  url: Yup.string().required('리뷰 url를 입력해주세요'),
+  url: Yup.string().required('리뷰 url를 입력해주세요')
+    .test('snsTypeCheck', '올바른 블로그 URL이 아닙니다. URL을 확인해주세요.', val => (
+      val.indexOf('http://') === 0 || val.indexOf('https://') === 0
+    )),
 });
 
 
 export default function ReviewInfoDialog(props) {
   const {
-    open, closeDialog, onConfirm,
+    open, closeDialog, onConfirm, currentAd
   } = props;
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const classes = useStyles();
 
-  const onConfirmFunc = (data) => {
-    onConfirm(data.url);
-    closeDialog();
-  };
 
   const {
     register, handleSubmit, handleBlur, watch, errors, setValue, control, getValues, reset
@@ -59,18 +58,34 @@ export default function ReviewInfoDialog(props) {
     defaultValues
   });
 
+  const onConfirmFunc = (data) => {
+    onConfirm(data.url);
+    reset(defaultValues);
+    closeDialog();
+  };
+
+  function onDialogClose() {
+    reset(defaultValues);
+    closeDialog();
+  }
+
+  function checkUrl() {
+    reset({ url: currentAd.url });
+  }
+
   return (
     <Dialog
       classes={{ paper: classes.paper }}
       // fullScreen={fullScreen}
       open={open}
-      onClose={closeDialog}
+      onEntered={checkUrl}
+      onClose={onDialogClose}
       maxWidth="xs"
       aria-labelledby="responsive-dialog-title"
     >
       <Box padding="20px" fontSize="18px" fontWeight="400" lineHeight="18px" position="relative" borderBottom={`1px solid ${Colors.grey8}`}>
                 INFLAI
-        <Clear onClick={closeDialog} classes={{ root: classes.root }} />
+        <Clear onClick={onDialogClose} classes={{ root: classes.root }} />
       </Box>
       <Box padding="20px">
         <Box mb={2}>
@@ -85,7 +100,7 @@ export default function ReviewInfoDialog(props) {
         <Grid container spacing={2} justify="center">
           <Grid item>
             <Box width="100px">
-              <StyledButton height={38} padding="0" onClick={closeDialog}>
+              <StyledButton height={38} padding="0" onClick={onDialogClose}>
                         닫기
               </StyledButton>
             </Box>

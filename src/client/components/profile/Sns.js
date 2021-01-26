@@ -39,6 +39,10 @@ function Sns(props) {
   const [instaSelectDialogOpen, setInstaSelectDialogOpen] = useState(false);
   const [instaAccounts, setInstaAccounts] = useState([]);
 
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  const isInstagram = (ua.indexOf('Instagram') > -1);
+  // const isInstagram = true;
+
   async function instagramButtonClick() {
     if (!INS_ID) {
       setInstaDialogOpen(!instaDialogOpen);
@@ -266,6 +270,24 @@ function Sns(props) {
                 </StyledText>
               </Box>
               <StyledText fontSize="13px">{`${INS_DT}에 연결되었습니다`}</StyledText>
+            </Grid>
+          </Grid>
+        </Grid>
+      ) : null}
+      {isInstagram ? (
+        <Grid item xs={12}>
+          <Grid container alignItems="center" spacing={1}>
+            {isMD ? (
+              <Grid item>
+                <LabelComponent labelName="" />
+              </Grid>
+            ) : null}
+            <Grid item xs={12} md>
+              <Box>
+                <StyledText fontSize="14px" color="red" lineHeight="1.3em">
+                  사파리 혹은 크롬으로 접속하셔야 연동이 문제없이 됩니다 ㅠㅠ!
+                </StyledText>
+              </Box>
             </Grid>
           </Grid>
         </Grid>

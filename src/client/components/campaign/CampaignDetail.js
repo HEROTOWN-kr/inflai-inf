@@ -275,7 +275,6 @@ function CampaignDetail() {
     checkFavorites();
   }, [token]);
 
-
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 
@@ -349,7 +348,6 @@ function CampaignDetail() {
             ) : (
               <StyledImage width="550px" height={isMD ? '435px' : 'auto'} src={currentImage || testImage} />
             )}
-
             <Box mt={1} mb={isMD ? 5 : 1}>
               <Grid container spacing={1}>
                 {productData.TB_PHOTO_ADs.map(item => (
@@ -551,14 +549,16 @@ function CampaignDetail() {
                   </Grid>
                   <Grid item xs={12} sm className="provide-info">
                     <Grid container>
-                      <Grid item xs={12}>
-                        <Grid container>
-                          <Grid item><Box width="65px" fontWeight="bold">주소</Box></Grid>
-                          <Grid item xs>
-                            {`(${productData.AD_POST_CODE}) ${productData.AD_ROAD_ADDR} ${productData.AD_DETAIL_ADDR} ${productData.AD_EXTR_ADDR}`}
+                      {productData.AD_POST_CODE ? (
+                        <Grid item xs={12}>
+                          <Grid container>
+                            <Grid item><Box width="65px" fontWeight="bold">주소</Box></Grid>
+                            <Grid item xs>
+                              {`(${productData.AD_POST_CODE}) ${productData.AD_ROAD_ADDR} ${productData.AD_DETAIL_ADDR} ${productData.AD_EXTR_ADDR}`}
+                            </Grid>
                           </Grid>
                         </Grid>
-                      </Grid>
+                      ) : null}
                       <Grid item xs={12}>
                         <Grid container>
                           <Grid item><Box width="65px" fontWeight="bold">연락처</Box></Grid>

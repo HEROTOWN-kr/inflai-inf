@@ -12,7 +12,7 @@ import ReviewInfoDialog from './ReviewInfoDialog';
 
 function CampaignSelectedCard(props) {
   const {
-    writeReview, image, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD
+    writeReview, image, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD, review
   } = props;
 
   function calculateDates(date) {
@@ -56,7 +56,7 @@ function CampaignSelectedCard(props) {
                   hoverBackground={Colors.greenHover}
                   onClick={writeReview}
                 >
-                  리뷰 등록
+                  {review ? '리뷰 수정' : '리뷰 등록'}
                 </StyledButton>
               </Grid>
             </Grid>

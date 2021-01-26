@@ -40,27 +40,17 @@ function TabComponent(props) {
 
 function CampaignInfo(props) {
   const { history, match } = props;
-  const [tab, setTab] = useState(2);
+  const [tab, setTab] = useState(1);
   const [loading, setLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const { token } = useContext(AuthContext);
 
   const [reviewDialog, setReviewDialog] = useState(false);
-  const [currentAd, setCurrentAd] = useState(0);
+  const [currentAd, setCurrentAd] = useState({ id: 0, url: '' });
 
   function toggleReviewDialog() {
     setReviewDialog(!reviewDialog);
-  }
-
-  function saveReviewInfo(url) {
-    console.log(currentAd);
-    console.log(url);
-  }
-
-  function writeReview(adId) {
-    setCurrentAd(adId);
-    toggleReviewDialog();
   }
 
   function getCampaigns(status) {
@@ -77,6 +67,20 @@ function CampaignInfo(props) {
       setCampaigns(data);
       setLoading(false);
     }).catch(err => alert(err));
+  }
+
+  function saveReviewInfo(url) {
+    const apiObj = { adId: currentAd.id, url, token };
+    axios.post('/api/TB_PARTICIPANT/writeReview', apiObj).then((res) => {
+      getCampaigns(2);
+    }).catch((err) => {
+      alert(err.response.data.message);
+    });
+  }
+
+  function writeReview(adId, PAR_REVIEW) {
+    setCurrentAd({ id: adId, url: PAR_REVIEW });
+    toggleReviewDialog();
   }
 
   useEffect(() => {
@@ -177,7 +181,7 @@ function CampaignInfo(props) {
                 <Grid container spacing={isMD ? 3 : 1}>
                   {campaigns.map((item) => {
                     const {
-                      AD_ID, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs,
+                      AD_ID, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs, PAR_REVIEW
                     } = item;
                     return (
                       tab === 1 ? (
@@ -208,8 +212,9 @@ function CampaignInfo(props) {
                             participantsLength={TB_PARTICIPANTs.length}
                             cnt={AD_INF_CNT}
                             proportion={proportion}
+                            review={PAR_REVIEW}
                             onClick={() => detailInfo(AD_ID)}
-                            writeReview={() => writeReview(AD_ID)}
+                            writeReview={() => writeReview(AD_ID, PAR_REVIEW)}
                             isMD={isMD}
                           />
                         </Grid>
@@ -246,6 +251,7 @@ function CampaignInfo(props) {
         open={reviewDialog}
         closeDialog={toggleReviewDialog}
         onConfirm={saveReviewInfo}
+        currentAd={currentAd}
       />
     </WhiteBlock>
   );

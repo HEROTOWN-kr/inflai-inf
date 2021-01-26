@@ -14,7 +14,6 @@ import HomeVideoTitle from './sections/HomeVideoTitle';
 
 const ElementLink = Scroll.Element;
 
-
 function Home(props) {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
