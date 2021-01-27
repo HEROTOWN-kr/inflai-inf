@@ -249,6 +249,7 @@ function CampaignApply(props) {
                                   <Checkbox
                                     onChange={e => checkBoxProps.onChange(e.target.checked)}
                                     checked={checkBoxProps.value}
+                                    disabled={!applyData.instaUserName}
                                   />
                                 )}
                               />
@@ -297,6 +298,7 @@ function CampaignApply(props) {
                                   <Checkbox
                                     onChange={e => checkBoxProps.onChange(e.target.checked)}
                                     checked={checkBoxProps.value}
+                                    disabled={!applyData.youtubeChannelName}
                                   />
                                 )}
                               />
@@ -344,6 +346,7 @@ function CampaignApply(props) {
                                   <Checkbox
                                     onChange={e => checkBoxProps.onChange(e.target.checked)}
                                     checked={checkBoxProps.value}
+                                    disabled={!applyData.naverChannelName}
                                   />
                                 )}
                               />
