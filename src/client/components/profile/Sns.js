@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, Button, Grid, Hidden, InputBase
+  Box, Button, Grid, Hidden, InputBase, makeStyles
 } from '@material-ui/core';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { TextFields } from '@material-ui/icons';
 import StyledText from '../../containers/StyledText';
 import StyledImage from '../../containers/StyledImage';
 import instagramIcon from '../../img/instagram.png';
@@ -15,6 +18,24 @@ import YoutubeDialog from '../login/YoutubeDialog';
 import StyledButton from '../../containers/StyledButton';
 import { Colors } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
+import StyledTextField from '../../containers/StyledTextField';
+
+const useStyles = makeStyles({
+  FormHelperContained: {
+    marginLeft: '0'
+  },
+});
+
+const defaultValues = {
+  naverUrl: ''
+};
+
+const schema = Yup.object().shape({
+  naverUrl: Yup.string().required('네이버 주소를 입력해주세요')
+    .test('snsTypeCheck', '올바른 블로그 URL이 아닙니다. URL을 확인해주세요.', val => (
+      val.indexOf('http://') === 0 || val.indexOf('https://') === 0
+    )),
+});
 
 function Sns(props) {
   const {
@@ -24,6 +45,7 @@ function Sns(props) {
   const { INS_ID, INS_USERNAME, INS_DT } = TB_INSTum || {};
   const { YOU_ID, YOU_NAME, YOU_DT } = TB_YOUTUBE || {};
   const { NAV_ID, NAV_URL, NAV_DT } = TB_NAVER || {};
+  const classes = useStyles();
   const { token } = useContext(AuthContext);
   const [fbData, setFbData] = useState({
     isConnect: false,
@@ -32,7 +54,11 @@ function Sns(props) {
 
   const {
     register, handleSubmit, watch, errors, setValue, control, getValues
-  } = useForm();
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(schema),
+    defaultValues
+  });
 
   const [instaDialogOpen, setInstaDialogOpen] = useState(false);
   const [youtubeDialogOpen, setYoutubeDialogOpen] = useState(false);
@@ -87,28 +113,23 @@ function Sns(props) {
     }
   }
 
-  function naverButtonClick() {
-    if (!NAV_ID) {
-      const url = getValues('naverUrl');
-      if (!url) {
-        alert('네이버 주소를 입력해주세요');
-      } else {
-        axios.post('/api/TB_NAVER/add', {
-          url,
-          token
-        }).then((res) => {
-          getUserInfo();
-        }).catch((error) => {
-          alert(error.response.data.message);
-        });
-      }
-    } else {
-      axios.post('/api/TB_NAVER/delete', {
-        id: NAV_ID
-      }).then((res) => {
-        getUserInfo();
-      }).catch(err => alert(err.response.data.message));
-    }
+  function naverButtonClick(data) {
+    axios.post('/api/TB_NAVER/add', {
+      url: data.naverUrl,
+      token
+    }).then((res) => {
+      getUserInfo();
+    }).catch((error) => {
+      alert(error.response.data.message);
+    });
+  }
+
+  function deleteNaverUrl() {
+    axios.post('/api/TB_NAVER/delete', {
+      id: NAV_ID
+    }).then((res) => {
+      getUserInfo();
+    }).catch(err => alert(err.response.data.message));
   }
 
   function selectAccountDialog() {
@@ -347,9 +368,9 @@ function Sns(props) {
                   ) : (
                     <Box py={1} px={2} border="1px solid #e9ecef">
                       <InputBase
+                        inputRef={register}
                         name="naverUrl"
                         fullWidth
-                        inputRef={register({ required: true })}
                         placeholder="http://블로그주소 또는 https://블로그주소"
                         inputProps={{ 'aria-label': 'naked', style: { padding: '0' } }}
                       />
@@ -363,13 +384,16 @@ function Sns(props) {
                       boxShadow="none"
                       padding="0 10"
                       background={Colors.blue2}
-                      onClick={naverButtonClick}
+                      onClick={NAV_ID ? deleteNaverUrl : handleSubmit(naverButtonClick)}
                     >
                       {NAV_ID ? '연결해제' : '연결하기'}
                     </StyledButton>
                   </Box>
                 </Grid>
               </Grid>
+              {errors.naverUrl ? (
+                <div className="error-message">{errors.naverUrl.message}</div>
+              ) : null}
             </Box>
           </Grid>
         </Grid>

@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
-  Box, Button, Divider, Grid, Hidden
+  Box, Button, Checkbox, Divider, Grid, Hidden, FormControlLabel, Typography, makeStyles
 } from '@material-ui/core';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import WhiteBlock from '../../../containers/WhiteBlock';
 import PageTitle from '../PageTitle';
 import StyledText from '../../../containers/StyledText';
@@ -18,6 +20,7 @@ import defaultAccountImage from '../../../img/default_account_image.png';
 import DaumPostCodeMobile from '../../../containers/DaumPostCodeMobile';
 import CategoryDialog from '../../navbar/MobileView/CategoryDialog';
 import DaumPostCodeDialog from '../../../containers/DaumPostCodeDialog';
+import ReactFormText from '../../../containers/ReactFormText';
 
 function ImageActionButton(props) {
   const {
@@ -51,47 +54,89 @@ function LabelComponent(props) {
   );
 }
 
+Yup.addMethod(Yup.string, 'integerString', function () {
+  return this.matches(/^\d+$/, '숫자 입력만 가능합니다');
+});
+
+const schema = Yup.object().shape({
+  nickName: Yup.string().required('이름을 입력해주세요'),
+  phone: Yup.string().required('연락처를 입력해주세요').integerString(),
+  postcode: Yup.string().required('우편번호를 입력해주세요'),
+  roadAddress: Yup.string().required('도로명주소를 입력해주세요'),
+  detailAddress: Yup.string().required('상세주소를 입력해주세요'),
+});
+
+const defaultValues = {
+  nickName: '',
+  phone: '',
+  postcode: '',
+  roadAddress: '',
+  detailAddress: '',
+  extraAddress: '',
+  message: false,
+};
+
+const useStyles = makeStyles({
+  label: {
+    fontSize: '13px'
+  }
+});
+
 function UserInfo(props) {
   const {
-    userInfo, setUserInfo, getUserInfo, setMessage, isMD
+    setMessage, isMD
   } = props;
   const [imageUrl, setImageUrl] = useState('');
-  const [noticeCheck, setNoticeCheck] = useState(false);
-  const {
-    register, handleSubmit, watch, errors, setValue, control, getValues
-  } = useForm();
+  const [userInfo, setUserInfo] = useState({});
   const { token, userDataUpdate } = useContext(AuthContext);
+  const classes = useStyles();
+
+  const {
+    register, handleSubmit, reset, errors, setValue, control
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(schema),
+    defaultValues
+  });
+
+  function getUserInfo() {
+    axios.get('/api/TB_INFLUENCER/', { params: { token } }).then((res) => {
+      const { data } = res.data;
+      const {
+        INF_EMAIL, INF_NAME, INF_TEL, INF_POST_CODE, INF_ROAD_ADDR, INF_DETAIL_ADDR,
+        INF_EXTR_ADDR, INF_PHOTO, INF_MESSAGE, TB_INSTum, TB_YOUTUBE, TB_NAVER
+      } = data;
+      reset({
+        nickName: INF_NAME,
+        phone: INF_TEL,
+        postcode: INF_POST_CODE,
+        roadAddress: INF_ROAD_ADDR,
+        detailAddress: INF_DETAIL_ADDR,
+        extraAddress: INF_EXTR_ADDR,
+        message: INF_MESSAGE === 1,
+      });
+      setUserInfo({
+        TB_INSTum, TB_YOUTUBE, TB_NAVER, INF_PHOTO, INF_EMAIL
+      });
+      userDataUpdate(INF_NAME, INF_PHOTO);
+    });
+  }
 
   useEffect(() => {
-    register({ name: 'photo' }, {});
+    register({ name: 'photo' });
   }, [register]);
 
   useEffect(() => {
-    const {
-      INF_NAME, INF_TEL, INF_POST_CODE, INF_ROAD_ADDR, INF_DETAIL_ADDR,
-      INF_EXTR_ADDR, INF_AREA, INF_PROD, INF_PHOTO, INF_MESSAGE
-    } = userInfo;
-
-    setValue('nickName', INF_NAME);
-    setValue('phone', INF_TEL);
-    setValue('postcode', INF_POST_CODE);
-    setValue('roadAddress', INF_ROAD_ADDR);
-    setValue('detailAddress', INF_DETAIL_ADDR);
-    setValue('extraAddress', INF_EXTR_ADDR);
-    setValue('region', INF_AREA || '0');
-    setValue('product', INF_PROD);
-    setNoticeCheck(INF_MESSAGE === 1);
-
-    userDataUpdate(INF_NAME, INF_PHOTO);
-  }, [userInfo]);
+    if (token) {
+      getUserInfo();
+    }
+  }, [token]);
 
   const updateProfile = async (data) => {
     try {
-      const apiObj = { ...data, token };
-      apiObj.message = noticeCheck ? 1 : 0;
+      const apiObj = { ...data, message: data.message ? 1 : 0, token };
 
       await axios.post('/api/TB_INFLUENCER/updateInfo', apiObj);
-
       if (data.photo) {
         const { photo } = data;
         const formData = new FormData();
@@ -100,11 +145,11 @@ function UserInfo(props) {
         return axios.post('/api/TB_INFLUENCER/upload', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         }).then(async (response) => {
-          await getUserInfo();
+          getUserInfo();
           setMessage({ type: 'success', open: true, text: '신청되었습니다' });
         }).catch(err => alert('photo upload error'));
       }
-      await getUserInfo();
+      getUserInfo();
       setMessage({ type: 'success', open: true, text: '저장되었습니다' });
     } catch (err) {
       alert(err.message);
@@ -113,7 +158,6 @@ function UserInfo(props) {
 
   function addPicture(event) {
     setValue('photo', event.target.files[0]);
-
     const picture = event.target.files[0];
     const picUrl = URL.createObjectURL(picture);
     setImageUrl(picUrl);
@@ -124,10 +168,6 @@ function UserInfo(props) {
     setImageUrl(null);
     setValue('photo', null);
     getUserInfo();
-  }
-
-  function onCheckboxClick(checked) {
-    setNoticeCheck(checked);
   }
 
   return (
@@ -164,16 +204,11 @@ function UserInfo(props) {
                   </Grid>
                   <Grid item xs={12} md>
                     <Box width={isMD ? '250px' : '100%'}>
-                      <StyledTextField
-                        fullWidth
+                      <ReactFormText
+                        register={register}
+                        errors={errors}
                         name="nickName"
-                        defaultValue={userInfo.INF_NAME || ''}
-                        inputRef={register({ required: true })}
-                        error={!!errors.nickName}
-                        variant="outlined"
-                        helperText={errors.nickName ? (
-                          <span className="error-message">이름을 입력해주세요</span>
-                        ) : null}
+                        placeholder="이름"
                       />
                     </Box>
                   </Grid>
@@ -186,16 +221,11 @@ function UserInfo(props) {
                   </Grid>
                   <Grid item xs={12} md>
                     <Box width={isMD ? '250px' : '100%'}>
-                      <StyledTextField
-                        fullWidth
+                      <ReactFormText
+                        register={register}
+                        errors={errors}
                         name="phone"
-                        defaultValue={userInfo.INF_TEL || ''}
-                        inputRef={register({ required: true })}
-                        error={!!errors.phone}
-                        variant="outlined"
-                        helperText={errors.phone ? (
-                          <span className="error-message">전화번호를 입력해주세요</span>
-                        ) : null}
+                        placeholder="전화번호"
                       />
                     </Box>
                     <Box fontSize="13px" color={Colors.grey2}>
@@ -211,13 +241,10 @@ function UserInfo(props) {
                   </Grid>
                   <Grid item xs={12} md>
                     <Box maxWidth={isMD ? '500px' : 'none'}>
-                      {/* <Button onClick={toggleDialog}>testDialog</Button> */}
                       <DaumPostCode setValue={setValue} register={register} errors={errors} />
                       <Box fontSize="13px" color={Colors.grey2}>
                         ※ 주소는 한번만 기입하시면 향후 제품수령시 자동으로 사용이 됩니다. 정확하게 기입해주세요.
                       </Box>
-
-                      {/* <DaumPostCodeMobile setValue={setValue} register={register} errors={errors} /> */}
                     </Box>
                   </Grid>
                 </Grid>
@@ -246,8 +273,9 @@ function UserInfo(props) {
                                 id="picAdd"
                                 name="photo"
                                 type="file"
-                                style={{ display: 'none' }}
-                                                              // multiple
+                                style={{
+                                  opacity: '0', width: '0', padding: '0', border: '0', height: '0'
+                                }}
                                 accept="image/*"
                                 onChange={(event => addPicture(event))}
                               />
@@ -272,10 +300,25 @@ function UserInfo(props) {
                     <LabelComponent labelName="카카오수신동의" />
                   </Grid>
                   <Grid item xs={12} md>
-                    <input id="kakaoCheck" type="checkbox" checked={noticeCheck} onChange={e => onCheckboxClick(e.target.checked)} />
-                    <label htmlFor="kakaoCheck">
-                      {' 카카오톡 통한 캠페인 모집 및 추천, 이벤트 정보 등의 수신에 동의합니다.'}
-                    </label>
+                    <Controller
+                      name="message"
+                      control={control}
+                      render={checkBoxProps => (
+                        <FormControlLabel
+                          control={(
+                            <Checkbox
+                              onChange={e => checkBoxProps.onChange(e.target.checked)}
+                              checked={checkBoxProps.value}
+                            />
+                             )}
+                          label={(
+                            <Typography classes={{ body1: classes.label }}>
+                            카카오톡 통한 캠페인 모집 및 추천, 이벤트 정보 등의 수신에 동의합니다.
+                            </Typography>
+                          )}
+                        />
+                      )}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -305,7 +348,7 @@ function UserInfo(props) {
             <Box pb={4}>
               <StyledText fontSize="19px" fontWeight="600">SNS</StyledText>
             </Box>
-            <Sns {...props} LabelComponent={LabelComponent} />
+            <Sns {...props} userInfo={userInfo} getUserInfo={getUserInfo} LabelComponent={LabelComponent} />
           </Grid>
         </Grid>
         <Box px={2} />

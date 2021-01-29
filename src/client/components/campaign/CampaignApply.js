@@ -182,8 +182,13 @@ function CampaignApply(props) {
       };
 
       axios.post('/api/TB_PARTICIPANT/save', apiObj).then((res) => {
-        setMessage({ type: 'success', open: true, text: '신청되었습니다' });
-        history.push(`/Campaign/detail/${match.params.id}`);
+        if (res.status === 201) {
+          alert(res.data.message);
+          history.push(`/Campaign/detail/${match.params.id}`);
+        } else {
+          setMessage({ type: 'success', open: true, text: '신청되었습니다' });
+          history.push(`/Campaign/detail/${match.params.id}`);
+        }
       }).catch((err) => {
         alert(err.response.data.message);
       });

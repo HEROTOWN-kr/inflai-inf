@@ -5,9 +5,11 @@ import StyledText from '../../containers/StyledText';
 import StyledImage from '../../containers/StyledImage';
 import defaultAccountImage from '../../img/default_account_image.png';
 import WhiteBlock from '../../containers/WhiteBlock';
+import AuthContext from '../../context/AuthContext';
 
 function ProfileMenu(props) {
-  const { history, match, userInfo } = props;
+  const { history, match } = props;
+  const { userName, userPhoto, socialType } = useContext(AuthContext);
 
   const links = [
     { text: '내정보 관리', link: '/UserInfo' },
@@ -30,17 +32,17 @@ function ProfileMenu(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <Box py={1}>
-                    <StyledImage width="110px" height="110px" borderRadius="100%" src={userInfo.INF_PHOTO || defaultAccountImage} />
+                    <StyledImage width="110px" height="110px" borderRadius="100%" src={userPhoto || defaultAccountImage} />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
                   <StyledText fontSize="16px" fontWeight="600">
-                    {userInfo.INF_NAME}
+                    {userName}
                   </StyledText>
                 </Grid>
                 <Grid item xs={12}>
                   <StyledText fontSize="14px">
-                    {`${userInfo.INF_BLOG_TYPE} 로그인`}
+                    {`${socialType} 로그인`}
                   </StyledText>
                 </Grid>
               </Grid>

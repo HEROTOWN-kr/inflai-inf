@@ -41,9 +41,10 @@ const menuLinks = [
     link: '/Profile/Rank'
   },
 ];
-// backgroundImage: `url(${Logo})`,
+
 function MyPage(props) {
-  const { history, userInfo, match } = props;
+  const { history } = props;
+  const { userName, userPhoto } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
   const { Kakao, gapi, FB } = window;
 
@@ -79,10 +80,10 @@ function MyPage(props) {
         color="#ddd"
         css={{ background: `#333 url(${myPageBg}) 50% no-repeat`, backgroundSize: 'cover' }}
       >
-        <StyledImage width="68px" height="68px" borderRadius="100%" src={userInfo.INF_PHOTO || defaultAccountImage} />
+        <StyledImage width="68px" height="68px" borderRadius="100%" src={userPhoto || defaultAccountImage} />
         <Box mt={1}>
           <StyledText color="#ffffff" fontSize="20px" fontWeight="600">
-            {userInfo.INF_NAME}
+            {userName}
           </StyledText>
         </Box>
         <Box mt={6}>

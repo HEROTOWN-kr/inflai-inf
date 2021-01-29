@@ -576,7 +576,7 @@ function CampaignDetail() {
                           </Grid>
                         </Grid>
                       ) : null}
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <Grid container>
                           <Grid item><Box width="65px" fontWeight="bold">연락처</Box></Grid>
                           <Grid item xs>{productData.AD_TEL}</Grid>
@@ -587,7 +587,7 @@ function CampaignDetail() {
                           <Grid item><Box width="65px" fontWeight="bold">이메일</Box></Grid>
                           <Grid item xs>{productData.AD_EMAIL}</Grid>
                         </Grid>
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                   </Grid>
                 </Grid>
