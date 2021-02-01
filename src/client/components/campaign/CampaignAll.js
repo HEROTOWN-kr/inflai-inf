@@ -79,13 +79,14 @@ function CampaignAll(props) {
               <Grid container spacing={isMD ? 3 : 1}>
                 {campaigns.map((item) => {
                   const {
-                    AD_ID, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs, mainImage
+                    AD_ID, AD_TYPE, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs, mainImage
                   } = item;
 
                   return (
                     <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
                       <CampaignCard
                         image={mainImage}
+                        type={AD_TYPE}
                         ctg1={AD_CTG}
                         ctg2={AD_CTG2}
                         srchEnd={AD_SRCH_END}

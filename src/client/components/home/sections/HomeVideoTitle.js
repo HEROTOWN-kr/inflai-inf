@@ -71,7 +71,7 @@ function HomeVideoTitle() {
           }}
           id="videoBG"
           // objectFit="cover"
-          poster="/attach/video/bgImage.png"
+          poster="/attach/video/bgImage.PNG"
           autoPlay
           muted
           loop

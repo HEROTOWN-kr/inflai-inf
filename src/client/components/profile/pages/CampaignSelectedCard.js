@@ -12,7 +12,7 @@ import ReviewInfoDialog from './ReviewInfoDialog';
 
 function CampaignSelectedCard(props) {
   const {
-    writeReview, image, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD, review
+    writeReview, image, type, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD, review
   } = props;
 
   function calculateDates(date) {
@@ -35,7 +35,16 @@ function CampaignSelectedCard(props) {
         <Grid item xs>
           <Box>
             <StyledText>
-              <span style={{ color: Colors.pink }}>{`${AdvertiseTypes.mainType[ctg1]}/${AdvertiseTypes.subType[ctg1][ctg2]}`}</span>
+              {type === '1' ? (
+                <span style={{ color: Colors.pink, fontWeight: '600' }}>Instagram</span>
+              ) : null}
+              {type === '2' ? (
+                <span style={{ color: Colors.red, fontWeight: '600' }}>Youtube</span>
+              ) : null}
+              {type === '3' ? (
+                <span style={{ color: Colors.green, fontWeight: '600' }}>Blog</span>
+              ) : null}
+              {/* <span style={{ color: Colors.pink }}>{`${AdvertiseTypes.mainType[ctg1]}/${AdvertiseTypes.subType[ctg1][ctg2]}`}</span> */}
               {` D-${calculateDates(srchEnd)}`}
             </StyledText>
             <StyledText lineHeight="1.2em" my="8px" fontWeight="bold" fontSize="16px">{name}</StyledText>

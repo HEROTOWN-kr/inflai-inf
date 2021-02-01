@@ -73,9 +73,15 @@ function Service(props) {
     }).catch(err => alert(err.response.data.message));
   }
 
+  function changeTab(selectedTab) {
+    setTab({ id: selectedTab.id, name: selectedTab.name });
+    history.push(matchUrl + selectedTab.link);
+  }
+
   useEffect(() => {
     getCampaigns();
   }, [tab]);
+
   return (
     <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 8 }} maxWidth="1920px" margin="0 auto">
       <StyledText fontSize="25px">
@@ -93,7 +99,7 @@ function Service(props) {
               css={{ cursor: 'pointer' }}
               cursor="pointer"
               className={`category-tab${tab.id === cat.id ? ' active' : ''} card`}
-              onClick={() => history.push(matchUrl + cat.link)}
+              onClick={() => changeTab(cat)}
             >
               {cat.name}
             </Box>
