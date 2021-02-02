@@ -27,6 +27,7 @@ import defaultAccountImage from '../../img/default_account_image.png';
 import AuthContext from '../../context/AuthContext';
 import TopMenu from './TopMenu';
 import MyPagination from '../../containers/MyPagination';
+import SelectedList from './SelectedList';
 
 function TabComponent(props) {
   const {
@@ -468,6 +469,9 @@ function CampaignDetail() {
                 <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
                   <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
                 </Grid>
+                <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={3} />
+                </Grid>
               </Grid>
             </Box>
             {tab === 1 ? (
@@ -481,9 +485,13 @@ function CampaignDetail() {
                   {ReactHtmlParser(productData.AD_DETAIL)}
                 </div>
               </Box>
-            ) : (
+            ) : null}
+            {tab === 2 ? (
               <ParticipantList adId={adId} isMD={isMD} />
-            )}
+            ) : null}
+            {tab === 3 ? (
+              <SelectedList adId={adId} isMD={isMD} />
+            ) : null}
             {showMore.visible && tab === 1 ? (
               <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
                 <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
