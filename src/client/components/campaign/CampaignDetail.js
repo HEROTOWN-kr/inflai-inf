@@ -220,7 +220,6 @@ function CampaignDetail() {
       params: apiObj
     }).then((res) => {
       const { data } = res.data;
-      console.log(data);
       setProductData(data);
       setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE);
       setLoading(false);
@@ -325,7 +324,7 @@ function CampaignDetail() {
               loading ? (
                 <Skeleton variant="text" height={33} />
               ) : (
-                <StyledText fontSize={isMD ? '33px' : '20px'}>{productData.AD_NAME}</StyledText>
+                <Box fontSize={isMD ? '33px' : '20px'}>{productData.AD_NAME}</Box>
               )
             }
             <Box mt={isMD ? 3 : 2} mb={isMD ? 5 : 2}>
@@ -333,10 +332,9 @@ function CampaignDetail() {
                 loading ? (
                   <Skeleton variant="text" height={16} />
                 ) : (
-                  <StyledText fontSize={isMD ? '16px' : '14px'} color={Colors.grey2}>
-                    {/* {ReactHtmlParser(productData.AD_SHRT_DISC)} */}
-                    {productData.AD_SHRT_DISC.split('\n').map((i, key) => <div key={key}>{i}</div>)}
-                  </StyledText>
+                  <Box fontSize={isMD ? '16px' : '14px'} whiteSpace="pre-wrap" color={Colors.grey2}>
+                    {productData.AD_SHRT_DISC}
+                  </Box>
                 )
               }
             </Box>
@@ -520,8 +518,7 @@ function CampaignDetail() {
                     <Box width="125px" fontWeight="bold" component="p">제공내역</Box>
                   </Grid>
                   <Grid item xs={12} sm className="provide-info">
-                    {/* {ReactHtmlParser(productData.AD_PROVIDE)} */}
-                    {productData.AD_PROVIDE.split('\n').map((i, key) => <div key={key}>{i}</div>)}
+                    {productData.AD_PROVIDE}
                   </Grid>
                 </Grid>
               </Grid>
@@ -551,12 +548,12 @@ function CampaignDetail() {
                   <ElementLink name="discription" />
                   <Grid item>
                     <Box width="125px" fontWeight="bold">
-                      참여 안내 사항
+                      포스팅가이드
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm className="provide-info">
                     <Box>
-                      {ReactHtmlParser(productData.AD_DISC)}
+                      {productData.AD_DISC}
                     </Box>
                   </Grid>
                 </Grid>
@@ -630,7 +627,7 @@ function CampaignDetail() {
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('discription')}>참여 안내 사항</StyledText>
+                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('discription')}>포스팅가이드</StyledText>
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
                       <Grid item xs={12}>
