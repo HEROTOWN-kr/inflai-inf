@@ -8,22 +8,25 @@ import StyledSvg from '../../containers/StyledSvg';
 import noImage from '../../img/noImage.png';
 import noFound from '../../img/notFound400_316.png';
 
+function PeriodComponent(props) {
+  const { srchEnd } = props;
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  const lastDate = new Date(srchEnd);
+  if (lastDate < currentDate) {
+    return null;
+    /* return (
+      <span style={{ fontWeight: 600 }}>&nbsp;&nbsp;발표기간</span>
+    ); */
+  }
+  const daysLag = Math.ceil(Math.abs(lastDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
+  return ` D-${daysLag}`;
+}
+
 function CampaignCard(props) {
   const {
     image, type, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD
   } = props;
-
-
-  function calculateDates(date) {
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    const lastDate = new Date(date);
-    if (lastDate < currentDate) {
-      return '마감';
-    }
-    const daysLag = Math.ceil(Math.abs(lastDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
-    return daysLag;
-  }
 
   return (
     <Box border="1px solid #eaeaea" overflow="hidden" borderRadius="10px" css={{ cursor: 'pointer' }} onClick={onClick}>
@@ -42,7 +45,8 @@ function CampaignCard(props) {
                 <span style={{ color: Colors.green, fontWeight: '600' }}>Blog</span>
               ) : null}
               {/* <span style={{ color: Colors.pink }}>{`${AdvertiseTypes.mainType[ctg1]}/${AdvertiseTypes.subType[ctg1][ctg2]}`}</span> */}
-              {` D-${calculateDates(srchEnd)}`}
+
+              <PeriodComponent srchEnd={srchEnd} />
             </StyledText>
           </Grid>
           <Grid item xs={12}>

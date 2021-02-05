@@ -7,8 +7,10 @@ import { Skeleton } from '@material-ui/lab';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CampaignCard from './CampaignCard';
 
-function CampaignAll(props) {
-  const { campaigns, loading } = props;
+function CampaignAllNew(props) {
+  const {
+    campaigns, loading, fetchMoreData, hasMore
+  } = props;
   const history = useHistory();
 
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
@@ -72,14 +74,23 @@ function CampaignAll(props) {
         </Grid>
       ) : (
         <React.Fragment>
-          {
-            campaigns.length > 0 ? (
+          {campaigns.length > 0 ? (
+            <InfiniteScroll
+              dataLength={campaigns.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={<h4>Loading...</h4>}
+              endMessage={(
+                <p style={{ textAlign: 'center' }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+)}
+            >
               <Grid container spacing={isMD ? 3 : 1}>
                 {campaigns.map((item) => {
                   const {
                     AD_ID, AD_TYPE, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs, mainImage
                   } = item;
-
                   return (
                     <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
                       <CampaignCard
@@ -100,14 +111,15 @@ function CampaignAll(props) {
                   );
                 })}
               </Grid>
-            ) : (
-              <Box mt={4} textAlign="center">조회된 캠페인이 없습니다.</Box>
-            )
-          }
+            </InfiniteScroll>
+
+          ) : (
+            <Box mt={4} textAlign="center">조회된 캠페인이 없습니다.</Box>
+          )}
         </React.Fragment>
       )}
     </React.Fragment>
   );
 }
 
-export default CampaignAll;
+export default CampaignAllNew;

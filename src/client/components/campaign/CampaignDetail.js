@@ -28,6 +28,8 @@ import AuthContext from '../../context/AuthContext';
 import TopMenu from './TopMenu';
 import MyPagination from '../../containers/MyPagination';
 import SelectedList from './SelectedList';
+import CampaignShareDialog from './pages/CampaignShareDialog';
+import CategoryDialog from '../navbar/MobileView/CategoryDialog';
 
 function TabComponent(props) {
   const {
@@ -176,6 +178,7 @@ function CampaignDetail() {
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState({ visible: false, isOpen: false });
   const [tab, setTab] = useState(1);
+  const [shareDialog, setShareDialog] = useState(false);
   const [liked, setLiked] = useState(false);
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
   const { token, userRole } = useContext(AuthContext);
@@ -193,6 +196,10 @@ function CampaignDetail() {
 
   function toggleShowMore() {
     setShowMore({ ...showMore, isOpen: !showMore.isOpen });
+  }
+
+  function toggleShareDialog() {
+    setShareDialog(!shareDialog);
   }
 
   const handleScroll = () => {
@@ -341,23 +348,26 @@ function CampaignDetail() {
             <Hidden smDown>
               <Grid container justify="flex-end">
                 <Grid item>
-                  <Box width="130px" mb={2}>
-                    <Grid container justify="space-between">
-                      <Grid item>
-                        {
-                          liked ? (
-                            <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
-                          ) : (
-                            <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
-                          )
-                        }
-                        {/* <Favorite onClick={favoriteClick} classes={liked ? { root: classes.root } : null} /> */}
-                      </Grid>
-                      <Grid item><Share /></Grid>
-                      <Grid item><Print /></Grid>
-                      <Grid item><Error /></Grid>
+                  <Grid container>
+                    <Grid item>
+                      {liked ? (
+                        <IconButton size="medium" onClick={favoriteClick}>
+                          <Favorite style={{ color: Colors.pink3 }} />
+                        </IconButton>
+                      ) : (
+                        <IconButton size="medium" onClick={favoriteClick}>
+                          <FavoriteBorder style={{ color: Colors.grey8 }} />
+                        </IconButton>
+                      )}
                     </Grid>
-                  </Box>
+                    <Grid item>
+                      <IconButton size="medium" onClick={toggleShareDialog}>
+                        <Share />
+                      </IconButton>
+                    </Grid>
+                    {/* <Grid item><Print /></Grid> */}
+                    {/* <Grid item><Error /></Grid> */}
+                  </Grid>
                 </Grid>
               </Grid>
             </Hidden>
@@ -648,36 +658,32 @@ function CampaignDetail() {
         ) : null}
 
       </Grid>
-      {
-        isMD ? null : (
-          <Box
-            position="fixed"
-            bottom="0"
-            zIndex="2"
-            borderTop={`1px solid ${Colors.grey7}`}
-            width="100%"
-            css={{ backgroundColor: Colors.white }}
-          >
-            <Grid container alignItems="center">
-              <Grid item>
-                <Box px={2} color={Colors.pink3}>
-                  {
-                    liked ? (
-                      <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
-                    ) : (
-                      <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
-                    )
-                  }
-                </Box>
-              </Grid>
-              <Grid item xs>
-                <StyledButton variant="text" height={60} borderRadius="0" onClick={sendRequest}>신청하기</StyledButton>
-              </Grid>
+      {isMD ? null : (
+        <Box
+          position="fixed"
+          bottom="0"
+          zIndex="2"
+          borderTop={`1px solid ${Colors.grey7}`}
+          width="100%"
+          css={{ backgroundColor: Colors.white }}
+        >
+          <Grid container alignItems="center">
+            <Grid item>
+              <Box px={2} color={Colors.pink3}>
+                {liked ? (
+                  <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
+                ) : (
+                  <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
+                )}
+              </Box>
             </Grid>
-
-          </Box>
-        )
-      }
+            <Grid item xs>
+              <StyledButton variant="text" height={60} borderRadius="0" onClick={sendRequest}>신청하기</StyledButton>
+            </Grid>
+          </Grid>
+        </Box>
+      )}
+      <CampaignShareDialog open={shareDialog} closeDialog={toggleShareDialog} />
     </Box>
   );
 }

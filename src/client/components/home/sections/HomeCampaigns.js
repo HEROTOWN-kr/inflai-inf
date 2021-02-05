@@ -9,93 +9,38 @@ import { Colors } from '../../../lib/Сonstants';
 import CampaignAll from '../../campaign/CampaignAll';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import CampaignAllNew from '../../campaign/CampaignAllNew';
 
 function HomeCampaigns(props) {
-  const history = useHistory();
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [dragging, setDragging] = useState(false);
-  const theme = useTheme();
-
-  const isXl = useMediaQuery(theme.breakpoints.up('xl'));
-  const is1600 = useMediaQuery('(min-width:1600px)');
-  const isLG = useMediaQuery(theme.breakpoints.up('lg'));
-  const isMD = useMediaQuery(theme.breakpoints.up('md'));
-  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
-
-  const settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 6,
-    arrows: true,
-    autoplay: false,
-    autoplaySpeed: 2000,
-    beforeChange: () => setDragging(true),
-    afterChange: () => setDragging(false),
-    responsive: [
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2, slidesToScroll: 2, arrows: false, dots: true, rows: 3
-        }
-      },
-      {
-        breakpoint: 960,
-        settings: { slidesToShow: 3, slidesToScroll: 3 }
-      },
-      {
-        breakpoint: 1280,
-        settings: { slidesToShow: 4, slidesToScroll: 4 }
-      },
-      {
-        breakpoint: 1600,
-        settings: { slidesToShow: 5, slidesToScroll: 5 }
-      },
-      {
-        breakpoint: 1920,
-        settings: { slidesToShow: 6, slidesToScroll: 6 }
-      },
-
-
-      /* {
-        breakpoint: 10000,
-        settings: 'unslick'
-      }, */
-    ]
-  };
-
-  function getCardWidth() {
-    if (isXl) {
-      return '16.666%';
-    } if (is1600) {
-      return '20%';
-    } if (isLG) {
-      return '25%';
-    } if (isMD) {
-      return '33.333%';
-    } if (isSM) {
-      return '33.333%';
-    }
-    return '50%';
-  }
-
+  const [count, setCount] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   function getCampaigns() {
     setLoading(true);
     // const params = { limit: 6 };
+    // const params = { limit: 12, offset: 0 };
     const params = { limit: null };
 
     axios.get('/api/TB_AD/list', { params }).then((res) => {
       const { data } = res.data;
       setCampaigns(data);
+      // setCount(res.data.count);
       setLoading(false);
     }).catch(err => alert(err.response.data.message));
   }
 
-  function detailInfo(AD_ID) {
-    if (!dragging) {
-      history.push(`/Campaign/detail/${AD_ID}`);
+  function fetchMoreData() {
+    if (campaigns.length >= count) {
+      setHasMore(false);
+    } else {
+      const params = { limit: 10, offset: campaigns.length };
+      axios.get('/api/TB_AD/listHome', { params }).then((res) => {
+        const { data } = res.data;
+        setCampaigns(data);
+        setCount(res.data.count);
+      }).catch(err => alert(err.response.data.message));
     }
   }
 
@@ -111,38 +56,15 @@ function HomeCampaigns(props) {
       </StyledText>
       <Box mt={{ xs: 2, md: 5 }}>
         <CampaignAll {...props} campaigns={campaigns} loading={loading} />
+        {/* <CampaignAllNew
+          {...props}
+          campaigns={campaigns}
+          loading={loading}
+          fetchMoreData={fetchMoreData}
+          hasMore={hasMore}
+        /> */}
       </Box>
-      {/* {loading ? (
-        <Grid container>
-          <Grid item style={{ width: getCardWidth() }}>
-            <Box
-              border="1px solid #eaeaea"
-              overflow="hidden"
-              borderRadius="10px"
-              css={{ cursor: 'pointer' }}
-            >
-              <Skeleton variant="rect" width="100%" height={186} />
-              <Box p={3}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Skeleton variant="text" width="50%" />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Skeleton variant="text" />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Skeleton variant="text" />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Skeleton variant="text" />
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      ) : (
-        <Box>
+      {/* <Box>
           {campaigns.length > 0 ? (
             <Box margin="-8px">
               <Slider {...settings} className="register-link-slider">
@@ -168,12 +90,7 @@ function HomeCampaigns(props) {
                   );
                 })}
               </Slider>
-            </Box>
-          ) : (
-            <Box mt={4} textAlign="center">조회된 캠페인이 없습니다.</Box>
-          )}
-        </Box>
-      )} */}
+            </Box> */}
     </React.Fragment>
   );
 }
