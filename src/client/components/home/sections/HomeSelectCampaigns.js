@@ -29,7 +29,7 @@ function HomeSelectCampaigns(props) {
   return (
     <React.Fragment>
       <StyledText mt={6} fontSize="25px">
-        <span style={{ color: Colors.pink }}>진행중</span>
+        <span style={{ color: Colors.pink }}>완료된</span>
         {' 캠페인'}
       </StyledText>
       <Box mt={{ xs: 2, md: 5 }}>

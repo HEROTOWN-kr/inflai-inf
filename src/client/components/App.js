@@ -7,6 +7,7 @@ import Footer from './footer/Footer';
 import useAuth from '../hooks/auth.hook';
 import AuthContext from '../context/AuthContext';
 import BottomMenu from './navbar/MobileView/BottomMenu';
+import HelmetMetaData from '../containers/HelmetMetaData';
 
 function App() {
   const {
@@ -15,22 +16,24 @@ function App() {
   const isAuthenticated = !!token;
 
   return (
-    <AuthContext.Provider value={{
-      token, login, logout, userDataUpdate, userPhoto, socialType, userName, isAuthenticated
-    }}
-    >
-      <div className="app-block">
-        <div className="app-header">
-          <CustomNavBar />
+    <React.Fragment>
+      <AuthContext.Provider value={{
+        token, login, logout, userDataUpdate, userPhoto, socialType, userName, isAuthenticated
+      }}
+      >
+        <div className="app-block">
+          <div className="app-header">
+            <CustomNavBar />
+          </div>
+          <div className="app-body">
+            <Main />
+          </div>
+          <div className="app-footer">
+            <Footer />
+          </div>
         </div>
-        <div className="app-body">
-          <Main />
-        </div>
-        <div className="app-footer">
-          <Footer />
-        </div>
-      </div>
-    </AuthContext.Provider>
+      </AuthContext.Provider>
+    </React.Fragment>
   );
 }
 

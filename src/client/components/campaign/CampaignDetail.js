@@ -11,9 +11,11 @@ import {
 import ReactHtmlParser from 'react-html-parser';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import * as Scroll from 'react-scroll';
 import { Skeleton } from '@material-ui/lab';
+import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import Common from '../../lib/common';
 import { Colors, campaignSteps, AdvertiseTypes } from '../../lib/Сonstants';
 import IconYoutube from '../../img/icon_youtube_url.png';
@@ -28,8 +30,8 @@ import AuthContext from '../../context/AuthContext';
 import TopMenu from './TopMenu';
 import MyPagination from '../../containers/MyPagination';
 import SelectedList from './SelectedList';
-import CampaignShareDialog from './pages/CampaignShareDialog';
-import CategoryDialog from '../navbar/MobileView/CategoryDialog';
+import CampaignShareDialog from './CampaignShareDialog';
+import HelmetMetaData from '../../containers/HelmetMetaData';
 
 function TabComponent(props) {
   const {
@@ -166,6 +168,7 @@ function CampaignDetail() {
   const adId = params.id;
   const classes = useStyles();
   const [productData, setProductData] = useState({
+    AD_NAME: '',
     AD_PROVIDE: '',
     AD_SHRT_DISC: '',
     AD_DISC: '',
@@ -318,280 +321,289 @@ function CampaignDetail() {
     }
   }, [productData]);
 
+  const location = useLocation();
+  const currentUrl = `https://influencer.inflai.com${location.pathname}`;
 
   return (
-    <Box maxWidth="1160px" margin="0 auto" className="campaign-detail">
-      <Hidden mdUp>
-        <TopMenu title="캠페인 안내" history={history} />
-      </Hidden>
-      <Grid container>
-        <Grid item xs>
-          <Box py={isMD ? 6 : 2} pr={isMD ? 6 : 2} pl={isLG ? 0 : 2}>
-            {
-              loading ? (
+    <React.Fragment>
+      {/* <HelmetMetaData title={productData.AD_NAME} description={productData.AD_SHRT_DISC} image={currentImage} /> */}
+      <MetaTags>
+        <title>Inflai</title>
+        <meta name="description" content="Inflai" />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={productData.AD_NAME} />
+        <meta property="og:description" content={productData.AD_SHRT_DISC} />
+        <meta property="og:image" content={currentImage || 'https://influencer.inflai.com/attach/video/logo_inflai-color.png'} />
+      </MetaTags>
+      <Box maxWidth="1160px" margin="0 auto" className="campaign-detail">
+        <Hidden mdUp>
+          <TopMenu title="캠페인 안내" history={history} />
+        </Hidden>
+        <Grid container>
+          <Grid item xs>
+            <Box py={isMD ? 6 : 2} pr={isMD ? 6 : 2} pl={isLG ? 0 : 2}>
+              {loading ? (
                 <Skeleton variant="text" height={33} />
               ) : (
                 <Box fontSize={isMD ? '33px' : '20px'}>{productData.AD_NAME}</Box>
-              )
-            }
-            <Box mt={isMD ? 3 : 2} mb={isMD ? 5 : 2}>
-              {
-                loading ? (
+              )}
+              <Box mt={isMD ? 3 : 2} mb={isMD ? 5 : 2}>
+                {loading ? (
                   <Skeleton variant="text" height={16} />
                 ) : (
                   <Box fontSize={isMD ? '16px' : '14px'} whiteSpace="pre-wrap" color={Colors.grey2}>
                     {productData.AD_SHRT_DISC}
                   </Box>
-                )
-              }
-            </Box>
-            <Hidden smDown>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Grid container>
-                    <Grid item>
-                      {liked ? (
-                        <IconButton size="medium" onClick={favoriteClick}>
-                          <Favorite style={{ color: Colors.pink3 }} />
+                )}
+              </Box>
+              <Hidden smDown>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Grid container>
+                      <Grid item>
+                        {liked ? (
+                          <IconButton size="medium" onClick={favoriteClick}>
+                            <Favorite style={{ color: Colors.pink3 }} />
+                          </IconButton>
+                        ) : (
+                          <IconButton size="medium" onClick={favoriteClick}>
+                            <FavoriteBorder style={{ color: Colors.grey8 }} />
+                          </IconButton>
+                        )}
+                      </Grid>
+                      <Grid item>
+                        <IconButton size="medium" onClick={toggleShareDialog}>
+                          <Share />
                         </IconButton>
-                      ) : (
-                        <IconButton size="medium" onClick={favoriteClick}>
-                          <FavoriteBorder style={{ color: Colors.grey8 }} />
-                        </IconButton>
-                      )}
+                      </Grid>
+                      {/* <Grid item><Print /></Grid> */}
+                      {/* <Grid item><Error /></Grid> */}
                     </Grid>
-                    <Grid item>
-                      <IconButton size="medium" onClick={toggleShareDialog}>
-                        <Share />
-                      </IconButton>
-                    </Grid>
-                    {/* <Grid item><Print /></Grid> */}
-                    {/* <Grid item><Error /></Grid> */}
                   </Grid>
                 </Grid>
-              </Grid>
-            </Hidden>
-            {loading ? (
-              <Skeleton variant="rect" width="100%" height={435} />
-            ) : (
-              <StyledImage width="550px" height={isMD ? '435px' : 'auto'} src={currentImage || testImage} />
-            )}
-            <Box mt={1} mb={isMD ? 5 : 1}>
-              <Grid container spacing={1}>
-                {productData.TB_PHOTO_ADs.map(item => (
-                  <Grid item xs={2} key={item.PHO_FILE}>
-                    <StyledImage width="100%" src={item.PHO_FILE} alt="noFoto" onMouseOver={() => setCurrentImage(item.PHO_FILE)} />
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-            <Grid container justify={isMD ? 'flex-end' : 'flex-start'} spacing={1}>
-              <Grid item xs={12} md={7}>
-                <Box border={isMD ? `1px solid ${Colors.grey7}` : null} borderRadius="5px" px={isMD ? 3 : 0} pt={isMD ? 3 : 1} pb={isMD ? 6 : 4}>
-                  <StyledText fontSize="16px" fontWeight="bold">리뷰어 신청현황</StyledText>
-                  <Box mt={isMD ? 3 : 2}>
-                    <Grid container alignItems="center" justify="space-between">
-                      <Grid item>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <StyledSvg
-                            component={SupervisorAccount}
-                            color={Colors.grey5}
-                            fontSize="20px"
-                          />
-                          <StyledText overflowHidden fontSize="15px" color={Colors.grey5}>
-                            <span style={{ color: Colors.pink, margin: '2px', fontWeight: 'bold' }}>{`${productData.TB_PARTICIPANTs.length} `}</span>
-                            명
-                          </StyledText>
-                        </div>
-                      </Grid>
-                      <Grid item>
-                        <StyledText overflowHidden fontSize="15px" color={Colors.grey5}>
-                          <span style={{ color: Colors.black, fontWeight: 'bold' }}>{`${productData.AD_INF_CNT} `}</span>
-                          명
-                        </StyledText>
-                      </Grid>
+              </Hidden>
+              {loading ? (
+                <Skeleton variant="rect" width="100%" height={435} />
+              ) : (
+                <StyledImage width="550px" height={isMD ? '435px' : 'auto'} src={currentImage || testImage} />
+              )}
+              <Box mt={1} mb={isMD ? 5 : 1}>
+                <Grid container spacing={1}>
+                  {productData.TB_PHOTO_ADs.map(item => (
+                    <Grid item xs={2} key={item.PHO_FILE}>
+                      <StyledImage width="100%" src={item.PHO_FILE} alt="noFoto" onMouseOver={() => setCurrentImage(item.PHO_FILE)} />
                     </Grid>
-                  </Box>
-                  <Box mt={1} height="5px" borderRadius="50px" overflow="hidden" css={{ background: Colors.grey6 }}>
-                    <Box height="4px" width={`${productData.proportion}%`} css={{ background: Colors.pink2 }} />
-                  </Box>
-                  <div style={{ position: 'relative', top: '9px', left: '-23px' }}>
-                    <div
-                      className="percent_bubble_layer"
-                      style={{
-                        position: 'absolute', top: '10', left: productData.proportion > 100 ? '100%' : `${productData.proportion}%`, padding: '5px 0'
-                      }}
-                    >
-                      <StyledText fontSize="12px" color={Colors.pink}>{`${productData.proportion}%`}</StyledText>
-                    </div>
-                  </div>
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={5}>
-                <Box border={isMD ? `1px solid ${Colors.grey7}` : null} borderRadius="5px" p={isMD ? 3 : 0} pt={isMD ? 3 : 1}>
-                  <Grid container spacing={isMD ? 3 : 2}>
-                    <Grid item xs={12}>
-                      <Grid container justify="space-between">
-                        <Grid item><StyledText fontWeight="bold">카테고리</StyledText></Grid>
-                        <Grid item><StyledText>{`${AdvertiseTypes.mainType[productData.AD_CTG]}/${AdvertiseTypes.subType[productData.AD_CTG][productData.AD_CTG2]}`}</StyledText></Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container justify="space-between">
-                        <Grid item><StyledText fontWeight="bold">진행상태</StyledText></Grid>
+                  ))}
+                </Grid>
+              </Box>
+              <Grid container justify={isMD ? 'flex-end' : 'flex-start'} spacing={1}>
+                <Grid item xs={12} md={7}>
+                  <Box border={isMD ? `1px solid ${Colors.grey7}` : null} borderRadius="5px" px={isMD ? 3 : 0} pt={isMD ? 3 : 1} pb={isMD ? 6 : 4}>
+                    <StyledText fontSize="16px" fontWeight="bold">리뷰어 신청현황</StyledText>
+                    <Box mt={isMD ? 3 : 2}>
+                      <Grid container alignItems="center" justify="space-between">
                         <Grid item>
-                          <StyledText color={Colors.pink}>
-                            {`리뷰어신청 D-${calculateDates(productData.AD_SRCH_END)}`}
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <StyledSvg
+                              component={SupervisorAccount}
+                              color={Colors.grey5}
+                              fontSize="20px"
+                            />
+                            <StyledText overflowHidden fontSize="15px" color={Colors.grey5}>
+                              <span style={{ color: Colors.pink, margin: '2px', fontWeight: 'bold' }}>{`${productData.TB_PARTICIPANTs.length} `}</span>
+                                명
+                            </StyledText>
+                          </div>
+                        </Grid>
+                        <Grid item>
+                          <StyledText overflowHidden fontSize="15px" color={Colors.grey5}>
+                            <span style={{ color: Colors.black, fontWeight: 'bold' }}>{`${productData.AD_INF_CNT} `}</span>
+                              명
                           </StyledText>
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container justify="space-between" alignItems="center">
-                        <Grid item><StyledText fontWeight="bold">모집희망SNS</StyledText></Grid>
-                        <Grid item>
-                          <Grid container spacing={1}>
-                            {productData.AD_TYPE === '1' ? (
-                              <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
-                            ) : null}
-                            {productData.AD_TYPE === '2' ? (
-                              <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
-                            ) : null}
-                            {productData.AD_TYPE === '3' ? (
-                              <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
-                            ) : null}
+                    </Box>
+                    <Box mt={1} height="5px" borderRadius="50px" overflow="hidden" css={{ background: Colors.grey6 }}>
+                      <Box height="4px" width={`${productData.proportion}%`} css={{ background: Colors.pink2 }} />
+                    </Box>
+                    <div style={{ position: 'relative', top: '9px', left: '-23px' }}>
+                      <div
+                        className="percent_bubble_layer"
+                        style={{
+                          position: 'absolute', top: '10', left: productData.proportion > 100 ? '100%' : `${productData.proportion}%`, padding: '5px 0'
+                        }}
+                      >
+                        <StyledText fontSize="12px" color={Colors.pink}>{`${productData.proportion}%`}</StyledText>
+                      </div>
+                    </div>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={5}>
+                  <Box border={isMD ? `1px solid ${Colors.grey7}` : null} borderRadius="5px" p={isMD ? 3 : 0} pt={isMD ? 3 : 1}>
+                    <Grid container spacing={isMD ? 3 : 2}>
+                      <Grid item xs={12}>
+                        <Grid container justify="space-between">
+                          <Grid item><StyledText fontWeight="bold">카테고리</StyledText></Grid>
+                          <Grid item><StyledText>{`${AdvertiseTypes.mainType[productData.AD_CTG]}/${AdvertiseTypes.subType[productData.AD_CTG][productData.AD_CTG2]}`}</StyledText></Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Grid container justify="space-between">
+                          <Grid item><StyledText fontWeight="bold">진행상태</StyledText></Grid>
+                          <Grid item>
+                            <StyledText color={Colors.pink}>
+                              {`리뷰어신청 D-${calculateDates(productData.AD_SRCH_END)}`}
+                            </StyledText>
                           </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-            </Grid>
-            <Box mt={isMD ? 10 : 2} borderBottom={`1px solid ${Colors.grey7}`}>
-              <Grid container>
-                <ElementLink name="detail" />
-                <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
-                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="상세정보" tabNumber={1} />
-                </Grid>
-                <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
-                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
-                </Grid>
-                <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
-                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={3} />
-                </Grid>
-              </Grid>
-            </Box>
-            {tab === 1 ? (
-              <Box style={{
-                textAlign: 'center',
-                maxHeight: showMore.isOpen ? 'none' : '760px',
-                overflow: 'hidden'
-              }}
-              >
-                <div ref={DetailPageRef}>
-                  {ReactHtmlParser(productData.AD_DETAIL)}
-                </div>
-              </Box>
-            ) : null}
-            {tab === 2 ? (
-              <ParticipantList adId={adId} isMD={isMD} />
-            ) : null}
-            {tab === 3 ? (
-              <SelectedList adId={adId} isMD={isMD} />
-            ) : null}
-            {showMore.visible && tab === 1 ? (
-              <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
-                <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
-                  {showMore.isOpen ? (
-                    <React.Fragment>
-                        상세 페이지 주리기
-                      <ExpandLess />
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                        상세 페이지 더보기
-                      <ExpandMore />
-                    </React.Fragment>
-                  )}
-                </StyledButton>
-              </Box>
-            ) : null}
-            <Grid container spacing={isMD ? 4 : 2} style={{ fontSize: isMD ? '16px' : '14px' }}>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container>
-                  <ElementLink name="provide" />
-                  <Grid item>
-                    <Box width="125px" fontWeight="bold" component="p">제공내역</Box>
-                  </Grid>
-                  <Grid item xs={12} sm className="provide-info">
-                    {productData.AD_PROVIDE}
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container>
-                  <ElementLink name="search" />
-                  <Grid item>
-                    <Box width="125px" fontWeight="bold">
-                      검색 키워드
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm className="provide-info">
-                    <Box>
-                      {productData.AD_SEARCH_KEY}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container>
-                  <ElementLink name="discription" />
-                  <Grid item>
-                    <Box width="125px" fontWeight="bold">
-                      포스팅가이드
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm className="provide-info">
-                    <Box>
-                      {productData.AD_DISC}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container>
-                  <ElementLink name="info" />
-                  <Grid item>
-                    <Box width="125px" fontWeight="bold">
-                      업체 정보
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm className="provide-info">
-                    <Grid container>
-                      {productData.AD_POST_CODE ? (
-                        <Grid item xs={12}>
-                          <Grid container>
-                            <Grid item><Box width="65px" fontWeight="bold">주소</Box></Grid>
-                            <Grid item xs>
-                              {`(${productData.AD_POST_CODE}) ${productData.AD_ROAD_ADDR} ${productData.AD_DETAIL_ADDR} ${productData.AD_EXTR_ADDR}`}
+                      <Grid item xs={12}>
+                        <Grid container justify="space-between" alignItems="center">
+                          <Grid item><StyledText fontWeight="bold">모집희망SNS</StyledText></Grid>
+                          <Grid item>
+                            <Grid container spacing={1}>
+                              {productData.AD_TYPE === '1' ? (
+                                <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
+                              ) : null}
+                              {productData.AD_TYPE === '2' ? (
+                                <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
+                              ) : null}
+                              {productData.AD_TYPE === '3' ? (
+                                <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
+                              ) : null}
                             </Grid>
                           </Grid>
                         </Grid>
-                      ) : null}
-                      {/* <Grid item xs={12}>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Box mt={isMD ? 10 : 2} borderBottom={`1px solid ${Colors.grey7}`}>
+                <Grid container>
+                  <ElementLink name="detail" />
+                  <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                    <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="상세정보" tabNumber={1} />
+                  </Grid>
+                  <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                    <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
+                  </Grid>
+                  <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                    <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={3} />
+                  </Grid>
+                </Grid>
+              </Box>
+              {tab === 1 ? (
+                <Box style={{
+                  textAlign: 'center',
+                  maxHeight: showMore.isOpen ? 'none' : '760px',
+                  overflow: 'hidden'
+                }}
+                >
+                  <div ref={DetailPageRef}>
+                    {ReactHtmlParser(productData.AD_DETAIL)}
+                  </div>
+                </Box>
+              ) : null}
+              {tab === 2 ? (
+                <ParticipantList adId={adId} isMD={isMD} />
+              ) : null}
+              {tab === 3 ? (
+                <SelectedList adId={adId} isMD={isMD} />
+              ) : null}
+              {showMore.visible && tab === 1 ? (
+                <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
+                  <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
+                    {showMore.isOpen ? (
+                      <React.Fragment>
+                              상세 페이지 주리기
+                        <ExpandLess />
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                              상세 페이지 더보기
+                        <ExpandMore />
+                      </React.Fragment>
+                    )}
+                  </StyledButton>
+                </Box>
+              ) : null}
+              <Grid container spacing={isMD ? 4 : 2} style={{ fontSize: isMD ? '16px' : '14px' }}>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <ElementLink name="provide" />
+                    <Grid item>
+                      <Box width="125px" fontWeight="bold" component="p">제공내역</Box>
+                    </Grid>
+                    <Grid item xs={12} sm className="provide-info">
+                      {productData.AD_PROVIDE}
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <ElementLink name="search" />
+                    <Grid item>
+                      <Box width="125px" fontWeight="bold">
+                          검색 키워드
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} sm className="provide-info">
+                      <Box>
+                        {productData.AD_SEARCH_KEY}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <ElementLink name="discription" />
+                    <Grid item>
+                      <Box width="125px" fontWeight="bold">
+                          포스팅가이드
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} sm className="provide-info">
+                      <Box>
+                        {productData.AD_DISC}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <ElementLink name="info" />
+                    <Grid item>
+                      <Box width="125px" fontWeight="bold">
+                          업체 정보
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} sm className="provide-info">
+                      <Grid container>
+                        {productData.AD_POST_CODE ? (
+                          <Grid item xs={12}>
+                            <Grid container>
+                              <Grid item><Box width="65px" fontWeight="bold">주소</Box></Grid>
+                              <Grid item xs>
+                                {`(${productData.AD_POST_CODE}) ${productData.AD_ROAD_ADDR} ${productData.AD_DETAIL_ADDR} ${productData.AD_EXTR_ADDR}`}
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                        ) : null}
+                        {/* <Grid item xs={12}>
                         <Grid container>
                           <Grid item><Box width="65px" fontWeight="bold">연락처</Box></Grid>
                           <Grid item xs>{productData.AD_TEL}</Grid>
@@ -603,88 +615,96 @@ function CampaignDetail() {
                           <Grid item xs>{productData.AD_EMAIL}</Grid>
                         </Grid>
                       </Grid> */}
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Box>
-        </Grid>
-        {/* <Grid item xs>
+            </Box>
+          </Grid>
+          {/* <Grid item xs>
           <Box height="1000px" css={{ background: 'green' }}>test</Box>
         </Grid> */}
-        {isMD ? (
-          <Grid item style={{ borderLeft: '1px solid #eee' }}>
-            <Box width="360px" position="relative">
-              <Box position="absolute" top={isSticky ? '-92px' : '0'} left="0">
-                <Box position={isSticky ? 'fixed' : 'static'}>
-                  <Box py={isMD ? 6 : 2} pl={isLG ? 6 : 2} pr={isLG ? 0 : 2} width="312px">
-                    <Grid container spacing={3}>
-                      <Grid item xs={12}>
-                        <StyledText fontSize="16px" fontWeight="bold">{`리뷰어 신청  ${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}</StyledText>
+          {isMD ? (
+            <Grid item style={{ borderLeft: '1px solid #eee' }}>
+              <Box width="360px" position="relative">
+                <Box position="absolute" top={isSticky ? '-92px' : '0'} left="0">
+                  <Box position={isSticky ? 'fixed' : 'static'}>
+                    <Box py={isMD ? 6 : 2} pl={isLG ? 6 : 2} pr={isLG ? 0 : 2} width="312px">
+                      <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                          <StyledText fontSize="16px" fontWeight="bold">{`리뷰어 신청  ${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}</StyledText>
+                        </Grid>
+                        <Grid item xs={12}><Divider /></Grid>
+                        <Grid item xs={12}>
+                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('detail')}>캠페인 상세정보</StyledText>
+                        </Grid>
+                        <Grid item xs={12}><Divider /></Grid>
+                        <Grid item xs={12}>
+                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('provide')}>제공내역</StyledText>
+                        </Grid>
+                        <Grid item xs={12}><Divider /></Grid>
+                        <Grid item xs={12}>
+                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('search')}>검색 키워드</StyledText>
+                        </Grid>
+                        <Grid item xs={12}><Divider /></Grid>
+                        <Grid item xs={12}>
+                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('discription')}>포스팅가이드</StyledText>
+                        </Grid>
+                        <Grid item xs={12}><Divider /></Grid>
+                        <Grid item xs={12}>
+                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('info')}>업체 정보</StyledText>
+                        </Grid>
+                        <Grid item xs={12}><Divider /></Grid>
+                        <Grid item xs={12}>
+                          <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={sendRequest}>
+                                리뷰어 신청하기
+                          </StyledButton>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={12}><Divider /></Grid>
-                      <Grid item xs={12}>
-                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('detail')}>캠페인 상세정보</StyledText>
-                      </Grid>
-                      <Grid item xs={12}><Divider /></Grid>
-                      <Grid item xs={12}>
-                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('provide')}>제공내역</StyledText>
-                      </Grid>
-                      <Grid item xs={12}><Divider /></Grid>
-                      <Grid item xs={12}>
-                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('search')}>검색 키워드</StyledText>
-                      </Grid>
-                      <Grid item xs={12}><Divider /></Grid>
-                      <Grid item xs={12}>
-                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('discription')}>포스팅가이드</StyledText>
-                      </Grid>
-                      <Grid item xs={12}><Divider /></Grid>
-                      <Grid item xs={12}>
-                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('info')}>업체 정보</StyledText>
-                      </Grid>
-                      <Grid item xs={12}><Divider /></Grid>
-                      <Grid item xs={12}>
-                        <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={sendRequest}>
-                            리뷰어 신청하기
-                        </StyledButton>
-                      </Grid>
-                    </Grid>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
-          </Grid>
-        ) : null}
+            </Grid>
+          ) : null}
 
-      </Grid>
-      {isMD ? null : (
-        <Box
-          position="fixed"
-          bottom="0"
-          zIndex="2"
-          borderTop={`1px solid ${Colors.grey7}`}
-          width="100%"
-          css={{ backgroundColor: Colors.white }}
-        >
-          <Grid container alignItems="center">
-            <Grid item>
-              <Box px={2} color={Colors.pink3}>
-                {liked ? (
-                  <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
-                ) : (
-                  <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
-                )}
-              </Box>
+        </Grid>
+        {isMD ? null : (
+          <Box
+            position="fixed"
+            bottom="0"
+            zIndex="2"
+            borderTop={`1px solid ${Colors.grey7}`}
+            width="100%"
+            css={{ backgroundColor: Colors.white }}
+          >
+            <Grid container alignItems="center">
+              <Grid item>
+                <Box px={2} color={Colors.pink3}>
+                  {liked ? (
+                    <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
+                  ) : (
+                    <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs>
+                <StyledButton variant="text" height={60} borderRadius="0" onClick={sendRequest}>신청하기</StyledButton>
+              </Grid>
             </Grid>
-            <Grid item xs>
-              <StyledButton variant="text" height={60} borderRadius="0" onClick={sendRequest}>신청하기</StyledButton>
-            </Grid>
-          </Grid>
-        </Box>
-      )}
-      <CampaignShareDialog open={shareDialog} closeDialog={toggleShareDialog} />
-    </Box>
+          </Box>
+        )}
+        <CampaignShareDialog
+          open={shareDialog}
+          closeDialog={toggleShareDialog}
+          title={productData.AD_NAME}
+          description={productData.AD_SHRT_DISC}
+          img={currentImage}
+        />
+      </Box>
+    </React.Fragment>
+
   );
 }
 
