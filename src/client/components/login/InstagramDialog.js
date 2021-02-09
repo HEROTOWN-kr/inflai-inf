@@ -147,7 +147,7 @@ function InstagramDialog(props) {
               className="facebook-button"
               onClick={loginFacebook}
             >
-                Login with Facebook
+                LoginNew with Facebook
             </Button>
           </Grid>
         </Grid>

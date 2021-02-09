@@ -4,6 +4,7 @@ import '../../css/sub.scss';
 import Home from '../home/home';
 import NotFound from './NotFound';
 import Login from '../login/Login';
+import LoginNew from '../loginNew/LoginNew';
 import SignUp from '../signup/SignUp';
 import Profile from '../profile/Profile';
 import PrivateRoute from '../../containers/PrivateRoute';
@@ -20,8 +21,14 @@ function Main() {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route
+        exact
         path="/Login"
         render={renderProps => <Login {...renderProps} />}
+      />
+      <Route
+        exact
+        path="/LoginNew"
+        render={renderProps => <LoginNew {...renderProps} />}
       />
       <Route
         path="/SignUp"
