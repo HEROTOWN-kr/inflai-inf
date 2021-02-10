@@ -110,7 +110,7 @@ function Social(props) {
         }).then((res) => {
           if (res.status === 200) {
             const {
-              userPhone, social_type, userToken, userName, userPhoto, regState
+              userPhone, social_type, userToken, userName, userPhoto
             } = res.data;
             auth.login(userToken, userName, social_type, userPhoto);
             if (userPhone) {

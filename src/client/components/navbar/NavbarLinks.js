@@ -24,10 +24,19 @@ function NavbarLinks() {
       text: '서비스',
       link: '/Campaign/Service'
     },
-    /* {
-      text: '랭킹',
-      link: '/Ranking'
-    }, */
+
+    {
+      text: 'LoginNew',
+      link: '/LoginNew'
+    },
+    {
+      text: 'SignUpNew',
+      link: '/SignUpNew'
+    },
+    {
+      text: 'Join',
+      link: '/Join'
+    },
   ];
 
   function scrollTo() {

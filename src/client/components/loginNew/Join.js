@@ -1,43 +1,46 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useHistory } from 'react-router-dom';
-import { Box, Divider } from '@material-ui/core';
 import axios from 'axios';
+import { Box } from '@material-ui/core';
 import AuthContext from '../../context/AuthContext';
 import { Colors } from '../../lib/Сonstants';
 import StyledText from '../../containers/StyledText';
 import ReactFormText from '../../containers/ReactFormText';
 import StyledButton from '../../containers/StyledButton';
-import FbLogin from './sns/FbLogin';
-import NavLogin from './sns/NavLogin';
-import KakLogin from './sns/KakLogin';
 
 const defaultValues = {
   email: '',
-  password: '',
-  passwordConfirm: '',
   name: '',
+  phone: ''
 };
+
+Yup.addMethod(Yup.string, 'integerString', function () {
+  return this.matches(/^\d+$/, '숫자 입력만 가능합니다');
+});
 
 const schema = Yup.object().shape({
   email: Yup.string()
     .email('잘못된 이메일 형식 입니다.')
     .required('이메일을 입력해주세요'),
-  password: Yup.string()
-    .required('비밀번호를 입력해주세요'),
-  passwordConfirm: Yup.string()
-    .oneOf([Yup.ref('password'), null], '비밀번호가 일치해야합니다')
-    .required('비밀번호 확인해주세요'),
   name: Yup.string()
     .required('이름을 입력해주세요'),
+  phone: Yup.string().required('연락처를 입력해주세요').integerString(),
 });
 
-function SignUpNew() {
+function Join() {
   const history = useHistory();
   const [mainError, setMainError] = useState({});
   const auth = useContext(AuthContext);
+  const loginInfo = JSON.parse(localStorage.getItem('loginInfo')) || {
+    type: null
+  };
+
+  useEffect(() => {
+    if (!loginInfo.type) history.push('/Login');
+  }, []);
 
   const { register, handleSubmit, errors } = useForm({
     mode: 'onBlur',
@@ -45,25 +48,22 @@ function SignUpNew() {
     defaultValues
   });
 
-  async function signUp(values) {
-    try {
-      const urlResponse = await axios.post('/api/TB_INFLUENCER/signup', values);
-      const {
-        social_type, userToken, userName, userPhone, message, userPhoto
-      } = urlResponse.data;
-      if (urlResponse.status === 200) {
-        auth.login(userToken, '2', userName, social_type, userPhoto);
+  function signUp(values) {
+    const post = { ...loginInfo, ...values };
+    axios.post('/api/TB_INFLUENCER/facebookSignUp', post).then((res) => {
+      if (res.status === 200) {
+        /* auth.login(userToken, '2', userName, social_type, userPhoto);
         if (userPhone) {
           history.push('/');
         } else {
           history.push('/Profile');
-        }
-      } else if (urlResponse.status === 201) {
-        setMainError({ message });
+        } */
+      } else if (res.status === 201) {
+        setMainError({ message: res.data.message });
       }
-    } catch (e) {
-      alert(e.response.data.message);
-    }
+    }).catch((err) => {
+      alert(err.response.data.message);
+    });
   }
 
   const handleUserKeyPress = (e) => {
@@ -71,7 +71,6 @@ function SignUpNew() {
       handleSubmit(signUp)();
     }
   };
-
 
   return (
     <Box
@@ -83,60 +82,44 @@ function SignUpNew() {
       px={{ xs: 2, md: 6 }}
     >
       <StyledText mb="44px" textAlign="center" fontSize="36px">회원가입</StyledText>
-      <Box mb={1}>
-        <ReactFormText
-          register={register}
-          errors={errors}
-          name="email"
-          placeholder="이메일"
-        />
-      </Box>
       <ReactFormText
         register={register}
         errors={errors}
-        name="password"
-        type="password"
-        placeholder="비밀번호"
+        name="email"
+        placeholder="이메일"
       />
       <Box my={1}>
         <ReactFormText
           register={register}
           errors={errors}
-          name="passwordConfirm"
-          type="password"
-          placeholder="비밀번호 확인"
+          name="name"
+          placeholder="이름"
+          onKeyPress={handleUserKeyPress}
         />
       </Box>
-      <ReactFormText
-        register={register}
-        errors={errors}
-        name="name"
-        placeholder="이름"
-        onKeyPress={handleUserKeyPress}
-      />
+      <Box mb={1}>
+        <ReactFormText
+          register={register}
+          errors={errors}
+          name="phone"
+          placeholder="전화번호"
+        />
+      </Box>
       {mainError.message ? (
         <Box my={1} textAlign="center">
           <div className="error-message">{mainError.message ? mainError.message : null}</div>
         </Box>
       ) : null}
-      <Box my={3}>
-        <StyledButton
-          height={36}
-          background="#f50057"
-          hoverBackground="#c51162"
-          onClick={handleSubmit(signUp)}
-        >
-            회원가입
-        </StyledButton>
-      </Box>
-      <Divider />
       <Box mt={3}>
-        <FbLogin />
-        <NavLogin />
-        <KakLogin />
+        <StyledButton height={40} onClick={handleSubmit(signUp)}>
+          {loginInfo.type === 'naver' ? '네이버' : null}
+          {loginInfo.type === 'kakao' ? '카카오' : null}
+          {loginInfo.type === 'facebook' ? '페이스북' : null}
+          {' 아이디로 회원가입'}
+        </StyledButton>
       </Box>
     </Box>
   );
 }
 
-export default SignUpNew;
+export default Join;

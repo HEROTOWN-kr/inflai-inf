@@ -74,7 +74,7 @@ function LoginNew() {
       px={{ xs: 2, md: 6 }}
     >
       <StyledText mb="44px" textAlign="center" fontSize="36px">로그인</StyledText>
-      <Box mb="24px">
+      <Box mb={3}>
         <ReactFormText
           register={register}
           errors={errors}
@@ -91,11 +91,11 @@ function LoginNew() {
         onKeyPress={handleUserKeyPress}
       />
       {mainError.message ? (
-        <Box my="24px">
+        <Box my={3}>
           <div className="error-message">{mainError.message ? mainError.message : null}</div>
         </Box>
       ) : null}
-      <Box my="24px">
+      <Box my={3}>
         <StyledButton
           height={36}
           background="#f50057"
@@ -106,13 +106,15 @@ function LoginNew() {
         </StyledButton>
       </Box>
       <Divider />
-      <Box my="24px">
+      <Box my={3}>
         <FbLogin />
         <NavLogin />
         <KakLogin />
       </Box>
       <Divider />
-
+      <Box mt={3}>
+        <StyledButton height={44} onClick={() => history.push('/SignUpNew')}>회원가입하기</StyledButton>
+      </Box>
     </Box>
   );
 }

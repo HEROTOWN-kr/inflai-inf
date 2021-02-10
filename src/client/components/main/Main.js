@@ -9,6 +9,8 @@ import SignUp from '../signup/SignUp';
 import Profile from '../profile/Profile';
 import PrivateRoute from '../../containers/PrivateRoute';
 import Campaign from '../campaign/Campaign';
+import SignUpNew from '../loginNew/SignUpNew';
+import Join from '../loginNew/Join';
 
 
 function Main() {
@@ -26,13 +28,23 @@ function Main() {
         render={renderProps => <Login {...renderProps} />}
       />
       <Route
+        path="/SignUp"
+        render={renderProps => <SignUp {...renderProps} />}
+      />
+      <Route
         exact
         path="/LoginNew"
         render={renderProps => <LoginNew {...renderProps} />}
       />
       <Route
-        path="/SignUp"
-        render={renderProps => <SignUp {...renderProps} />}
+        exact
+        path="/SignUpNew"
+        render={renderProps => <SignUpNew {...renderProps} />}
+      />
+      <Route
+        exact
+        path="/Join"
+        render={renderProps => <Join {...renderProps} />}
       />
       <PrivateRoute
         path="/Profile"
