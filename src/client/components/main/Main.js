@@ -11,6 +11,7 @@ import PrivateRoute from '../../containers/PrivateRoute';
 import Campaign from '../campaign/Campaign';
 import SignUpNew from '../loginNew/SignUpNew';
 import Join from '../loginNew/Join';
+import Activate from '../loginNew/Activate';
 
 
 function Main() {
@@ -45,6 +46,10 @@ function Main() {
         exact
         path="/Join"
         render={renderProps => <Join {...renderProps} />}
+      />
+      <Route
+        path="/Activate/:hash"
+        render={renderProps => <Activate {...renderProps} />}
       />
       <PrivateRoute
         path="/Profile"

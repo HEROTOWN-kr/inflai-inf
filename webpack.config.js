@@ -42,9 +42,11 @@ module.exports = {
         pathRewrite: { '^/api': '' },
         secure: false,
         changeOrigin: true
-      }
+      },
     },
-    historyApiFallback: true
+    historyApiFallback: {
+      disableDotRule: true
+    }
   },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),

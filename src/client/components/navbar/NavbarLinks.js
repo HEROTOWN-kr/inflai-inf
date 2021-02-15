@@ -37,6 +37,10 @@ function NavbarLinks() {
       text: 'Join',
       link: '/Join'
     },
+    {
+      text: 'Activate',
+      link: '/Activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMxMTIsImlhdCI6MTYxMzM3NzAyMX0.4F8knvjqTNP3xoSxQhcIFoYzgxr1gOEr28MN2vzDTS0'
+    },
   ];
 
   function scrollTo() {

@@ -10,6 +10,8 @@ import { Colors } from '../../lib/Сonstants';
 import StyledText from '../../containers/StyledText';
 import ReactFormText from '../../containers/ReactFormText';
 import StyledButton from '../../containers/StyledButton';
+import StyledBackDrop from '../../containers/StyledBackDrop';
+import CompleteDialog from './CompleteDialog';
 
 const defaultValues = {
   email: '',
@@ -33,10 +35,20 @@ const schema = Yup.object().shape({
 function Join() {
   const history = useHistory();
   const [mainError, setMainError] = useState({});
+  const [savingMode, setSavingMode] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const auth = useContext(AuthContext);
   const loginInfo = JSON.parse(localStorage.getItem('loginInfo')) || {
     type: null
   };
+
+  function toggleDialog() {
+    setDialogOpen(!dialogOpen);
+  }
+
+  function toggleSavingMode() {
+    setSavingMode(!savingMode);
+  }
 
   useEffect(() => {
     if (!loginInfo.type) history.push('/Login');
@@ -49,20 +61,19 @@ function Join() {
   });
 
   function signUp(values) {
+    setSavingMode(true);
     const post = { ...loginInfo, ...values };
     axios.post('/api/TB_INFLUENCER/facebookSignUp', post).then((res) => {
       if (res.status === 200) {
-        /* auth.login(userToken, '2', userName, social_type, userPhoto);
-        if (userPhone) {
-          history.push('/');
-        } else {
-          history.push('/Profile');
-        } */
+        setSavingMode(false);
+        toggleDialog();
       } else if (res.status === 201) {
         setMainError({ message: res.data.message });
+        setSavingMode(false);
       }
     }).catch((err) => {
       alert(err.response.data.message);
+      setSavingMode(false);
     });
   }
 
@@ -118,6 +129,8 @@ function Join() {
           {' 아이디로 회원가입'}
         </StyledButton>
       </Box>
+      <StyledBackDrop open={savingMode} handleClose={toggleSavingMode} />
+      <CompleteDialog open={dialogOpen} handleClose={toggleDialog} />
     </Box>
   );
 }
