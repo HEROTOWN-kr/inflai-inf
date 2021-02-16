@@ -13,13 +13,20 @@ import StyledButton from '../../containers/StyledButton';
 import FbLogin from './sns/FbLogin';
 import NavLogin from './sns/NavLogin';
 import KakLogin from './sns/KakLogin';
+import StyledBackDrop from '../../containers/StyledBackDrop';
+import CompleteDialog from './CompleteDialog';
 
 const defaultValues = {
   email: '',
   password: '',
   passwordConfirm: '',
   name: '',
+  phone: ''
 };
+
+Yup.addMethod(Yup.string, 'integerString', function () {
+  return this.matches(/^\d+$/, '숫자 입력만 가능합니다');
+});
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -32,12 +39,23 @@ const schema = Yup.object().shape({
     .required('비밀번호 확인해주세요'),
   name: Yup.string()
     .required('이름을 입력해주세요'),
+  phone: Yup.string().required('연락처를 입력해주세요').integerString(),
 });
 
 function SignUpNew() {
   const history = useHistory();
   const [mainError, setMainError] = useState({});
+  const [savingMode, setSavingMode] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const auth = useContext(AuthContext);
+
+  function toggleDialog() {
+    setDialogOpen(!dialogOpen);
+  }
+
+  function toggleSavingMode() {
+    setSavingMode(!savingMode);
+  }
 
   const { register, handleSubmit, errors } = useForm({
     mode: 'onBlur',
@@ -45,14 +63,14 @@ function SignUpNew() {
     defaultValues
   });
 
-  async function signUp(values) {
+  /* async function signUp(values) {
     try {
-      const urlResponse = await axios.post('/api/TB_INFLUENCER/signup', values);
+      const urlResponse = await axios.post('/api/TB_INFLUENCER/signupNew', values);
       const {
         social_type, userToken, userName, userPhone, message, userPhoto
       } = urlResponse.data;
       if (urlResponse.status === 200) {
-        auth.login(userToken, '2', userName, social_type, userPhoto);
+        auth.login(userToken, userName, social_type, userPhoto);
         if (userPhone) {
           history.push('/');
         } else {
@@ -64,6 +82,22 @@ function SignUpNew() {
     } catch (e) {
       alert(e.response.data.message);
     }
+  } */
+
+  function signUp(values) {
+    setSavingMode(true);
+    axios.post('/api/TB_INFLUENCER/signupNew', values).then((res) => {
+      if (res.status === 200) {
+        setSavingMode(false);
+        toggleDialog();
+      } else if (res.status === 201) {
+        setMainError({ message: res.data.message });
+        setSavingMode(false);
+      }
+    }).catch((err) => {
+      alert(err.response.data.message);
+      setSavingMode(false);
+    });
   }
 
   const handleUserKeyPress = (e) => {
@@ -112,8 +146,16 @@ function SignUpNew() {
         errors={errors}
         name="name"
         placeholder="이름"
-        onKeyPress={handleUserKeyPress}
       />
+      <Box my={1}>
+        <ReactFormText
+          register={register}
+          errors={errors}
+          name="phone"
+          placeholder="전화번호"
+          onKeyPress={handleUserKeyPress}
+        />
+      </Box>
       {mainError.message ? (
         <Box my={1} textAlign="center">
           <div className="error-message">{mainError.message ? mainError.message : null}</div>
@@ -135,6 +177,8 @@ function SignUpNew() {
         <NavLogin />
         <KakLogin />
       </Box>
+      <StyledBackDrop open={savingMode} handleClose={toggleSavingMode} />
+      <CompleteDialog open={dialogOpen} handleClose={toggleDialog} />
     </Box>
   );
 }

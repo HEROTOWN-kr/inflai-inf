@@ -13,6 +13,13 @@ function KakLogin() {
   const history = useHistory();
   const auth = useContext(AuthContext);
 
+  function saveLoginInfo(info) {
+    localStorage.setItem('loginInfo', JSON.stringify({
+      ...info
+    }));
+    history.push('/Join');
+  }
+
   const kakaoLoginForm = () => {
     try {
       const { Kakao } = window;
@@ -23,7 +30,7 @@ function KakLogin() {
             url: '/v2/user/me',
             success(response) {
               const { id, kakao_account } = response;
-              axios.get('/api/TB_INFLUENCER/kakaoLogin', {
+              axios.get('/api/TB_INFLUENCER/kakaoLoginNew', {
                 params: {
                   id,
                   email: kakao_account.email,
@@ -32,16 +39,22 @@ function KakLogin() {
                   type: '1',
                   social_type: 'kakao'
                 }
-              }).then((influencerData) => {
-                const {
-                  social_type, userToken, userName, userPhone, userPhoto
-                } = influencerData.data;
-                auth.login(userToken, userName, social_type, userPhoto);
-                if (userPhone) {
+              }).then((res) => {
+                if (res.status === 200) {
+                  const {
+                    social_type, userToken, userName, userPhoto
+                  } = res.data;
+                  auth.login(userToken, userName, social_type, userPhoto);
                   history.push('/');
-                } else {
-                  history.push('/profile');
+                } else if (res.status === 201) {
+                  const { kakaoData } = res.data;
+                  const loginInfo = {
+                    type: 'kakao', kakaoData
+                  };
+                  saveLoginInfo(loginInfo);
                 }
+              }).catch((err) => {
+                alert(err.response.data.message);
               });
             },
             fail(err2) {

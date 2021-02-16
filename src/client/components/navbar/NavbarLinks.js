@@ -39,7 +39,7 @@ function NavbarLinks() {
     },
     {
       text: 'Activate',
-      link: '/Activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMxMTIsImlhdCI6MTYxMzM3NzAyMX0.4F8knvjqTNP3xoSxQhcIFoYzgxr1gOEr28MN2vzDTS0'
+      link: '/Activate/c51414a9a19e1eae4efaf0c1451f0cf8:17bf2aafe3eef4c588326866118b1553'
     },
   ];
 

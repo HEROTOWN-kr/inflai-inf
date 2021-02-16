@@ -39,23 +39,17 @@ function LoginNew() {
   });
 
   function logIn(values) {
-    axios.post('/api/auth/login', { ...values, type: '2' }).then((res) => {
+    axios.post('/api/auth/loginNew', { ...values }).then((res) => {
       if (res.status === 200) {
         const {
-          social_type, userToken, userName, userPhone, userPhoto
+          social_type, userToken, userName, userPhoto
         } = res.data;
         auth.login(userToken, userName, social_type, userPhoto);
-        if (userPhone) {
-          history.push('/');
-        } else {
-          history.push('/Profile');
-        }
+        history.push('/');
       } else if (res.status === 201) {
         setMainError({ message: res.data.message });
-      } else {
-        setMainError({ message: res.data.message });
       }
-    }).catch(error => (error));
+    }).catch(error => alert(error.response.data.message));
   }
 
   const handleUserKeyPress = (e) => {

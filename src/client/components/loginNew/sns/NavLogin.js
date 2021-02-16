@@ -17,6 +17,12 @@ function NavLogin() {
   const isLocal = checkLocalHost(window.location.origin);
   const NaverLoginId = isLocal ? 'KyWNbHHgcX4ZcIagGtBg' : 'HddfazOY2WePr9AUHcfh';
 
+  function saveLoginInfo(info) {
+    localStorage.setItem('loginInfo', JSON.stringify({
+      ...info
+    }));
+    history.push('/Join');
+  }
 
   const responseNaver = (response) => {
     try {
@@ -24,7 +30,7 @@ function NavLogin() {
         const {
           email, id, name, profile_image
         } = response;
-        axios.get('/api/TB_INFLUENCER/naverLogin', {
+        axios.get('/api/TB_INFLUENCER/naverLoginNew', {
           params: {
             id,
             email,
@@ -32,15 +38,19 @@ function NavLogin() {
             profile_image,
             social_type: 'naver'
           }
-        }).then((influencerData) => {
-          const {
-            social_type, userToken, userName, regState, userPhone, userPhoto
-          } = influencerData.data;
-          auth.login(userToken, userName, social_type, userPhoto);
-          if (userPhone) {
+        }).then((res) => {
+          if (res.status === 200) {
+            const {
+              social_type, userToken, userName, userPhoto
+            } = res.data;
+            auth.login(userToken, userName, social_type, userPhoto);
             history.push('/');
-          } else {
-            history.push('/profile');
+          } else if (res.status === 201) {
+            const { navData } = res.data;
+            const loginInfo = {
+              type: 'naver', navData
+            };
+            saveLoginInfo(loginInfo);
           }
         }).catch((err) => {
           alert(err.response.data.message);

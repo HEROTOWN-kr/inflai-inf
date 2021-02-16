@@ -60,7 +60,7 @@ function Join() {
     defaultValues
   });
 
-  function signUp(values) {
+  function facebookSignUp(values) {
     setSavingMode(true);
     const post = { ...loginInfo, ...values };
     axios.post('/api/TB_INFLUENCER/facebookSignUp', post).then((res) => {
@@ -75,6 +75,50 @@ function Join() {
       alert(err.response.data.message);
       setSavingMode(false);
     });
+  }
+
+  function naverSignUp(values) {
+    setSavingMode(true);
+    const post = { ...loginInfo, ...values };
+    axios.post('/api/TB_INFLUENCER/naverSignUp', post).then((res) => {
+      if (res.status === 200) {
+        setSavingMode(false);
+        toggleDialog();
+      } else if (res.status === 201) {
+        setMainError({ message: res.data.message });
+        setSavingMode(false);
+      }
+    }).catch((err) => {
+      alert(err.response.data.message);
+      setSavingMode(false);
+    });
+  }
+
+  function kakaoSignUp(values) {
+    setSavingMode(true);
+    const post = { ...loginInfo, ...values };
+    axios.post('/api/TB_INFLUENCER/kakaoSignUp', post).then((res) => {
+      if (res.status === 200) {
+        setSavingMode(false);
+        toggleDialog();
+      } else if (res.status === 201) {
+        setMainError({ message: res.data.message });
+        setSavingMode(false);
+      }
+    }).catch((err) => {
+      alert(err.response.data.message);
+      setSavingMode(false);
+    });
+  }
+
+  function signUp(values) {
+    if (loginInfo.type === 'facebook') {
+      facebookSignUp(values);
+    } else if (loginInfo.type === 'naver') {
+      naverSignUp(values);
+    } else if (loginInfo.type === 'kakao') {
+      kakaoSignUp(values);
+    }
   }
 
   const handleUserKeyPress = (e) => {
