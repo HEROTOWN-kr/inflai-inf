@@ -63,27 +63,6 @@ function SignUpNew() {
     defaultValues
   });
 
-  /* async function signUp(values) {
-    try {
-      const urlResponse = await axios.post('/api/TB_INFLUENCER/signupNew', values);
-      const {
-        social_type, userToken, userName, userPhone, message, userPhoto
-      } = urlResponse.data;
-      if (urlResponse.status === 200) {
-        auth.login(userToken, userName, social_type, userPhoto);
-        if (userPhone) {
-          history.push('/');
-        } else {
-          history.push('/Profile');
-        }
-      } else if (urlResponse.status === 201) {
-        setMainError({ message });
-      }
-    } catch (e) {
-      alert(e.response.data.message);
-    }
-  } */
-
   function signUp(values) {
     setSavingMode(true);
     axios.post('/api/TB_INFLUENCER/signupNew', values).then((res) => {
@@ -105,7 +84,6 @@ function SignUpNew() {
       handleSubmit(signUp)();
     }
   };
-
 
   return (
     <Box

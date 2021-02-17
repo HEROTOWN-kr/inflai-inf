@@ -52,6 +52,9 @@ function Join() {
 
   useEffect(() => {
     if (!loginInfo.type) history.push('/Login');
+    return () => {
+      localStorage.removeItem('loginInfo');
+    };
   }, []);
 
   const { register, handleSubmit, errors } = useForm({

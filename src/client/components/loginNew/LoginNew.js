@@ -16,6 +16,8 @@ import StyledButton from '../../containers/StyledButton';
 import FbLogin from './sns/FbLogin';
 import NavLogin from './sns/NavLogin';
 import KakLogin from './sns/KakLogin';
+import FindId from './FindId';
+import ResetPass from './ResetPass';
 
 const defaultValues = {
   email: '',
@@ -89,7 +91,7 @@ function LoginNew() {
           <div className="error-message">{mainError.message ? mainError.message : null}</div>
         </Box>
       ) : null}
-      <Box my={3}>
+      <Box mt={3} mb={2}>
         <StyledButton
           height={36}
           background="#f50057"
@@ -98,6 +100,16 @@ function LoginNew() {
         >
         로그인
         </StyledButton>
+      </Box>
+      <Box mb={2}>
+        <Grid container justify="space-between">
+          <Grid item>
+            <FindId />
+          </Grid>
+          <Grid item>
+            <ResetPass />
+          </Grid>
+        </Grid>
       </Box>
       <Divider />
       <Box my={3}>

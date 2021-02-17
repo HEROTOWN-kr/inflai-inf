@@ -24,7 +24,6 @@ function NavbarLinks() {
       text: '서비스',
       link: '/Campaign/Service'
     },
-
     {
       text: 'LoginNew',
       link: '/LoginNew'
@@ -39,7 +38,11 @@ function NavbarLinks() {
     },
     {
       text: 'Activate',
-      link: '/Activate/c51414a9a19e1eae4efaf0c1451f0cf8:17bf2aafe3eef4c588326866118b1553'
+      link: '/Activate/17d325b554fd95143e18be66cc172725:b1a7d695fdec720c92ceb32fbbda6da1'
+    },
+    {
+      text: 'Reset',
+      link: '/Reset/17d325b554fd95143e18be66cc172725:b1a7d695fdec720c92ceb32fbbda6da1'
     },
   ];
 

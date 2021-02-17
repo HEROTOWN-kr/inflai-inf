@@ -12,6 +12,7 @@ import Campaign from '../campaign/Campaign';
 import SignUpNew from '../loginNew/SignUpNew';
 import Join from '../loginNew/Join';
 import Activate from '../loginNew/Activate';
+import ResetPassPage from '../loginNew/ResetPassPage';
 
 
 function Main() {
@@ -50,6 +51,10 @@ function Main() {
       <Route
         path="/Activate/:hash"
         render={renderProps => <Activate {...renderProps} />}
+      />
+      <Route
+        path="/Reset/:hash"
+        render={renderProps => <ResetPassPage {...renderProps} />}
       />
       <PrivateRoute
         path="/Profile"
