@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import NaverLogin from 'react-naver-login';
 import AuthContext from '../../../context/AuthContext';
 import SocialButtonNew from './SocialButtonNew';
@@ -60,6 +60,13 @@ function NavLogin() {
       alert(err.message);
     }
   };
+
+  useEffect(() => {
+    const { naver } = window;
+    if (naver && naver.successCallback) {
+      naver.successCallback = data => responseNaver(data);
+    }
+  }, []);
 
   return (
     <NaverLogin

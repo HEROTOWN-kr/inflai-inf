@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Box, Grid } from '@material-ui/core';
-import StyledImage from '../../../containers/StyledImage';
-import defaultAccountImage from '../../../img/default_account_image.png';
-import StyledText from '../../../containers/StyledText';
-import { Colors } from '../../../lib/Сonstants';
-import myPageBg from '../../../img/myPageBg.jpg';
-import AuthContext from '../../../context/AuthContext';
+import StyledImage from '../../containers/StyledImage';
+import defaultAccountImage from '../../img/default_account_image.png';
+import StyledText from '../../containers/StyledText';
+import { Colors } from '../../lib/Сonstants';
+import myPageBg from '../../img/myPageBg.jpg';
+import AuthContext from '../../context/AuthContext';
 
 const arrowIcon = 'icon: chevron-right; ratio: 1';
 

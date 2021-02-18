@@ -8,10 +8,10 @@ import {
 import { useTheme } from '@material-ui/core/styles';
 import { Clear, WarningRounded } from '@material-ui/icons';
 import { useForm } from 'react-hook-form';
-import StyledButton from '../../../containers/StyledButton';
-import { Colors } from '../../../lib/Сonstants';
-import StyledText from '../../../containers/StyledText';
-import ReactFormText from '../../../containers/ReactFormText';
+import StyledButton from '../../../../containers/StyledButton';
+import { Colors } from '../../../../lib/Сonstants';
+import StyledText from '../../../../containers/StyledText';
+import ReactFormText from '../../../../containers/ReactFormText';
 
 const useStyles = makeStyles({
   root: {

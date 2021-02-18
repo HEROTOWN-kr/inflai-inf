@@ -67,14 +67,14 @@ function SuccessDialog(props) {
       open={open}
     >
       <Box p="15px" fontSize="16px" fontWeight="400" lineHeight="18px" textAlign="center" position="relative" borderBottom={`1px solid ${Colors.grey8}`}>
-          비밀번호 병경
+          비밀번호 변경
         <IconButton size="medium" classes={{ root: classes.root }} onClick={onDialogClose}>
           <Clear />
         </IconButton>
       </Box>
       <Box px={2} py={2} width="325px" boxSizing="border-box">
         <Box mb={1}>
-            비밀번호 병경이 완료되었습니다. 로그인해주세요.
+            비밀번호 변경이 완료되었습니다. 로그인해주세요.
         </Box>
         <Box mt={1}>
           <StyledButton height={40} onClick={onDialogClose}>
@@ -127,7 +127,7 @@ function ResetPassPage() {
       py={{ xs: 0, md: 6 }}
       px={{ xs: 2, md: 6 }}
     >
-      <StyledText mb="30px" textAlign="center" fontSize="26px">비밀번호 병경</StyledText>
+      <StyledText mb="30px" textAlign="center" fontSize="26px">비밀번호 변경</StyledText>
       <ReactFormText
         register={register}
         errors={errors}
@@ -156,7 +156,7 @@ function ResetPassPage() {
           hoverBackground="#c51162"
           onClick={handleSubmit(changePassword)}
         >
-          비밀번호 병경
+          비밀번호 변경
         </StyledButton>
       </Box>
       <StyledBackDrop open={savingMode} handleClose={toggleSavingMode} />

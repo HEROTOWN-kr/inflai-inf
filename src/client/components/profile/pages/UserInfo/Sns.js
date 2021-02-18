@@ -7,18 +7,17 @@ import GoogleLogin from 'react-google-login';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextFields } from '@material-ui/icons';
-import StyledText from '../../containers/StyledText';
-import StyledImage from '../../containers/StyledImage';
-import instagramIcon from '../../img/instagram.png';
-import youtubeIcon from '../../img/youtube.png';
-import InstagramDialog from '../login/InstagramDialog';
-import InstagramSelectDialog from '../login/InstagramSelectDialog';
-import YoutubeDialog from '../login/YoutubeDialog';
-import StyledButton from '../../containers/StyledButton';
-import { Colors } from '../../lib/Сonstants';
-import AuthContext from '../../context/AuthContext';
-import StyledTextField from '../../containers/StyledTextField';
+import StyledText from '../../../../containers/StyledText';
+import StyledImage from '../../../../containers/StyledImage';
+import instagramIcon from '../../../../img/instagram.png';
+import youtubeIcon from '../../../../img/youtube.png';
+import InstagramDialog from '../../../login/InstagramDialog';
+import InstagramSelectDialog from '../../../login/InstagramSelectDialog';
+import YoutubeDialog from '../../../login/YoutubeDialog';
+import StyledButton from '../../../../containers/StyledButton';
+import { Colors } from '../../../../lib/Сonstants';
+import AuthContext from '../../../../context/AuthContext';
+import LabelComponent from './LabelComponent';
 
 const useStyles = makeStyles({
   FormHelperContained: {
@@ -38,9 +37,7 @@ const schema = Yup.object().shape({
 });
 
 function Sns(props) {
-  const {
-    LabelComponent, userInfo, getUserInfo, isMD
-  } = props;
+  const { userInfo, getUserInfo, isMD } = props;
   const { TB_INSTum, TB_YOUTUBE, TB_NAVER } = userInfo;
   const { INS_ID, INS_USERNAME, INS_DT } = TB_INSTum || {};
   const { YOU_ID, YOU_NAME, YOU_DT } = TB_YOUTUBE || {};
@@ -271,7 +268,6 @@ function Sns(props) {
                 </Box>
               </Grid>
             </Grid>
-
           </Grid>
         </Grid>
       </Grid>

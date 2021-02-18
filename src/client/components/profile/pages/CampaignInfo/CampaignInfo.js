@@ -4,13 +4,13 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { Skeleton } from '@material-ui/lab';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import StyledText from '../../../containers/StyledText';
-import PageTitle from '../PageTitle';
-import { Colors } from '../../../lib/Сonstants';
-import AuthContext from '../../../context/AuthContext';
-import CampaignCard from '../../campaign/CampaignCard';
-import MyPagination from '../../../containers/MyPagination';
+import WhiteBlock from '../../../../containers/WhiteBlock';
+import StyledText from '../../../../containers/StyledText';
+import PageTitle from '../../PageTitle';
+import { Colors } from '../../../../lib/Сonstants';
+import AuthContext from '../../../../context/AuthContext';
+import CampaignCard from '../../../campaign/CampaignCard';
+import MyPagination from '../../../../containers/MyPagination';
 import CampaignSelectedCard from './CampaignSelectedCard';
 import ReviewInfoDialog from './ReviewInfoDialog';
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Grid, Hidden } from '@material-ui/core';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import PageTitle from '../PageTitle';
-import StyledText from '../../../containers/StyledText';
+import WhiteBlock from '../../../../containers/WhiteBlock';
+import PageTitle from '../../PageTitle';
+import StyledText from '../../../../containers/StyledText';
 import InstagramInfo from './InstagramInfo';
 
 function Rank(props) {

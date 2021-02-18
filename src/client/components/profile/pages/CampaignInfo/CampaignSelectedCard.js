@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { SupervisorAccount } from '@material-ui/icons';
-import StyledImage from '../../../containers/StyledImage';
-import StyledText from '../../../containers/StyledText';
-import { AdvertiseTypes, Colors } from '../../../lib/Сonstants';
-import StyledSvg from '../../../containers/StyledSvg';
-import noImage from '../../../img/noImage.png';
-import noFound from '../../../img/notFound400_316.png';
-import StyledButton from '../../../containers/StyledButton';
+import StyledImage from '../../../../containers/StyledImage';
+import StyledText from '../../../../containers/StyledText';
+import { AdvertiseTypes, Colors } from '../../../../lib/Сonstants';
+import StyledSvg from '../../../../containers/StyledSvg';
+import noImage from '../../../../img/noImage.png';
+import noFound from '../../../../img/notFound400_316.png';
+import StyledButton from '../../../../containers/StyledButton';
 import ReviewInfoDialog from './ReviewInfoDialog';
 
 function CampaignSelectedCard(props) {

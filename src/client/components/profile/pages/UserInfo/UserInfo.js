@@ -6,21 +6,23 @@ import {
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import PageTitle from '../PageTitle';
-import StyledText from '../../../containers/StyledText';
-import AuthContext from '../../../context/AuthContext';
-import StyledTextField from '../../../containers/StyledTextField';
-import DaumPostCode from '../../../containers/DaumPostCode';
-import StyledImage from '../../../containers/StyledImage';
-import StyledButton from '../../../containers/StyledButton';
-import { Colors } from '../../../lib/Сonstants';
-import Sns from '../Sns';
-import defaultAccountImage from '../../../img/default_account_image.png';
-import DaumPostCodeMobile from '../../../containers/DaumPostCodeMobile';
-import CategoryDialog from '../../navbar/MobileView/CategoryDialog';
-import DaumPostCodeDialog from '../../../containers/DaumPostCodeDialog';
-import ReactFormText from '../../../containers/ReactFormText';
+import WhiteBlock from '../../../../containers/WhiteBlock';
+import PageTitle from '../../PageTitle';
+import StyledText from '../../../../containers/StyledText';
+import AuthContext from '../../../../context/AuthContext';
+import StyledTextField from '../../../../containers/StyledTextField';
+import DaumPostCode from '../../../../containers/DaumPostCode';
+import StyledImage from '../../../../containers/StyledImage';
+import StyledButton from '../../../../containers/StyledButton';
+import { Colors } from '../../../../lib/Сonstants';
+import Sns from './Sns';
+import defaultAccountImage from '../../../../img/default_account_image.png';
+import DaumPostCodeMobile from '../../../../containers/DaumPostCodeMobile';
+import CategoryDialog from '../../../navbar/MobileView/CategoryDialog';
+import DaumPostCodeDialog from '../../../../containers/DaumPostCodeDialog';
+import ReactFormText from '../../../../containers/ReactFormText';
+import SocialLogin from './SocialLogin/SocialLogin';
+import LabelComponent from './LabelComponent';
 
 function ImageActionButton(props) {
   const {
@@ -40,17 +42,6 @@ function ImageActionButton(props) {
     <div style={styles} onClick={onClick}>
       {children}
     </div>
-  );
-}
-
-function LabelComponent(props) {
-  const { labelName } = props;
-  return (
-    <Box width="175px">
-      <StyledText fontSize="15px">
-        {labelName}
-      </StyledText>
-    </Box>
   );
 }
 
@@ -344,14 +335,15 @@ function UserInfo(props) {
           <Grid item xs={12}>
             <Divider />
           </Grid>
-          <Grid item xs={12}>
-            <Box pb={4}>
-              <StyledText fontSize="19px" fontWeight="600">SNS</StyledText>
-            </Box>
-            <Sns {...props} userInfo={userInfo} getUserInfo={getUserInfo} LabelComponent={LabelComponent} />
-          </Grid>
         </Grid>
-        <Box px={2} />
+        <Box py={4}>
+          <Box pb={4}>
+            <StyledText fontSize="19px" fontWeight="600">SNS</StyledText>
+          </Box>
+          <Sns {...props} userInfo={userInfo} getUserInfo={getUserInfo} />
+        </Box>
+        <Divider />
+        <SocialLogin />
       </Box>
     </WhiteBlock>
   );

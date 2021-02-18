@@ -18,7 +18,7 @@ import ResetPassPage from '../loginNew/ResetPassPage';
 function Main() {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, [pathname]);
 
   return (
@@ -27,11 +27,11 @@ function Main() {
       <Route
         exact
         path="/Login"
-        render={renderProps => <Login {...renderProps} />}
+        render={renderProps => <LoginNew {...renderProps} />}
       />
       <Route
         path="/SignUp"
-        render={renderProps => <SignUp {...renderProps} />}
+        render={renderProps => <SignUpNew {...renderProps} />}
       />
       <Route
         exact

@@ -48,6 +48,7 @@ function LoginNew() {
         } = res.data;
         auth.login(userToken, userName, social_type, userPhoto);
         history.push('/');
+        // window.location = 'http://127.0.0.1:3002/';
       } else if (res.status === 201) {
         setMainError({ message: res.data.message });
       }

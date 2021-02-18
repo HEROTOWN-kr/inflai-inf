@@ -5,20 +5,20 @@ import { PieChart } from 'react-minimal-pie-chart';
 import {
   ChatBubble, Room, Favorite, Image, Details, ChangeHistory, ImportExportOutlined, CalendarToday
 } from '@material-ui/icons';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import StyledImage from '../../../containers/StyledImage';
-import Common from '../../../lib/common';
-import defaultAccountImage from '../../../img/default_account_image.png';
-import StyledText from '../../../containers/StyledText';
-import StyledSvg from '../../../containers/StyledSvg';
-import GoogleVisionGraph from './Graphs/GoogleVisionGraph';
-import LikeCommentBarGraph from './Graphs/LikeCommentBarGraph';
-import { Colors } from '../../../lib/Сonstants';
-import AgeGraph from './Graphs/AgeGraph';
-import GenderGraph from './Graphs/GenderGraph';
-import MapGraph from './Graphs/MapGraph';
-import AuthContext from '../../../context/AuthContext';
-import MapGraph2 from './Graphs/MapGraph2';
+import WhiteBlock from '../../../../containers/WhiteBlock';
+import StyledImage from '../../../../containers/StyledImage';
+import Common from '../../../../lib/common';
+import defaultAccountImage from '../../../../img/default_account_image.png';
+import StyledText from '../../../../containers/StyledText';
+import StyledSvg from '../../../../containers/StyledSvg';
+import GoogleVisionGraph from '../Graphs/GoogleVisionGraph';
+import LikeCommentBarGraph from '../Graphs/LikeCommentBarGraph';
+import { Colors } from '../../../../lib/Сonstants';
+import AgeGraph from '../Graphs/AgeGraph';
+import GenderGraph from '../Graphs/GenderGraph';
+import MapGraph from '../Graphs/MapGraph';
+import AuthContext from '../../../../context/AuthContext';
+import MapGraph2 from '../Graphs/MapGraph2';
 
 function InstagramInfo(props) {
   const { isMD, isSM } = props;

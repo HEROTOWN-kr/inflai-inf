@@ -151,7 +151,7 @@ function SuccessDialog(props) {
       </Box>
       <Box px={2} py={2} width="325px" boxSizing="border-box">
         <Box mb={1}>
-          이메일에 비밀번호 병경링크가 발송되었습니다. 확인해주세요.
+          이메일에 비밀번호 변경링크가 발송되었습니다. 확인해주세요.
         </Box>
         <Box mt={1}>
           <StyledButton height={40} onClick={closeDialog}>

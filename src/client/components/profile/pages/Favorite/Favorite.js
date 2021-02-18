@@ -5,12 +5,12 @@ import {
 import { Skeleton } from '@material-ui/lab';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import PageTitle from '../PageTitle';
-import StyledText from '../../../containers/StyledText';
-import CampaignCard from '../../campaign/CampaignCard';
-import AuthContext from '../../../context/AuthContext';
-import MyPagination from '../../../containers/MyPagination';
+import WhiteBlock from '../../../../containers/WhiteBlock';
+import PageTitle from '../../PageTitle';
+import StyledText from '../../../../containers/StyledText';
+import CampaignCard from '../../../campaign/CampaignCard';
+import AuthContext from '../../../../context/AuthContext';
+import MyPagination from '../../../../containers/MyPagination';
 
 function Favorite() {
   const [loading, setLoading] = useState(false);
