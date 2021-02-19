@@ -23,6 +23,7 @@ import DaumPostCodeDialog from '../../../../containers/DaumPostCodeDialog';
 import ReactFormText from '../../../../containers/ReactFormText';
 import SocialLogin from './SocialLogin/SocialLogin';
 import LabelComponent from './LabelComponent';
+import PasswordChange from './PasswordChange/PasswordChange';
 
 function ImageActionButton(props) {
   const {
@@ -344,6 +345,8 @@ function UserInfo(props) {
         </Box>
         <Divider />
         <SocialLogin />
+        <Divider />
+        <PasswordChange />
       </Box>
     </WhiteBlock>
   );
