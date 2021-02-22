@@ -90,7 +90,7 @@ function ResetPassDialog(props) {
 
   const handleUserKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      handleSubmit(findId)();
+      handleSubmit(sendEmail)();
     }
   };
 

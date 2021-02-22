@@ -78,58 +78,56 @@ function SocialNaver() {
 
   return (
     <React.Fragment>
-      {
-        naverInfo.NIF_ID ? (
-          <React.Fragment>
+      { naverInfo.NIF_ID ? (
+        <React.Fragment>
+          <Box
+            py={2}
+            px={2}
+            width={{ xs: 'inherit', md: '250px' }}
+            border="1px solid #e9ecef"
+            css={{ cursor: 'pointer' }}
+            onClick={naverDelete}
+          >
+            <Grid container justify="center" alignItems="center" spacing={1}>
+              <Grid item>
+                <StyledImage width="18px" height="18px" src={NaverIcon} />
+              </Grid>
+              <Grid item>
+                <StyledText>네이버 간편로그인 해제</StyledText>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box mt={1}>
+            <StyledText fontSize="13px">{`${naverInfo.NIF_DT}에 연결되었습니다`}</StyledText>
+          </Box>
+        </React.Fragment>
+      ) : (
+        <NaverLogin
+          clientId={NaverLoginId}
+          callbackUrl={`${window.location.origin}/Profile/UserInfo`}
+          render={props => (
             <Box
               py={2}
               px={2}
               width={{ xs: 'inherit', md: '250px' }}
               border="1px solid #e9ecef"
               css={{ cursor: 'pointer' }}
-              onClick={naverDelete}
+              onClick={props.onClick}
             >
-              <Grid container justify="center" alignItems="center" spacing={1}>
+              <Grid container justify="center" spacing={1}>
                 <Grid item>
                   <StyledImage width="18px" height="18px" src={NaverIcon} />
                 </Grid>
                 <Grid item>
-                  <StyledText>네이버 간편로그인 해제</StyledText>
+                  <StyledText>네이버 간편로그인 연결하기</StyledText>
                 </Grid>
               </Grid>
             </Box>
-            <Box mt={1}>
-              <StyledText fontSize="13px">{`${naverInfo.NIF_DT}에 연결되었습니다`}</StyledText>
-            </Box>
-          </React.Fragment>
-        ) : (
-          <NaverLogin
-            clientId={NaverLoginId}
-            callbackUrl={`${window.location.origin}/Profile/UserInfo`}
-            render={props => (
-              <Box
-                py={2}
-                px={2}
-                width={{ xs: 'inherit', md: '250px' }}
-                border="1px solid #e9ecef"
-                css={{ cursor: 'pointer' }}
-                onClick={props.onClick}
-              >
-                <Grid container justify="center" spacing={1}>
-                  <Grid item>
-                    <StyledImage width="18px" height="18px" src={NaverIcon} />
-                  </Grid>
-                  <Grid item>
-                    <StyledText>네이버 간편로그인 연결하기</StyledText>
-                  </Grid>
-                </Grid>
-              </Box>
-            )}
-            onSuccess={result => responseNaver(result)}
-            onFailure={result => responseNaver(result)}
-          />
-        )
-      }
+          )}
+          onSuccess={result => responseNaver(result)}
+          onFailure={result => responseNaver(result)}
+        />
+      )}
       {errorMessage ? (
         <Box my={1}>
           <div className="error-message">{errorMessage}</div>

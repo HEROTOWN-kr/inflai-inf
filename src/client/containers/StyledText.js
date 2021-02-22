@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
-import { textAlign } from '@material-ui/system';
 import { Colors } from '../lib/Сonstants';
 
 const useStyles = makeStyles({
