@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useContext, useEffect, useRef, useState
 } from 'react';
 import {
@@ -189,13 +190,17 @@ function CampaignDetail() {
   const Scroller = Scroll.scroller;
   const ElementLink = Scroll.Element;
 
-  const DetailPageRef = useRef(null);
+  const measuredRef = useCallback((node) => {
+    if (node !== null) {
+      setTimeout(() => {
+        const showMoreButton = node.getBoundingClientRect().height > 760;
+        if (showMoreButton) setShowMore({ ...showMore, visible: true });
+      }, 500);
+    }
+  }, []);
 
-  const isXl = useMediaQuery(theme.breakpoints.up('xl'));
-  const is1600 = useMediaQuery('(min-width:1600px)');
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
-  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   function toggleShowMore() {
     setShowMore({ ...showMore, isOpen: !showMore.isOpen });
@@ -311,15 +316,6 @@ function CampaignDetail() {
       window.removeEventListener('scroll', () => handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    if (DetailPageRef.current && productData.AD_DETAIL) {
-      setTimeout(() => {
-        const showMoreButton = DetailPageRef.current.clientHeight > 760;
-        if (showMoreButton) setShowMore({ ...showMore, visible: true });
-      }, 200);
-    }
-  }, [productData]);
 
   const location = useLocation();
   const currentUrl = `https://influencer.inflai.com${location.pathname}`;
@@ -498,10 +494,11 @@ function CampaignDetail() {
                 <Box style={{
                   textAlign: 'center',
                   maxHeight: showMore.isOpen ? 'none' : '760px',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  wordBreak: 'break-all'
                 }}
                 >
-                  <div ref={DetailPageRef}>
+                  <div ref={measuredRef}>
                     {ReactHtmlParser(productData.AD_DETAIL)}
                   </div>
                 </Box>
@@ -517,12 +514,12 @@ function CampaignDetail() {
                   <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
                     {showMore.isOpen ? (
                       <React.Fragment>
-                              상세 페이지 주리기
+                          상품정보접기
                         <ExpandLess />
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
-                              상세 페이지 더보기
+                        상품정보 더보기
                         <ExpandMore />
                       </React.Fragment>
                     )}
@@ -704,7 +701,6 @@ function CampaignDetail() {
         />
       </Box>
     </React.Fragment>
-
   );
 }
 

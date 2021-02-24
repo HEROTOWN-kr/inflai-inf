@@ -13,6 +13,8 @@ import SignUpNew from '../loginNew/SignUpNew';
 import Join from '../loginNew/Join';
 import Activate from '../loginNew/Activate';
 import ResetPassPage from '../loginNew/ResetPassPage';
+import Process from '../process/Process';
+import CampaignSearch from '../campaign/CampaignSearch';
 
 
 function Main() {
@@ -33,7 +35,7 @@ function Main() {
         path="/SignUp"
         render={renderProps => <SignUpNew {...renderProps} />}
       />
-      <Route
+      {/* <Route
         exact
         path="/LoginNew"
         render={renderProps => <LoginNew {...renderProps} />}
@@ -42,7 +44,7 @@ function Main() {
         exact
         path="/SignUpNew"
         render={renderProps => <SignUpNew {...renderProps} />}
-      />
+      /> */}
       <Route
         exact
         path="/Join"
@@ -68,10 +70,14 @@ function Main() {
         path="/Campaign"
         render={renderProps => <Campaign {...renderProps} />}
       />
-      {/* <Route
-        path="/Profile"
-        render={renderProps => <Profile {...renderProps} />}
-      /> */}
+      <Route
+        path="/Process"
+        render={renderProps => <Process {...renderProps} />}
+      />
+      <Route
+        path="/Search"
+        render={renderProps => <CampaignSearch {...renderProps} />}
+      />
       <Route
         component={NotFound}
       />

@@ -24,6 +24,10 @@ function NavbarLinks() {
       text: '서비스',
       link: '/Campaign/Service'
     },
+    {
+      text: '이용방법',
+      link: '/Process'
+    },
     /* {
       text: 'LoginNew',
       link: '/LoginNew'

@@ -40,6 +40,10 @@ const menuLinks = [
     text: '랭킹 정보',
     link: '/Profile/Rank'
   },
+  {
+    text: '이용방법',
+    link: '/Process'
+  },
 ];
 
 function MyPage(props) {

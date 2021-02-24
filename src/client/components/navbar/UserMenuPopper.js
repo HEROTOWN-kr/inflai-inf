@@ -50,7 +50,7 @@ function UserMenuPopper(props) {
             </div>
           </Grid>
           <Grid item>
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={() => history.push('/Search')}>
               <Search fontSize="large" />
             </IconButton>
           </Grid>
