@@ -82,7 +82,7 @@ function FindIdDialog(props) {
     });
   }
 
-  function onDilogClose() {
+  function onDialogClose() {
     setUserId(null);
     setErrorMessage(null);
     closeDialog();
@@ -97,13 +97,13 @@ function FindIdDialog(props) {
   return (
     <Dialog
       classes={{ paper: classes.paper }}
-      onClose={onDilogClose}
+      onClose={onDialogClose}
       aria-labelledby="simple-dialog-title"
       open={open}
     >
       <Box p="15px" fontSize="16px" fontWeight="400" lineHeight="18px" textAlign="center" position="relative" borderBottom={`1px solid ${Colors.grey8}`}>
           아이디 찾기
-        <IconButton size="medium" classes={{ root: classes.dialogRoot }} onClick={onDilogClose}>
+        <IconButton size="medium" classes={{ root: classes.dialogRoot }} onClick={onDialogClose}>
           <Clear />
         </IconButton>
       </Box>

@@ -24,6 +24,7 @@ import ReactFormText from '../../../../containers/ReactFormText';
 import SocialLogin from './SocialLogin/SocialLogin';
 import LabelComponent from './LabelComponent';
 import PasswordChange from './PasswordChange/PasswordChange';
+import UserDelete from './UserDelete';
 
 function ImageActionButton(props) {
   const {
@@ -318,9 +319,10 @@ function UserInfo(props) {
           </Grid>
           <Grid item xs={12}>
             <Box pt={isMD ? 4 : 0}>
-              <Grid container justify="center">
-                <Grid item>
-                  <Box width="280px">
+              <Grid container alignItems="flex-end">
+                <Grid item xs={4} />
+                <Grid item xs={4}>
+                  <Box width={{ xs: '100%', md: '280px' }} m="0 auto">
                     <StyledButton
                       onClick={handleSubmit(updateProfile)}
                       background={Colors.skyBlue}
@@ -328,6 +330,11 @@ function UserInfo(props) {
                     >
                       저장
                     </StyledButton>
+                  </Box>
+                </Grid>
+                <Grid item xs={4}>
+                  <Box textAlign="right">
+                    <UserDelete />
                   </Box>
                 </Grid>
               </Grid>
