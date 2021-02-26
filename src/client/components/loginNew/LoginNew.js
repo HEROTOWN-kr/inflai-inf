@@ -120,7 +120,7 @@ function LoginNew() {
       </Box>
       <Divider />
       <Box mt={3}>
-        <StyledButton height={44} onClick={() => history.push('/SignUpNew')}>회원가입하기</StyledButton>
+        <StyledButton height={44} onClick={() => history.push('/SignUp')}>회원가입하기</StyledButton>
       </Box>
     </Box>
   );

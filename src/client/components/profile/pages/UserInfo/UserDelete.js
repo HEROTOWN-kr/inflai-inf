@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Box, Dialog, Grid, IconButton, makeStyles
 } from '@material-ui/core';
@@ -39,12 +40,16 @@ const useStyles = makeStyles({
 function UserDeleteDialog(props) {
   const { open, closeDialog } = props;
   const classes = useStyles();
-  const { token } = useContext(AuthContext);
+  const { token, logout } = useContext(AuthContext);
+  const history = useHistory();
 
   function deleteUser() {
     axios.post('/api/TB_INFLUENCER/userDelete', { token }).then((res) => {
-
+      closeDialog();
+      logout();
+      history.push('/');
     }).catch((err) => {
+      closeDialog();
       alert(err.response.data.message);
     });
   }
