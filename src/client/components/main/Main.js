@@ -15,6 +15,8 @@ import Activate from '../loginNew/Activate';
 import ResetPassPage from '../loginNew/ResetPassPage';
 import Process from '../process/Process';
 import CampaignSearch from '../campaign/CampaignSearch';
+import Service from '../footer/Service';
+import Privacy from '../footer/Privacy';
 
 
 function Main() {
@@ -77,6 +79,14 @@ function Main() {
       <Route
         path="/Search"
         render={renderProps => <CampaignSearch {...renderProps} />}
+      />
+      <Route
+        path="/Policy/Service"
+        render={props => <Service {...props} />}
+      />
+      <Route
+        path="/Policy/Privacy"
+        render={props => <Privacy {...props} />}
       />
       <Route
         component={NotFound}
