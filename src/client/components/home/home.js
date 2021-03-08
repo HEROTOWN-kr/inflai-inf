@@ -28,7 +28,7 @@ function Home(props) {
         <HomeCampaigns {...props} isMD={isMD} />
         <HomeSelectCampaigns {...props} isMD={isMD} />
         <HomeBanners />
-        <HomePartners />
+        {/* <HomePartners /> */}
       </Box>
     </Box>
   );
