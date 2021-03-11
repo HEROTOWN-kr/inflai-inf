@@ -41,22 +41,14 @@ function ApplyFormComponent(componentProps) {
 function CampaignApply(props) {
   const { match, history, setMessage } = props;
   const [applyData, setApplyData] = useState({});
-  const [snsData, setSnsData] = useState({
-    insta: false,
-    youtube: false,
-    naver: false
-  });
   const [addData, setAddData] = useState({ TB_PHOTO_ADs: [] });
   const [isSticky, setSticky] = useState(false);
 
   const theme = useTheme();
   const { token } = useContext(AuthContext);
 
-  const isXl = useMediaQuery(theme.breakpoints.up('xl'));
-  const is1600 = useMediaQuery('(min-width:1600px)');
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
-  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   const schema = Yup.object().shape({
     sns: Yup.string()
@@ -254,7 +246,7 @@ function CampaignApply(props) {
                                   <Checkbox
                                     onChange={e => checkBoxProps.onChange(e.target.checked)}
                                     checked={checkBoxProps.value}
-                                    disabled={!applyData.instaUserName}
+                                    disabled={!applyData.instaUserName || applyData.INS_STATUS === 0}
                                   />
                                 )}
                               />
@@ -273,21 +265,37 @@ function CampaignApply(props) {
                               </Grid>
                             </Box>
                           </Grid>
-                          {
-                              applyData.instaUserName ? null : (
-                                <Grid item>
-                                  <Box
-                                    padding="18px"
-                                    border="1px solid #e9ecef"
-                                    borderLeft="0"
-                                    css={{ cursor: 'pointer' }}
-                                    onClick={() => history.push('/Profile/UserInfo')}
-                                  >
-                                    <StyledText>연결하기</StyledText>
-                                  </Box>
-                                </Grid>
-                              )
-                            }
+                          { applyData.instaUserName ? null : (
+                            <Grid item>
+                              <Box
+                                padding="18px"
+                                border="1px solid #e9ecef"
+                                borderLeft="0"
+                                css={{ cursor: 'pointer' }}
+                                onClick={() => history.push('/Profile/UserInfo')}
+                              >
+                                <StyledText>연결하기</StyledText>
+                              </Box>
+                            </Grid>
+                          ) }
+                          { applyData.INS_STATUS === 0 ? (
+                            <React.Fragment>
+                              <Grid item>
+                                <Box
+                                  padding="18px"
+                                  border="1px solid #e9ecef"
+                                  borderLeft="0"
+                                  css={{ cursor: 'pointer' }}
+                                  onClick={() => history.push('/Profile/UserInfo')}
+                                >
+                                  <StyledText>재연결</StyledText>
+                                </Box>
+                              </Grid>
+                              <Grid item xs={12}>
+                                <Box fontSize="14px" color="#da910c">페이스북 비번을 바꾸거나 인스타 연동 후 60일 지나거나 인스타 비즈니스 계정 취소할때 인스타 계정 재연결 해야 됩니다</Box>
+                              </Grid>
+                            </React.Fragment>
+                          ) : null }
                         </Grid>
                       </Grid>
                     ) : null}
@@ -321,21 +329,19 @@ function CampaignApply(props) {
                               </Grid>
                             </Box>
                           </Grid>
-                          {
-                              applyData.youtubeChannelName ? null : (
-                                <Grid item>
-                                  <Box
-                                    padding="18px"
-                                    border="1px solid #e9ecef"
-                                    borderLeft="0"
-                                    css={{ cursor: 'pointer' }}
-                                    onClick={() => history.push('/Profile/UserInfo')}
-                                  >
-                                    <StyledText>연결하기</StyledText>
-                                  </Box>
-                                </Grid>
-                              )
-                            }
+                          { applyData.youtubeChannelName ? null : (
+                            <Grid item>
+                              <Box
+                                padding="18px"
+                                border="1px solid #e9ecef"
+                                borderLeft="0"
+                                css={{ cursor: 'pointer' }}
+                                onClick={() => history.push('/Profile/UserInfo')}
+                              >
+                                <StyledText>연결하기</StyledText>
+                              </Box>
+                            </Grid>
+                          ) }
                         </Grid>
                       </Grid>
                     ) : null}
@@ -369,31 +375,27 @@ function CampaignApply(props) {
                               </Grid>
                             </Box>
                           </Grid>
-                          {
-                              applyData.naverChannelName ? null : (
-                                <Grid item>
-                                  <Box
-                                    padding="18px"
-                                    border="1px solid #e9ecef"
-                                    borderLeft="0"
-                                    css={{ cursor: 'pointer' }}
-                                    onClick={() => history.push('/Profile/UserInfo')}
-                                  >
-                                    <StyledText>연결하기</StyledText>
-                                  </Box>
-                                </Grid>
-                              )
-                            }
+                          { applyData.naverChannelName ? null : (
+                            <Grid item>
+                              <Box
+                                padding="18px"
+                                border="1px solid #e9ecef"
+                                borderLeft="0"
+                                css={{ cursor: 'pointer' }}
+                                onClick={() => history.push('/Profile/UserInfo')}
+                              >
+                                <StyledText>연결하기</StyledText>
+                              </Box>
+                            </Grid>
+                          ) }
                         </Grid>
                       </Grid>
                     ) : null}
-                    {
-                      errors.sns ? (
-                        <div className="error-message">
-                          {errors.sns.message}
-                        </div>
-                      ) : null
-                    }
+                    { errors.sns ? (
+                      <div className="error-message">
+                        {errors.sns.message}
+                      </div>
+                    ) : null }
                     <input
                       type="text"
                       readOnly
@@ -421,11 +423,9 @@ function CampaignApply(props) {
             </ApplyFormComponent>
             <ApplyFormComponent title="신청한마디">
               <TextareaAutosize ref={register} rowsMin={8} style={{ width: '99%' }} placeholder="신청한마디" name="message" />
-              {
-                errors.message ? (
-                  <div className="error-message">{errors.message.message}</div>
-                ) : null
-              }
+              { errors.message ? (
+                <div className="error-message">{errors.message.message}</div>
+              ) : null }
             </ApplyFormComponent>
             {addData.AD_DELIVERY ? (
               <React.Fragment>
@@ -492,20 +492,18 @@ function CampaignApply(props) {
           </Grid>
         ) : null}
       </Grid>
-      {
-        isMD ? null : (
-          <Box
-            position="fixed"
-            bottom="0"
-            zIndex="2"
-            borderTop={`1px solid ${Colors.grey7}`}
-            width="100%"
-            css={{ backgroundColor: Colors.white }}
-          >
-            <StyledButton variant="text" height={60} borderRadius="0" onClick={handleSubmit(onSubmit)}>신청하기</StyledButton>
-          </Box>
-        )
-      }
+      { isMD ? null : (
+        <Box
+          position="fixed"
+          bottom="0"
+          zIndex="2"
+          borderTop={`1px solid ${Colors.grey7}`}
+          width="100%"
+          css={{ backgroundColor: Colors.white }}
+        >
+          <StyledButton variant="text" height={60} borderRadius="0" onClick={handleSubmit(onSubmit)}>신청하기</StyledButton>
+        </Box>
+      ) }
     </Box>
   );
 }

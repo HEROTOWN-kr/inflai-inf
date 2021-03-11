@@ -39,7 +39,9 @@ const schema = Yup.object().shape({
 function Sns(props) {
   const { userInfo, getUserInfo, isMD } = props;
   const { TB_INSTum, TB_YOUTUBE, TB_NAVER } = userInfo;
-  const { INS_ID, INS_USERNAME, INS_DT } = TB_INSTum || {};
+  const {
+    INS_ID, INS_USERNAME, INS_STATUS, INS_DT
+  } = TB_INSTum || {};
   const { YOU_ID, YOU_NAME, YOU_DT } = TB_YOUTUBE || {};
   const { NAV_ID, NAV_URL, NAV_DT } = TB_NAVER || {};
   const classes = useStyles();
@@ -241,6 +243,10 @@ function Sns(props) {
     });
   }
 
+  function fbRecconect() {
+
+  }
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -262,11 +268,20 @@ function Sns(props) {
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item>
-                <Box py={2} px={2} height="52px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('http://pf.kakao.com/_AYxeUxb/62492911', '_blank')}>
-                  <StyledText>연결방법 (필독)</StyledText>
-                </Box>
-              </Grid>
+              { INS_ID ? null : (
+                <Grid item>
+                  <Box py={2} px={2} height="52px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => window.open('http://pf.kakao.com/_AYxeUxb/62492911', '_blank')}>
+                    <StyledText>연결방법 (필독)</StyledText>
+                  </Box>
+                </Grid>
+              ) }
+              { INS_STATUS === 0 ? (
+                <Grid item>
+                  <Box py={2} px={2} height="52px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => fbRecconect(INS_ID)}>
+                    <StyledText>재연결</StyledText>
+                  </Box>
+                </Grid>
+              ) : null }
             </Grid>
           </Grid>
         </Grid>
