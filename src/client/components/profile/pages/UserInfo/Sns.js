@@ -244,7 +244,30 @@ function Sns(props) {
   }
 
   function fbRecconect() {
+    const { FB } = window;
 
+    if (fbData.isConnect) {
+      const { accessToken, userID } = fbData.data;
+      console.log(accessToken);
+    } else {
+      FB.login((loginRes2) => {
+        if (loginRes2.authResponse) {
+          const { accessToken, userID } = loginRes2.authResponse;
+          axios.post('/api/TB_INSTA/reconnect', {
+            facebookToken: accessToken,
+            token
+          }).then((res) => {
+            if (res.status === 201) {
+              alert(res.data.message);
+            } else {
+              getUserInfo();
+            }
+          }).catch(err => alert(err.response.data.message));
+        } else {
+          alert('not connected');
+        }
+      }, { scope: 'public_profile, email, manage_pages, instagram_basic, instagram_manage_insights' });
+    }
   }
 
   return (
@@ -276,11 +299,17 @@ function Sns(props) {
                 </Grid>
               ) }
               { INS_STATUS === 0 ? (
-                <Grid item>
-                  <Box py={2} px={2} height="52px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => fbRecconect(INS_ID)}>
-                    <StyledText>재연결</StyledText>
-                  </Box>
-                </Grid>
+                <React.Fragment>
+                  <Grid item>
+                    <Box py={2} px={2} height="52px" border="1px solid #e9ecef" boxSizing="border-box" css={{ cursor: 'pointer' }} onClick={() => fbRecconect(INS_ID)}>
+                      <StyledText>재연결</StyledText>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box fontSize="14px" color="#da910c">페이스북 비번을 바꾸거나 인스타 연동 후 60일 지나거나 인스타 비즈니스 계정 취소할때 인스타 계정 재연결 해야 됩니다</Box>
+                  </Grid>
+                </React.Fragment>
+
               ) : null }
             </Grid>
           </Grid>

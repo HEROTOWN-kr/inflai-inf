@@ -250,7 +250,6 @@ function CampaignApply(props) {
                                   />
                                 )}
                               />
-                              {/* <StyledCheckBox checked={snsData.insta} onChange={event => setSnsData({ ...snsData, insta: event.target.checked })} disabled={!applyData.instaUserName} /> */}
                             </Box>
                           </Grid>
                           <Grid item xs md={5}>
