@@ -117,7 +117,7 @@ function Favorite() {
                   return (
                     <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
                       <CampaignCard
-                        image={TB_PHOTO_ADs[0].PHO_FILE}
+                        image={TB_PHOTO_ADs[0].PHO_FILE_URL}
                         ctg1={AD_CTG}
                         ctg2={AD_CTG2}
                         srchEnd={AD_SRCH_END}

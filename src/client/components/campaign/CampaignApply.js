@@ -452,7 +452,7 @@ function CampaignApply(props) {
                   <Box py={isMD ? 6 : 2} pl={isLG ? 6 : 2} pr={isLG ? 0 : 2} width="312px">
                     <Grid container spacing={3}>
                       <Grid item xs={12}>
-                        <StyledImage width="100%" height="300px" src={addData.TB_PHOTO_ADs.length > 0 ? addData.TB_PHOTO_ADs[0].PHO_FILE : noImage} />
+                        <StyledImage width="100%" height="300px" src={addData.TB_PHOTO_ADs.length > 0 ? addData.TB_PHOTO_ADs[0].PHO_FILE_URL : noImage} />
                         <Box py={3}><StyledText overflowHidden fontSize="20px" fontWeight="bold">{addData.AD_NAME}</StyledText></Box>
                         <StyledText overflowHidden fontSize="15px">{addData.AD_SHRT_DISC}</StyledText>
                         <Box pt={2}>
