@@ -97,7 +97,7 @@ function UserInfo(props) {
       const { data } = res.data;
       const {
         INF_EMAIL, INF_NAME, INF_TEL, INF_POST_CODE, INF_ROAD_ADDR, INF_DETAIL_ADDR,
-        INF_EXTR_ADDR, INF_PHOTO, INF_MESSAGE, TB_INSTum, TB_YOUTUBE, TB_NAVER
+        INF_EXTR_ADDR, INF_PHOTO_URL, INF_MESSAGE, TB_INSTum, TB_YOUTUBE, TB_NAVER
       } = data;
       reset({
         nickName: INF_NAME,
@@ -109,9 +109,9 @@ function UserInfo(props) {
         message: INF_MESSAGE === 1,
       });
       setUserInfo({
-        TB_INSTum, TB_YOUTUBE, TB_NAVER, INF_PHOTO, INF_EMAIL
+        TB_INSTum, TB_YOUTUBE, TB_NAVER, INF_PHOTO_URL, INF_EMAIL
       });
-      userDataUpdate(INF_NAME, INF_PHOTO);
+      userDataUpdate(INF_NAME, INF_PHOTO_URL);
     });
   }
 
@@ -135,7 +135,7 @@ function UserInfo(props) {
         const formData = new FormData();
         formData.append('file', photo);
         formData.append('token', token);
-        return axios.post('/api/TB_INFLUENCER/upload', formData, {
+        return axios.post('/api/TB_INFLUENCER/uploadAWS', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         }).then(async (response) => {
           getUserInfo();
@@ -157,7 +157,7 @@ function UserInfo(props) {
   }
 
   async function deletePicture() {
-    await axios.post('/api/TB_INFLUENCER/delete', { token }).catch(err => alert('pic delete error'));
+    await axios.post('/api/TB_INFLUENCER/deleteAWS', { token }).catch(err => alert('pic delete error'));
     setImageUrl(null);
     setValue('photo', null);
     getUserInfo();
@@ -255,7 +255,7 @@ function UserInfo(props) {
                             width="110px"
                             height="110px"
                             borderRadius="100%"
-                            src={imageUrl || userInfo.INF_PHOTO || defaultAccountImage}
+                            src={imageUrl || userInfo.INF_PHOTO_URL || defaultAccountImage}
                           />
                         </Grid>
                         <Grid item>
@@ -274,7 +274,7 @@ function UserInfo(props) {
                               />
                             </ImageActionButton>
                           </label>
-                          {userInfo.INF_PHOTO ? (
+                          {userInfo.INF_PHOTO_URL ? (
                             <Box pt={1}>
                               <ImageActionButton onClick={() => deletePicture(token)}>
                                                               이미지 삭제
