@@ -32,6 +32,8 @@ function InstagramInfo(props) {
           token
         }
       });
+
+      if (InstaData.status === 201) return null;
       const { data } = InstaData.data;
       setInstaData(data);
     } catch (err) {

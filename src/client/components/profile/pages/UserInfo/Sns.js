@@ -188,7 +188,7 @@ function Sns(props) {
         } else {
           alert('not connected');
         }
-      }, { scope: 'public_profile, email, manage_pages, instagram_basic, instagram_manage_insights' });
+      }, { scope: 'public_profile, email, instagram_basic, pages_show_list, instagram_manage_insights' });
     }
 
     /* FB.getLoginStatus((loginRes) => {
@@ -203,7 +203,7 @@ function Sns(props) {
           } else {
             alert('not connected');
           }
-        }, { scope: 'public_profile, email, manage_pages, instagram_basic, instagram_manage_insights' });
+        }, { scope: 'public_profile, email, pages_show_list, instagram_basic, instagram_manage_insights' });
       }
     }, true); */
   }
@@ -266,7 +266,7 @@ function Sns(props) {
         } else {
           alert('not connected');
         }
-      }, { scope: 'public_profile, email, manage_pages, instagram_basic, instagram_manage_insights' });
+      }, { scope: 'public_profile, email, pages_show_list, instagram_basic, instagram_manage_insights' });
     }
   }
 

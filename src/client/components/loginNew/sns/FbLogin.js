@@ -79,7 +79,7 @@ function FbLogin() {
       } else {
         console.log('not connected');
       }
-    }, { scope: 'public_profile, email, manage_pages, instagram_basic, instagram_manage_insights' });
+    }, { scope: 'public_profile, email, pages_show_list, instagram_basic, instagram_manage_insights' });
   }
 
   return (
