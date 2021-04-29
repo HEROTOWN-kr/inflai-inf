@@ -180,7 +180,7 @@ function UserInfo(props) {
                 <Box py={1}>
                   <Grid container alignItems="center" spacing={1}>
                     <Grid item>
-                      <LabelComponent labelName="이메일 아이디" />
+                      <LabelComponent fontSize="15px" labelName="이메일 아이디" />
                     </Grid>
                     <Grid item xs={12} md>
                       <StyledText fontSize="15px">
@@ -193,7 +193,7 @@ function UserInfo(props) {
               <Grid item xs={12}>
                 <Grid container alignItems="center" spacing={1}>
                   <Grid item>
-                    <LabelComponent labelName="이름" />
+                    <LabelComponent fontSize="15px" labelName="이름" />
                   </Grid>
                   <Grid item xs={12} md>
                     <Box width={isMD ? '250px' : '100%'}>
@@ -210,7 +210,7 @@ function UserInfo(props) {
               <Grid item xs={12}>
                 <Grid container alignItems="center" spacing={1}>
                   <Grid item>
-                    <LabelComponent labelName="전화번호" />
+                    <LabelComponent fontSize="15px" labelName="전화번호" />
                   </Grid>
                   <Grid item xs={12} md>
                     <Box width={isMD ? '250px' : '100%'}>
@@ -230,7 +230,7 @@ function UserInfo(props) {
               <Grid item xs={12}>
                 <Grid container alignItems="center" spacing={1}>
                   <Grid item>
-                    <LabelComponent labelName="주소" />
+                    <LabelComponent fontSize="15px" labelName="주소" />
                   </Grid>
                   <Grid item xs={12} md>
                     <Box maxWidth={isMD ? '500px' : 'none'}>
@@ -246,7 +246,7 @@ function UserInfo(props) {
                 <Box py={2}>
                   <Grid container alignItems="center" spacing={1}>
                     <Grid item>
-                      <LabelComponent labelName="사진" />
+                      <LabelComponent fontSize="15px" labelName="사진" />
                     </Grid>
                     <Grid item xs={12} md>
                       <Grid container alignItems="center" spacing={2} justify={isMD ? 'flex-start' : 'center'}>
@@ -290,7 +290,7 @@ function UserInfo(props) {
               <Grid item xs={12}>
                 <Grid container alignItems="center" spacing={1}>
                   <Grid item>
-                    <LabelComponent labelName="카카오수신동의" />
+                    <LabelComponent fontSize="15px" labelName="카카오수신동의" />
                   </Grid>
                   <Grid item xs={12} md>
                     <Controller

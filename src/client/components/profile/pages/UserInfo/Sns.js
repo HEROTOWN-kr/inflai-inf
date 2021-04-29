@@ -275,7 +275,7 @@ function Sns(props) {
       <Grid item xs={12}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
-            <LabelComponent labelName="인스타" />
+            <LabelComponent fontSize="15px" labelName="인스타" />
           </Grid>
           <Grid item xs={12} md>
             <Grid container spacing={1}>
@@ -320,7 +320,7 @@ function Sns(props) {
           <Grid container alignItems="center" spacing={1}>
             {isMD ? (
               <Grid item>
-                <LabelComponent labelName="" />
+                <LabelComponent fontSize="15px" labelName="" />
               </Grid>
             ) : null}
             <Grid item xs={12} md>
@@ -340,7 +340,7 @@ function Sns(props) {
           <Grid container alignItems="center" spacing={1}>
             {isMD ? (
               <Grid item>
-                <LabelComponent labelName="" />
+                <LabelComponent fontSize="15px" labelName="" />
               </Grid>
             ) : null}
             <Grid item xs={12} md>
@@ -356,7 +356,7 @@ function Sns(props) {
       <Grid item xs={12}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
-            <LabelComponent labelName="유튜브" />
+            <LabelComponent fontSize="15px" labelName="유튜브" />
           </Grid>
           <Grid item xs={12} md>
             <Box py={2} px={2} width={{ xs: 'inherit', md: '250px' }} border="1px solid #e9ecef" css={{ cursor: 'pointer' }} onClick={() => youtubeButtonClick()}>
@@ -377,7 +377,7 @@ function Sns(props) {
           <Grid container alignItems="center">
             {isMD ? (
               <Grid item>
-                <LabelComponent labelName="" />
+                <LabelComponent fontSize="15px" labelName="" />
               </Grid>
             ) : null}
             <Grid item xs={12} md>
@@ -395,7 +395,7 @@ function Sns(props) {
       <Grid item xs={12}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
-            <LabelComponent labelName="네이버" />
+            <LabelComponent fontSize="15px" labelName="네이버" />
           </Grid>
           <Grid item xs={12} md>
             <Box width={{ xs: 'inherit', md: '500px' }}>

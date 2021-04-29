@@ -90,7 +90,7 @@ function PasswordChange() {
       {passwordExist ? (
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
-            <LabelComponent labelName="기존 비밀번호" />
+            <LabelComponent fontSize="15px" labelName="기존 비밀번호" />
           </Grid>
           <Grid item xs={12} md>
             <Box width={{ xs: 'inherit', md: '290px' }}>
@@ -107,7 +107,7 @@ function PasswordChange() {
       <Box my={2}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
-            <LabelComponent labelName="새 비밀번호" />
+            <LabelComponent fontSize="15px" labelName="새 비밀번호" />
           </Grid>
           <Grid item xs={12} md>
             <Box width={{ xs: 'inherit', md: '290px' }}>
@@ -123,7 +123,7 @@ function PasswordChange() {
       </Box>
       <Grid container alignItems="center" spacing={1}>
         <Grid item>
-          <LabelComponent labelName="새 비밀번호 확인" />
+          <LabelComponent fontSize="15px" labelName="새 비밀번호 확인" />
         </Grid>
         <Grid item xs={12} md>
           <Box width={{ xs: 'inherit', md: '290px' }}>

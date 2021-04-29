@@ -14,7 +14,7 @@ function SocialLogin() {
       <Box mb={2}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
-            <LabelComponent labelName="네이버" />
+            <LabelComponent fontSize="15px" labelName="네이버" />
           </Grid>
           <Grid item xs={12} md>
             <SocialNaver />
@@ -24,7 +24,7 @@ function SocialLogin() {
       <Box>
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
-            <LabelComponent labelName="카카오" />
+            <LabelComponent fontSize="15px" labelName="카카오" />
           </Grid>
           <Grid item xs={12} md>
             <SocialKakao />
