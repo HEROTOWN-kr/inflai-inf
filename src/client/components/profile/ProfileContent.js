@@ -13,6 +13,7 @@ import Rank from './pages/Rank/Rank';
 import MyPage from './MyPage';
 import Favorite from './pages/Favorite/Favorite';
 import NaverBlog from './pages/SNS/NaverBlog';
+import Sns from './pages/SNS/Sns';
 /* import Rank from './pages/Rank';
 import UserInfo from './pages/UserInfo/UserInfo';
 import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
@@ -59,8 +60,8 @@ function ProfileContent(props) {
           render={renderProps => <MyPage {...props} setMessage={setMessage} />}
         />
         <Route
-          path={`${match.path}/NaverBlog`}
-          render={renderProps => <NaverBlog {...props} setMessage={setMessage} />}
+          path={`${match.path}/Sns`}
+          render={renderProps => <Sns {...props} setMessage={setMessage} />}
         />
         <Route
           exact

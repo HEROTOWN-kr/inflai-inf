@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, CircularProgress, Grid } from '@material-ui/core';
+import {
+  Box, CircularProgress, Grid, useMediaQuery, useTheme
+} from '@material-ui/core';
 import axios from 'axios';
 import { PieChart } from 'react-minimal-pie-chart';
 import {
@@ -20,8 +22,11 @@ import MapGraph from '../Graphs/MapGraph';
 import AuthContext from '../../../../context/AuthContext';
 import MapGraph2 from '../Graphs/MapGraph2';
 
-function InstagramInfo(props) {
-  const { isMD, isSM } = props;
+function InstagramInfo() {
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
+
   const [instaData, setInstaData] = useState({});
   const { token } = useContext(AuthContext);
 
