@@ -381,7 +381,7 @@ function CampaignApply(props) {
                                 border="1px solid #e9ecef"
                                 borderLeft="0"
                                 css={{ cursor: 'pointer' }}
-                                onClick={() => history.push('/Profile/UserInfo')}
+                                onClick={() => history.push('/Profile/Sns/NaverBlog')}
                               >
                                 <StyledText>연결하기</StyledText>
                               </Box>

@@ -97,12 +97,12 @@ function NaverBlog(props) {
     axios.get('/api/TB_NAVER/blogInfo', { params: { token } }).then((res) => {
       if (res.status === 200) {
         const {
-          NAV_ID, NAV_BLOG_ID, NAV_FLWR, NAV_CONT, visitorsAvg, cntArray, dateArray
+          NAV_ID, NAV_BLOG_ID, NAV_FLWR, NAV_CONT, NAV_GUEST_AVG, cntArray, dateArray
         } = res.data.data;
         setBlogInfo({
           ...blogInfo,
           blogId: NAV_BLOG_ID,
-          guests: visitorsAvg,
+          guests: NAV_GUEST_AVG,
           followers: NAV_FLWR,
           content: NAV_CONT,
           id: NAV_ID,

@@ -37,8 +37,8 @@ const menuLinks = [
     link: '/Profile/CampaignInfo'
   },
   {
-    text: '랭킹 정보',
-    link: '/Profile/Rank'
+    text: '내 SNS',
+    link: '/Profile/Sns'
   },
   {
     text: '이용방법',
