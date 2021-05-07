@@ -28,6 +28,10 @@ function NavbarLinks() {
       text: '이용방법',
       link: '/Process'
     },
+    {
+      text: '셀러',
+      link: '/Campaign/Seller'
+    },
     /* {
       text: 'LoginNew',
       link: '/LoginNew'
