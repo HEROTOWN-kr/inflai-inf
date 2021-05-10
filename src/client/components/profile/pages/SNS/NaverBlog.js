@@ -86,7 +86,6 @@ function NaverBlog(props) {
   });
 
   const theme = useTheme();
-  const isMD = useMediaQuery(theme.breakpoints.up('md'));
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   function toggleLoadMode() {
@@ -170,7 +169,7 @@ function NaverBlog(props) {
   }, [token]);
 
   return (
-    <Box py={isMD ? 4 : 1} px={isMD ? 6 : 1}>
+    <Box py={{ xs: 1, md: 4 }} px={{ xs: 1, md: 6 }}>
       <Box mb={2}>
         <LabelComponent fontWeight="700" color="#000000" fontSize="15px" labelName="네이버블로그 연동" />
       </Box>
