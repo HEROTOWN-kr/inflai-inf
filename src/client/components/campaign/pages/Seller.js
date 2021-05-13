@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Box, Divider, makeStyles, TextField, InputAdornment, Grid
 } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import axios from 'axios';
 import YoutubeIcon from '../../../img/icon_youtube_url.png';
 import BlogIcon from '../../../img/icon_blog_url.png';
 import InstaIcon from '../../../img/icon_instagram_url.png';
@@ -12,6 +13,9 @@ import StyledText from '../../../containers/StyledText';
 import { Colors } from '../../../lib/Сonstants';
 import ReactFormText from '../../../containers/ReactFormText';
 import StyledImage from '../../../containers/StyledImage';
+import StyledButton from '../../../containers/StyledButton';
+import AuthContext from '../../../context/AuthContext';
+import StyledTextField from '../../../containers/StyledTextField';
 
 const useStyles = makeStyles({
   divider: {
@@ -38,10 +42,20 @@ const defaultValues = {
   name: '',
   phone: '',
   email: '',
+  blogUrl: '',
+  instaUrl: '',
+  youtubeUrl: '',
+  salesNumber: '',
+  biography: ''
 };
 
 const schema = Yup.object().shape({
-  blogId: Yup.string().required('블로그 아이디를 입력해주세요'),
+  name: Yup.string().required('성명을 입력해주세요'),
+  phone: Yup.string().required('전화번호를 입력해주세요'),
+  email: Yup.string().required('이메일을 입력해주세요'),
+  salesNumber: Yup.string().required('판매 수량을 입력해주세요'),
+  biography: Yup.string().required('자기소개를 입력해주세요'),
+
 });
 
 
@@ -83,6 +97,16 @@ function Seller() {
     resolver: yupResolver(schema),
     defaultValues
   });
+  const { token } = useContext(AuthContext);
+
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      const apiObj = { token };
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   return (
     <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 8 }} maxWidth="1920px" margin="0 auto">
@@ -97,7 +121,7 @@ function Seller() {
           셀러 기본정보 입력
         </StyledText>
         <Box mb="24px">
-          <StyledText mb="12px" fontSize="14px">
+          <StyledText mb="12px" fontSize="14px" color="#000000a6">
           성명
           </StyledText>
           <ReactFormText
@@ -108,7 +132,7 @@ function Seller() {
           />
         </Box>
         <Box mb="24px">
-          <StyledText mb="12px" fontSize="14px">
+          <StyledText mb="12px" fontSize="14px" color="#000000a6">
               전화번호
           </StyledText>
           <ReactFormText
@@ -118,7 +142,7 @@ function Seller() {
             placeholder="전화번호를 입력해주세요"
           />
         </Box>
-        <StyledText mb="12px" fontSize="14px">
+        <StyledText mb="12px" fontSize="14px" color="#000000a6">
               이메일
         </StyledText>
         <ReactFormText
@@ -138,22 +162,22 @@ function Seller() {
         </StyledText>
         <BlogTextField
           icon={BlogIcon}
-          register={register}
-          errors={errors}
+          inputRef={register}
+          error={!!errors.blogUrl}
           name="blogUrl"
           placeholder="예) 본인의 블로그 Url"
         />
         <BlogTextField
           icon={InstaIcon}
-          register={register}
-          errors={errors}
+          inputRef={register}
+          error={!!errors.instaUrl}
           name="instaUrl"
           placeholder="예) 본인의 인스타 Url"
         />
         <BlogTextField
           icon={YoutubeIcon}
-          register={register}
-          errors={errors}
+          inputRef={register}
+          error={!!errors.youtubeUrl}
           name="youtubeUrl"
           placeholder="예) 본인의 유튜브 Url"
         />
@@ -164,7 +188,7 @@ function Seller() {
           셀러 판매 이력
         </StyledText>
         <Box mb="24px">
-          <StyledText mb="12px" fontSize="14px">
+          <StyledText mb="12px" fontSize="14px" color="#000000a6">
             공구 진행 시 최대 판매 수량:
           </StyledText>
           <ReactFormText
@@ -175,7 +199,7 @@ function Seller() {
           />
         </Box>
         <Box mb="24px">
-          <StyledText mb="12px" fontSize="14px">
+          <StyledText mb="12px" fontSize="14px" color="#000000a6">
             자기소개:
           </StyledText>
           <ReactFormText
@@ -187,6 +211,12 @@ function Seller() {
             placeholder="예) 관심 카테고리, 관심 상품 또는 공동 구매 경험 등 위주로 편하게 작성해 주시면 됩니다"
           />
         </Box>
+      </Box>
+      <Divider classes={{ root: classes.divider }} />
+      <Box maxWidth="500px" m="45px auto">
+        <StyledButton height={38} padding="0" onClick={handleSubmit(onSubmit)}>
+          신청 하기
+        </StyledButton>
       </Box>
     </Box>
   );
