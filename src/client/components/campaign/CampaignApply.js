@@ -48,7 +48,6 @@ function CampaignApply(props) {
   const { token } = useContext(AuthContext);
 
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
-  const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   const schema = Yup.object().shape({
     sns: Yup.string()
@@ -335,7 +334,7 @@ function CampaignApply(props) {
                                 border="1px solid #e9ecef"
                                 borderLeft="0"
                                 css={{ cursor: 'pointer' }}
-                                onClick={() => history.push('/Profile/UserInfo')}
+                                onClick={() => history.push('/Profile/Sns/Youtube')}
                               >
                                 <StyledText>연결하기</StyledText>
                               </Box>

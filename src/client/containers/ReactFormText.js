@@ -20,6 +20,7 @@ function ReactFormText(props) {
 
   return (
     <StyledTextField
+      label=" "
       variant="outlined"
       fullWidth
       name={name}

@@ -353,7 +353,7 @@ function Sns(props) {
           </Grid>
         </Grid>
       ) : null}
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
             <LabelComponent fontSize="15px" labelName="유튜브" />
@@ -391,8 +391,8 @@ function Sns(props) {
             </Grid>
           </Grid>
         </Grid>
-      ) : null}
-      <Grid item xs={12}>
+      ) : null} */}
+      {/* <Grid item xs={12}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item>
             <LabelComponent fontSize="15px" labelName="네이버" />
@@ -437,7 +437,7 @@ function Sns(props) {
             </Box>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
       <InstagramDialog open={instaDialogOpen} closeDialog={instagramButtonClick} facebookLogin={facebookLogin} userPage />
       <InstagramSelectDialog
         open={instaSelectDialogOpen}

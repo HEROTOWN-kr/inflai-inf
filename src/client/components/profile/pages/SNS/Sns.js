@@ -88,7 +88,7 @@ function Sns() {
           exact
           path={`${match.url}/`}
           render={() => (
-            <Redirect to={`${match.url}/Instagram`} />
+            <Redirect to={`${match.url}/Youtube`} />
           )}
         />
       </Switch>
