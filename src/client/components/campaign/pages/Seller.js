@@ -99,13 +99,16 @@ function Seller() {
   });
   const { token } = useContext(AuthContext);
 
-  const onSubmit = async (data) => {
-    try {
-      console.log(data);
-      const apiObj = { token };
-    } catch (err) {
-      alert(err);
-    }
+  const onSubmit = (data) => {
+    axios.post('/api/TB_SELLER/save', data).then((res) => {
+      if (res.status === 201) {
+
+      } else {
+        console.log('success');
+      }
+    }).catch((err) => {
+      alert(err.response.data.message);
+    });
   };
 
   return (
