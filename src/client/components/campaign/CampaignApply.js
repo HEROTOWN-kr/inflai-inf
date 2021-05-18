@@ -47,6 +47,7 @@ function CampaignApply(props) {
   const theme = useTheme();
   const { token } = useContext(AuthContext);
 
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
 
   const schema = Yup.object().shape({
