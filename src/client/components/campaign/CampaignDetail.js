@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import {
-  Sync, Favorite, FavoriteBorder, Print, Share, Error, SupervisorAccount, ExpandMore, ExpandLess
+  Sync, Favorite, FavoriteBorder, Print, Share, Error, SupervisorAccount, ExpandMore, ExpandLess, ChevronRight, FiberManualRecord
 } from '@material-ui/icons';
 import ReactHtmlParser from 'react-html-parser';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -161,7 +161,46 @@ const useStyles = makeStyles({
   root: {
     color: Colors.pink3
   },
+  rightMenu: {
+    borderBottom: 'solid 1px #efefef',
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#000',
+      backgroundColor: '#fafafa'
+    }
+  },
+  record: {
+    fontSize: '0.35rem',
+    marginRight: '7px'
+  },
+  num: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: '600'
+  }
 });
+
+const RightMenuLinks = [
+  {
+    text: '캠페인 상세정보',
+    link: 'detail'
+  },
+  {
+    text: '제공내역',
+    link: 'provide'
+  },
+  {
+    text: '검색 키워드',
+    link: 'search'
+  },
+  {
+    text: '포스팅가이드',
+    link: 'discription'
+  },
+  {
+    text: '업체 정보',
+    link: 'info'
+  },
+];
 
 function CampaignDetail() {
   const history = useHistory();
@@ -624,41 +663,117 @@ function CampaignDetail() {
         </Grid> */}
           {isMD ? (
             <Grid item style={{ borderLeft: '1px solid #eee' }}>
-              <Box width="360px" position="relative">
+              <Box width="300px" position="relative">
                 <Box position="absolute" top={isSticky ? '-92px' : '0'} left="0">
                   <Box position={isSticky ? 'fixed' : 'static'}>
-                    <Box py={isMD ? 6 : 2} pl={isLG ? 6 : 2} pr={isLG ? 0 : 2} width="312px">
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          <StyledText fontSize="16px" fontWeight="bold">{`리뷰어 신청  ${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}</StyledText>
-                        </Grid>
-                        <Grid item xs={12}><Divider /></Grid>
-                        <Grid item xs={12}>
-                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('detail')}>캠페인 상세정보</StyledText>
-                        </Grid>
-                        <Grid item xs={12}><Divider /></Grid>
-                        <Grid item xs={12}>
-                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('provide')}>제공내역</StyledText>
-                        </Grid>
-                        <Grid item xs={12}><Divider /></Grid>
-                        <Grid item xs={12}>
-                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('search')}>검색 키워드</StyledText>
-                        </Grid>
-                        <Grid item xs={12}><Divider /></Grid>
-                        <Grid item xs={12}>
-                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('discription')}>포스팅가이드</StyledText>
-                        </Grid>
-                        <Grid item xs={12}><Divider /></Grid>
-                        <Grid item xs={12}>
-                          <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('info')}>업체 정보</StyledText>
-                        </Grid>
-                        <Grid item xs={12}><Divider /></Grid>
-                        <Grid item xs={12}>
-                          <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={sendRequest}>
-                                리뷰어 신청하기
-                          </StyledButton>
-                        </Grid>
-                      </Grid>
+                    <Box py={{ xs: 2, md: 6 }} pl={{ xs: 2, lg: '15px' }} pr={{ xs: 2, lg: 0 }} width="300px">
+                      <Box pb="13px" borderBottom="solid 1px #efefef">
+                        <Box fontSize="18px" color="#000000">
+                          {productData.AD_NAME}
+                        </Box>
+                        <Box my="10px" fontSize="14px">
+                          {productData.AD_SHRT_DISC}
+                        </Box>
+                        <Box mb="15px">
+                          <Grid container>
+                            <Grid item>
+                              <Box fontSize="12px" mr="7px" p="2px 5px" color="#2ba406" border="solid 1px #2ba406">
+                                블로그
+                              </Box>
+                            </Grid>
+                            <Grid item>
+                              <Box fontSize="12px" p="2px 5px" bgcolor="#efefef" border="solid 1px #dcdcdc">
+                                배송형
+                              </Box>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                        <Box fontSize="14px" color="#000000">
+                          남은시간&nbsp;&nbsp;
+                          <span className={classes.num}>3</span>
+                          일&nbsp;&nbsp;
+                          <span className={classes.num}>06</span>
+                          시간&nbsp;&nbsp;
+                          <span className={classes.num}>21</span>
+                          분&nbsp;&nbsp;
+                          <span className={classes.num}>13</span>
+                          초&nbsp;&nbsp;
+                        </Box>
+                        <Box fontSize="14px" color="#000000">
+                          신청&nbsp;
+                          <span className={classes.num} style={{ color: '#ff3478' }}>{productData.TB_PARTICIPANTs.length}</span>
+                          &nbsp;/&nbsp;모집&nbsp;
+                          <span className={classes.num}>{productData.AD_INF_CNT}</span>
+                        </Box>
+                      </Box>
+                      <Box pl="5px" pt="14px" pb="23px" fontSize="14px" borderBottom="solid 1px #efefef">
+                        <Box mb="4px" color="#ff3478">
+                          <Grid container alignItems="center">
+                            <Grid item>
+                              <FiberManualRecord classes={{ fontSizeSmall: classes.record }} fontSize="small" />
+                            </Grid>
+                            <Grid item>
+                              <Box width="110px">리뷰어 신청기간</Box>
+                            </Grid>
+                            <Grid item>
+                              <span className={classes.num}>
+                                {`${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}
+                              </span>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                        <Box mb="4px">
+                          <Grid container alignItems="center">
+                            <Grid item>
+                              <FiberManualRecord classes={{ fontSizeSmall: classes.record }} fontSize="small" />
+                            </Grid>
+                            <Grid item>
+                              <Box width="110px">선정자 발표</Box>
+                            </Grid>
+                            <Grid item>
+                              <span className={classes.num}>
+                                {`${productData.AD_SEL_START} ~ ${productData.AD_SEL_END}`}
+                              </span>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                        <Box mb="4px">
+                          <Grid container alignItems="center">
+                            <Grid item>
+                              <FiberManualRecord classes={{ fontSizeSmall: classes.record }} fontSize="small" />
+                            </Grid>
+                            <Grid item>
+                              <Box width="110px">리뷰 등록기간</Box>
+                            </Grid>
+                            <Grid item>
+                              <span className={classes.num}>
+                                {`${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}
+                              </span>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      </Box>
+                      { RightMenuLinks.map(item => (
+                        <Box
+                          key={item.link}
+                          py="13px"
+                          pl="5px"
+                          classes={{ root: classes.rightMenu }}
+                          onClick={() => scrollTo(item.link)}
+                        >
+                          <Grid container alignItems="center" justify="space-between">
+                            <Grid item>{item.text}</Grid>
+                            <Grid item>
+                              <ChevronRight />
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      ))}
+                      <Box mt="20px">
+                        <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={sendRequest}>
+                          리뷰어 신청하기
+                        </StyledButton>
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
