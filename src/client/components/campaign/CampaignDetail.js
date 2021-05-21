@@ -34,6 +34,102 @@ import SelectedList from './SelectedList';
 import CampaignShareDialog from './CampaignShareDialog';
 import HelmetMetaData from '../../containers/HelmetMetaData';
 
+const useStyles = makeStyles({
+  root: {
+    color: Colors.pink3
+  },
+  rightMenu: {
+    borderBottom: 'solid 1px #efefef',
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#000',
+      backgroundColor: '#fafafa'
+    }
+  },
+  record: {
+    fontSize: '0.35rem',
+    marginRight: '7px'
+  },
+  num: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: '600'
+  }
+});
+
+const RightMenuLinks = [
+  {
+    text: '캠페인 상세정보',
+    link: 'detail'
+  },
+  {
+    text: '제공내역',
+    link: 'provide'
+  },
+  {
+    text: '검색 키워드',
+    link: 'search'
+  },
+  {
+    text: '포스팅가이드',
+    link: 'discription'
+  },
+  {
+    text: '업체 정보',
+    link: 'info'
+  },
+];
+
+function TimeComponent(props) {
+  const [seconds, setSeconds] = useState(0);
+  const [leftData, setLeftData] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+  const { FinalDate } = props;
+  const currentDate = new Date();
+  const endDate = new Date(FinalDate);
+  const currentDateSec = Math.round(currentDate.getTime() / 1000);
+  const endDateSec = Math.round(endDate.getTime() / 1000);
+  const secondsLeft = endDateSec - currentDateSec; // 1440516958
+
+  const classes = useStyles();
+
+  useEffect(() => {
+    if (seconds > 0) {
+      const d = Math.floor(seconds / (3600 * 24));
+      const h = Math.floor(seconds % (3600 * 24) / 3600);
+      const m = Math.floor(seconds % 3600 / 60);
+      const s = Math.floor(seconds % 60);
+      setLeftData({
+        days: d, hours: h, minutes: m, seconds: s
+      });
+      setTimeout(() => setSeconds(seconds - 1), 1000);
+    }
+  }, [seconds]);
+
+  useEffect(() => {
+    if (FinalDate) {
+      setSeconds(secondsLeft);
+    }
+  }, [FinalDate]);
+
+  return (
+    <Box fontSize="14px" color="#000000">
+        남은시간&nbsp;&nbsp;
+      <span className={classes.num}>{leftData.days}</span>
+        일&nbsp;&nbsp;
+      <span className={classes.num}>{leftData.hours}</span>
+        시간&nbsp;&nbsp;
+      <span className={classes.num}>{leftData.minutes}</span>
+        분&nbsp;&nbsp;
+      <span className={classes.num}>{leftData.seconds}</span>
+        초&nbsp;&nbsp;
+    </Box>
+  );
+}
+
 function TabComponent(props) {
   const {
     tab, setTab, text, tabNumber, isMD
@@ -94,7 +190,7 @@ function ParticipantList(props) {
         <Box py={4}>
           <Grid container justify="center">
             <Grid item>
-                신청한 리뷰어 없습니다
+                  신청한 리뷰어 없습니다
             </Grid>
           </Grid>
         </Box>
@@ -156,51 +252,6 @@ function ParticipantList(props) {
     </>
   );
 }
-
-const useStyles = makeStyles({
-  root: {
-    color: Colors.pink3
-  },
-  rightMenu: {
-    borderBottom: 'solid 1px #efefef',
-    cursor: 'pointer',
-    '&:hover': {
-      color: '#000',
-      backgroundColor: '#fafafa'
-    }
-  },
-  record: {
-    fontSize: '0.35rem',
-    marginRight: '7px'
-  },
-  num: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontWeight: '600'
-  }
-});
-
-const RightMenuLinks = [
-  {
-    text: '캠페인 상세정보',
-    link: 'detail'
-  },
-  {
-    text: '제공내역',
-    link: 'provide'
-  },
-  {
-    text: '검색 키워드',
-    link: 'search'
-  },
-  {
-    text: '포스팅가이드',
-    link: 'discription'
-  },
-  {
-    text: '업체 정보',
-    link: 'info'
-  },
-];
 
 function CampaignDetail() {
   const history = useHistory();
@@ -338,6 +389,17 @@ function CampaignDetail() {
     const lastDate = new Date(date);
     const daysLag = Math.ceil(Math.abs(lastDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
     return daysLag;
+  }
+
+  function addDays(data, days) {
+    const date = new Date(data);
+    date.setDate(date.getDate() + days);
+    const yyyy = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const mm = (month > 9 ? '' : '0') + month;
+    const day = date.getDate();
+    const dd = (day > 9 ? '' : '0') + day;
+    return [yyyy, mm, dd].join('-');
   }
 
   useEffect(() => {
@@ -677,28 +739,30 @@ function CampaignDetail() {
                         <Box mb="15px">
                           <Grid container>
                             <Grid item>
-                              <Box fontSize="12px" mr="7px" p="2px 5px" color="#2ba406" border="solid 1px #2ba406">
-                                블로그
-                              </Box>
+                              {productData.AD_TYPE === '1' ? (
+                                <Box fontSize="12px" mr="7px" p="2px 5px" color={Colors.pink} border={`solid 1px ${Colors.pink}`}>
+                                  인스타
+                                </Box>
+                              ) : null}
+                              {productData.AD_TYPE === '2' ? (
+                                <Box fontSize="12px" mr="7px" p="2px 5px" color={Colors.red} border={`solid 1px ${Colors.red}`}>
+                                    유튜브
+                                </Box>
+                              ) : null}
+                              {productData.AD_TYPE === '3' ? (
+                                <Box fontSize="12px" mr="7px" p="2px 5px" color="#2ba406" border="solid 1px #2ba406">
+                                    블로그
+                                </Box>
+                              ) : null}
                             </Grid>
                             <Grid item>
                               <Box fontSize="12px" p="2px 5px" bgcolor="#efefef" border="solid 1px #dcdcdc">
-                                배송형
+                                {productData.AD_DELIVERY === 0 ? '방문형' : '배송형'}
                               </Box>
                             </Grid>
                           </Grid>
                         </Box>
-                        <Box fontSize="14px" color="#000000">
-                          남은시간&nbsp;&nbsp;
-                          <span className={classes.num}>3</span>
-                          일&nbsp;&nbsp;
-                          <span className={classes.num}>06</span>
-                          시간&nbsp;&nbsp;
-                          <span className={classes.num}>21</span>
-                          분&nbsp;&nbsp;
-                          <span className={classes.num}>13</span>
-                          초&nbsp;&nbsp;
-                        </Box>
+                        <TimeComponent FinalDate={productData.AD_SRCH_END} />
                         <Box fontSize="14px" color="#000000">
                           신청&nbsp;
                           <span className={classes.num} style={{ color: '#ff3478' }}>{productData.TB_PARTICIPANTs.length}</span>
@@ -747,7 +811,7 @@ function CampaignDetail() {
                             </Grid>
                             <Grid item>
                               <span className={classes.num}>
-                                {`${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}
+                                {`${addDays(productData.AD_SEL_END, 1)} ~ ${addDays(productData.AD_SEL_END, 8)}`}
                               </span>
                             </Grid>
                           </Grid>
