@@ -1,70 +1,93 @@
 import React, { useState } from 'react';
-import { Box, Grid, Hidden } from '@material-ui/core';
+import {
+  Box, Grid, Hidden, Tab, Tabs, useMediaQuery, useTheme
+} from '@material-ui/core';
+import {
+  Link, Redirect, Route, Switch, useRouteMatch
+} from 'react-router-dom';
 import WhiteBlock from '../../../../containers/WhiteBlock';
 import PageTitle from '../../PageTitle';
 import StyledText from '../../../../containers/StyledText';
-import InstagramInfo from './InstagramInfo';
+import InstagramRank from './InstagramRank';
+import NaverRank from './NaverRank';
+import YoutubeRank from './YoutubeRank';
+
+const menuLinks = [
+  {
+    label: '인스타그램',
+    link: '/Instagram',
+    value: 1
+  },
+  {
+    label: '네이버블로그',
+    link: '/NaverBlog',
+    value: 2
+  },
+  {
+    label: '유튜브',
+    link: '/Youtube',
+    value: 3
+  },
+];
 
 function Rank(props) {
-  const [selectedSns, setSelectedSns] = useState(1);
+  const match = useRouteMatch();
 
-  const snsTypes = [
-    {
-      name: 'Instagram',
-      id: 1
-    },
-    {
-      name: 'Youtube',
-      id: 2
-    },
-  ];
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
-  function SnsButtonComponent(props) {
-    const { snsName, id } = props;
-    return (
-      <Box
-        py={2}
-        px={3}
-        className={`sns-button ${id === selectedSns ? 'selected' : null}`}
-        onClick={() => setSelectedSns(id)}
-      >
-        <StyledText>{snsName}</StyledText>
-      </Box>
-    );
-  }
+  const [value, setValue] = useState(1);
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const changeTab = (tabValue) => {
+    setValue(tabValue);
+  };
   return (
-    <div>
-      <Grid container spacing={2}>
-        <Hidden smDown>
-          <Grid item xs={12}>
-            <WhiteBlock>
-              <PageTitle>
-                <StyledText fontSize="24px">
+    <WhiteBlock height="100%">
+      <Hidden smDown>
+        <PageTitle>
+          <StyledText fontSize="24px">
                   랭킹 정보
-                </StyledText>
-              </PageTitle>
-              <Box py={4} px={6}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Grid container spacing={2}>
-                      {snsTypes.map(item => (
-                        <Grid item key={item.id}>
-                          <SnsButtonComponent snsName={item.name} id={item.id} />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Box>
-            </WhiteBlock>
-          </Grid>
-        </Hidden>
-        <Grid item xs={12}>
-          <InstagramInfo {...props} />
-        </Grid>
-      </Grid>
-    </div>
+          </StyledText>
+        </PageTitle>
+      </Hidden>
+      <Box borderBottom="1px solid #eaeaea">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+        >
+          { menuLinks.map(item => (
+            <Tab key={item.value} label={item.label} component={Link} to={match.url + item.link} value={item.value} />
+          )) }
+        </Tabs>
+      </Box>
+      <Switch>
+        <Route
+          path={`${match.url}/Instagram`}
+          render={renderProps => <InstagramRank changeTab={changeTab} />}
+        />
+        <Route
+          path={`${match.url}/NaverBlog`}
+          render={renderProps => <NaverRank changeTab={changeTab} />}
+        />
+        <Route
+          path={`${match.url}/Youtube`}
+          render={renderProps => <YoutubeRank changeTab={changeTab} />}
+        />
+        <Route
+          exact
+          path={`${match.url}/`}
+          render={() => (
+            <Redirect to={`${match.url}/Youtube`} />
+          )}
+        />
+      </Switch>
+    </WhiteBlock>
   );
 }
 

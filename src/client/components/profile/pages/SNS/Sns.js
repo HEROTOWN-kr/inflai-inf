@@ -67,7 +67,7 @@ function Sns() {
           textColor="primary"
         >
           { menuLinks.map(item => (
-            <Tab label={item.label} component={Link} to={match.url + item.link} value={item.value} />
+            <Tab key={item.value} label={item.label} component={Link} to={match.url + item.link} value={item.value} />
           )) }
         </Tabs>
       </Box>

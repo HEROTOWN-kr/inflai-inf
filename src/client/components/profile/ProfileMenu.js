@@ -16,7 +16,7 @@ function ProfileMenu(props) {
     { text: '내 SNS', link: '/Sns' },
     { text: '캠페인 관리', link: '/CampaignInfo' },
     { text: '관심 캠페인', link: '/Favorite' },
-    // { text: '랭킹 정보', link: '/Rank' },
+    { text: '랭킹', link: '/Rank' },
   ];
 
   return (

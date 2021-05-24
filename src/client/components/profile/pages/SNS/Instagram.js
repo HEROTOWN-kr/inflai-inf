@@ -13,7 +13,6 @@ function Instagram(props) {
     <Box p={{ xs: 0, md: 2 }} bgcolor="#f5f6f7">
       <InstagramInfo />
     </Box>
-
   );
 }
 
