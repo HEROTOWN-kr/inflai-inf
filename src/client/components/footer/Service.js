@@ -368,6 +368,27 @@ const ServiceContent = [
     ]
   },
   {
+    title: '제29조(SNS 약관 및 정책 동의)',
+    content: [
+      '1) 회원이 서비스 내에서 YouTube 서비스 연결을 완료한 경우, 아래 각호의 외부 SNS 약관 및 정책에 동의한 것으로 간주합니다.',
+      [
+        '① YouTube 서비스 약관',
+        'https://www.youtube.com/t/terms',
+        '② YouTube API 서비스 약관',
+        'https://developers.google.com/youtube/terms/api-services-terms-of-service-apac',
+        '③ Google 개인정보보호정책',
+        'https://policies.google.com/privacy'
+      ],
+      '2) 회사는 YouTube, Facebook 플랫폼에서 제공하 는 아래 각호의 플랫폼 정책을 준수합니다.',
+      [
+        '① YouTube Developer Policy',
+        'https://developers.google.com/youtube/terms/developer-policies',
+        '② Facebook 플랫폼 정책',
+        '② https://developers.facebook.com/policy',
+      ]
+    ]
+  },
+  {
     title: '<부칙>',
     description: '본 정책은 2021년 03월 01 일부터 시행합니다.'
   },
