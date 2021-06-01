@@ -59,10 +59,10 @@ function ProfileContent(props) {
           path={`${match.path}/MyPage`}
           render={renderProps => <MyPage {...props} setMessage={setMessage} />}
         />
-        <Route
+        {/* <Route
           path={`${match.path}/Sns`}
           render={renderProps => <Sns {...props} setMessage={setMessage} />}
-        />
+        /> */}
         <Route
           exact
           path={`${match.path}/`}
