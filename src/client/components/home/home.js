@@ -26,7 +26,7 @@ function Home(props) {
       {/* <ElementLink name="target" /> */}
       <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 8 }} maxWidth="1920px" margin="0 auto">
         <HomeCampaigns {...props} isMD={isMD} />
-        {/*<HomeSelectCampaigns {...props} isMD={isMD} />*/}
+        <HomeSelectCampaigns {...props} isMD={isMD} />
         <HomeBanners />
         {/* <HomePartners /> */}
       </Box>

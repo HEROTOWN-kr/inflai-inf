@@ -11,10 +11,12 @@ import Process7 from '../../img/process/process7.png';
 import Process8 from '../../img/process/process8.png';
 import Process9 from '../../img/process/process9.png';
 import Process10 from '../../img/process/process10.png';
+import CampaignCardSmall from '../campaign/CampaignCardSmall';
 
 function Process() {
   return (
     <Box my={2}>
+      <CampaignCardSmall />
       <Box mb={2} textAlign="center" fontSize="44px">인플라이 이용방법</Box>
       <StyledImage height="auto" width="275px" src={Process1} />
       <StyledImage height="auto" width="275px" src={Process2} />
