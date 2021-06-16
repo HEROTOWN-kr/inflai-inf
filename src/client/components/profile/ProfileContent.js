@@ -51,18 +51,18 @@ function ProfileContent(props) {
           path={`${match.path}/Favorite`}
           render={renderProps => <Favorite {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} isMD={isMD} isSM={isSM} />}
         />
-        <Route
+        {/* <Route
           path={`${match.path}/Rank`}
           render={renderProps => <Rank {...renderProps} currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} isMD={isMD} isSM={isSM} />}
-        />
+        /> */}
         <Route
           path={`${match.path}/MyPage`}
           render={renderProps => <MyPage {...props} setMessage={setMessage} />}
         />
-        {/* <Route
+        <Route
           path={`${match.path}/Sns`}
           render={renderProps => <Sns {...props} setMessage={setMessage} />}
-        /> */}
+        />
         <Route
           exact
           path={`${match.path}/`}

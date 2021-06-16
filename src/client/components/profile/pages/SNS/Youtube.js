@@ -45,6 +45,7 @@ function Youtube(props) {
     channelName: null,
     subs: null,
     views: null,
+    updated: null
   });
   const GoogleButtonRef = useRef(null);
 
@@ -60,7 +61,7 @@ function Youtube(props) {
     axios.get('/api/TB_YOUTUBE/channelInfo', { params: { token } }).then((res) => {
       if (res.status === 200) {
         const {
-          YOU_ID, YOU_ACCOUNT_ID, YOU_NAME, YOU_SUBS, YOU_VIEWS
+          YOU_ID, YOU_ACCOUNT_ID, YOU_NAME, YOU_SUBS, YOU_VIEWS, YOU_UPD_DATE
         } = res.data.data;
         setYoutubeInfo({
           ...youtubeInfo,
@@ -68,6 +69,7 @@ function Youtube(props) {
           channelName: YOU_NAME,
           subs: YOU_SUBS,
           views: YOU_VIEWS,
+          updated: YOU_UPD_DATE,
           id: YOU_ID,
         });
       } else if (res.status === 201) {
@@ -78,6 +80,7 @@ function Youtube(props) {
           subs: '',
           views: '',
           id: '',
+          updated: null,
         });
       }
     }).catch(err => alert(err.response.data.message));
@@ -129,8 +132,6 @@ function Youtube(props) {
           </Grid>
         </Grid>
       </Box>
-
-
       <Box mb={2}>
         <LabelComponent fontWeight="700" color="#000000" fontSize="15px" labelName="연동된 유튜브체널 정보" />
       </Box>
@@ -145,6 +146,15 @@ function Youtube(props) {
           <CardComponent title="구독자수" data={youtubeInfo.subs || '-'} />
         </Grid>
       </Grid>
+      {youtubeInfo.updated ? (
+        <Box mt={4} fontSize="15px">
+            업데이트 날짜
+          {' '}
+          <span style={{ fontWeight: 'bold' }}>
+            {youtubeInfo.updated}
+          </span>
+        </Box>
+      ) : null}
       <YoutubeDialog open={youtubeDialogOpen} closeDialog={toggleYoutubeDialog} googleLogin={() => GoogleButtonRef.current.click()} />
       <GoogleLogin
         clientId="997274422725-gb40o5tv579csr09ch7q8an63tfmjgfo.apps.googleusercontent.com" // CLIENTID                buttonText="LOGIN WITH GOOGLE"
