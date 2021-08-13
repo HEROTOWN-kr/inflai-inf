@@ -128,7 +128,7 @@ function Youtube(props) {
             <StyledImage width="24px" height="18px" src={youtubeIcon} />
           </Grid>
           <Grid item>
-            <StyledText>{youtubeInfo.id ? '유튜브 연결 해제' : '유튜브 연결하기'}</StyledText>
+            <StyledText>{youtubeInfo.id ? 'YouTube 연결 해제' : 'YouTube 연결하기'}</StyledText>
           </Grid>
         </Grid>
       </Box>

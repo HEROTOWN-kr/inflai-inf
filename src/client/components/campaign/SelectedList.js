@@ -12,7 +12,7 @@ import MyPagination from '../../containers/MyPagination';
 import noFound from '../../img/notFound400_316.png';
 
 function SelectedList(props) {
-  const { adId, isMD } = props;
+  const { adId, type, isMD } = props;
   const [participants, setParticipants] = useState([]);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -25,7 +25,7 @@ function SelectedList(props) {
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getList', {
       params: {
-        adId, limit, page, onlySelected: '1'
+        adId, type, limit, page, onlySelected: '1'
       }
     }).then((res) => {
       const { data } = res.data;
@@ -35,12 +35,8 @@ function SelectedList(props) {
   }
 
   useEffect(() => {
-    getParticipants();
-  }, [page]);
-
-  useEffect(() => {
-    getParticipants();
-  }, []);
+    if (type) getParticipants();
+  }, [type, page]);
 
   return (
     <>

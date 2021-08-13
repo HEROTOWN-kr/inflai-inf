@@ -39,7 +39,7 @@ function CampaignCard(props) {
                 <span style={{ color: Colors.pink, fontWeight: '600' }}>Instagram</span>
               ) : null}
               {type === '2' ? (
-                <span style={{ color: Colors.red, fontWeight: '600' }}>Youtube</span>
+                <span style={{ color: Colors.red, fontWeight: '600' }}>YouTube</span>
               ) : null}
               {type === '3' ? (
                 <span style={{ color: Colors.green, fontWeight: '600' }}>Blog</span>

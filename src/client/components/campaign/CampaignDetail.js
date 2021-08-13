@@ -156,7 +156,7 @@ function TabComponent(props) {
 }
 
 function ParticipantList(props) {
-  const { adId, isMD } = props;
+  const { adId, type, isMD } = props;
   const [participants, setParticipants] = useState([]);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -168,7 +168,9 @@ function ParticipantList(props) {
 
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getList', {
-      params: { adId, limit, page }
+      params: {
+        adId, type, limit, page
+      }
     }).then((res) => {
       const { data } = res.data;
       setParticipants(data);
@@ -177,12 +179,8 @@ function ParticipantList(props) {
   }
 
   useEffect(() => {
-    getParticipants();
-  }, [page]);
-
-  useEffect(() => {
-    getParticipants();
-  }, []);
+    if (type) getParticipants();
+  }, [type, page]);
 
   return (
     <>
@@ -605,10 +603,10 @@ function CampaignDetail() {
                 </Box>
               ) : null}
               {tab === 2 ? (
-                <ParticipantList adId={adId} isMD={isMD} />
+                <ParticipantList adId={adId} type={productData.AD_TYPE} isMD={isMD} />
               ) : null}
               {tab === 3 ? (
-                <SelectedList adId={adId} isMD={isMD} />
+                <SelectedList adId={adId} type={productData.AD_TYPE} isMD={isMD} />
               ) : null}
               {showMore.visible && tab === 1 ? (
                 <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
