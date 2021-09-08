@@ -17,6 +17,7 @@ import Process from '../process/Process';
 import CampaignSearch from '../campaign/CampaignSearch';
 import Service from '../footer/Service';
 import Privacy from '../footer/Privacy';
+import YoutubeTest from '../login/YoutubeTest';
 
 
 function Main() {
@@ -64,10 +65,10 @@ function Main() {
         path="/Profile"
         component={Profile}
       />
-      {/* <Route
-        path="/Profile"
-        render={renderProps => <Profile {...renderProps} />}
-      /> */}
+      <Route
+        path="/YoutubeTest"
+        render={renderProps => <YoutubeTest {...renderProps} />}
+      />
       <Route
         path="/Campaign"
         render={renderProps => <Campaign {...renderProps} />}
