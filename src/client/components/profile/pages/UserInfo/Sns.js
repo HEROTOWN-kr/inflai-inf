@@ -141,15 +141,14 @@ function Sns(props) {
     FB.api('/me', 'GET', {
       fields: 'accounts{instagram_business_account{id,username,profile_picture_url}}'
     }, (response) => {
-      console.log(response);
-      const { data } = response.accounts;
-      if (!data) {
+      const { accounts } = response;
+      if (!accounts) {
         alert('페이스북 페이지에 연결된 인스타그램 계정이 없습니다');
-      } else if (data && data.length > 1) {
-        const businesAccs = data.filter(item => item.instagram_business_account);
+      } else if (accounts.data && accounts.data.length > 1) {
+        const businesAccs = accounts.data.filter(item => item.instagram_business_account);
         if (businesAccs.length > 1) {
-          const accounts = businesAccs.map(item => item.instagram_business_account);
-          setInstaAccounts(accounts);
+          const accountList = businesAccs.map(item => item.instagram_business_account);
+          setInstaAccounts(accountList);
           selectAccountDialog();
         } else {
           axios.post('/api/TB_INSTA/add', {
@@ -166,7 +165,7 @@ function Sns(props) {
           facebookToken: accessToken,
           facebookUserId: userID,
           token,
-          instaId: data[0].instagram_business_account.id
+          instaId: accounts.data[0].instagram_business_account.id
         }).then((res) => {
           getUserInfo();
         }).catch(err => alert(err.response.data.message));
