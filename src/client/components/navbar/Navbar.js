@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  useLocation, withRouter, matchPath
+  useLocation, withRouter, matchPath, match, useParams
 } from 'react-router-dom';
 import {
   AppBar,
@@ -51,7 +51,7 @@ function NavbarComponent(props) {
 function CustomNavbar(props) {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
-
+  const urlParams = window.location.search;
   const location = useLocation();
   const [visible, setVisible] = useState({ top: true, bottom: true });
 
@@ -68,6 +68,18 @@ function CustomNavbar(props) {
       strict: false
     });
 
+    const matchMobileWebView = matchPath(pathname, {
+      path: ['/Profile/Sns/Instagram', '/Profile/Sns/NaverBlog', '/Profile/Sns/Youtube', '/Policy/Service'],
+      exact: true,
+      strict: true
+    });
+
+    const matchSearchAddr = matchPath(pathname, {
+      path: ['/search_addr'],
+      exact: true,
+      strict: true
+    });
+
     if (matchBottomMenu) {
       setVisible({ ...visible, bottom: false });
     } else {
@@ -78,6 +90,14 @@ function CustomNavbar(props) {
       setVisible({ ...visible, top: false });
     } else {
       setVisible({ ...visible, top: true });
+    }
+
+    if (matchMobileWebView && urlParams === '?m=1') {
+      setVisible({ bottom: false, top: false });
+    }
+
+    if (matchSearchAddr) {
+      setVisible({ bottom: false, top: false });
     }
   }
 

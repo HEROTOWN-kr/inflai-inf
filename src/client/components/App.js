@@ -14,6 +14,7 @@ function App() {
     token, login, logout, userDataUpdate, userPhoto, socialType, userName, ready
   } = useAuth();
   const isAuthenticated = !!token;
+  const showFooter = window.location.pathname !== '/search_addr';
 
   return (
     <React.Fragment>
@@ -28,9 +29,12 @@ function App() {
           <div className="app-body">
             <Main />
           </div>
-          <div className="app-footer">
-            <Footer />
-          </div>
+          {showFooter ? (
+            <div className="app-footer">
+              <Footer />
+            </div>
+          ) : null}
+
         </div>
       </AuthContext.Provider>
     </React.Fragment>

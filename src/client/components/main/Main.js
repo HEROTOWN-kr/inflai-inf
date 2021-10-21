@@ -18,6 +18,7 @@ import CampaignSearch from '../campaign/CampaignSearch';
 import Service from '../footer/Service';
 import Privacy from '../footer/Privacy';
 import YoutubeTest from '../login/YoutubeTest';
+import AddressSearch from "../profile/AddressSearch";
 
 
 function Main() {
@@ -80,6 +81,10 @@ function Main() {
       <Route
         path="/Search"
         render={renderProps => <CampaignSearch {...renderProps} />}
+      />
+      <Route
+        path="/search_addr"
+        render={renderProps => <AddressSearch {...renderProps} />}
       />
       <Route
         path="/Policy/Service"
