@@ -11,15 +11,10 @@ import {
 import NavbarLinks from './NavbarLinks';
 import NavbarLogo from './NavbarLogo';
 import NavbarUserMenu from './NavbarUserMenu';
-import NavbarMobileMenu from './MobileView/NavbarMobileMenu';
 import MobileNavBar from './MobileView/MobileNavBar';
 import BottomMenu from './MobileView/BottomMenu';
-// import NavbarUserMenu from './NavbarUserMenu';
-// import NavbarMobileMenu from './MobileView/NavbarMobileMenu';
 
 function NavbarComponent(props) {
-  const { isMD } = props;
-
   return (
     <Box px={{ xs: 2, md: 8 }} className="navbar">
       <AppBar position="static" color="transparent" className="navbar-content">
@@ -41,7 +36,6 @@ function NavbarComponent(props) {
               </Grid>
             </Grid>
           </Grid>
-          {/* <NavbarMobileMenu {...props} /> */}
         </Grid>
       </AppBar>
     </Box>
@@ -51,7 +45,11 @@ function NavbarComponent(props) {
 function CustomNavbar(props) {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+
   const urlParams = window.location.search;
+  const searchParams = new URLSearchParams(urlParams);
+  const isWebView = searchParams.has('m');
+
   const location = useLocation();
   const [visible, setVisible] = useState({ top: true, bottom: true });
 
@@ -69,7 +67,7 @@ function CustomNavbar(props) {
     });
 
     const matchMobileWebView = matchPath(pathname, {
-      path: ['/Profile/Sns/Instagram', '/Profile/Sns/NaverBlog', '/Profile/Sns/Youtube', '/Policy/Service'],
+      path: ['/Profile/Sns/Instagram', '/Profile/Sns/NaverBlog', '/Profile/Sns/Youtube', '/Policy/Service', '/Policy/Privacy'],
       exact: true,
       strict: true
     });
@@ -92,7 +90,7 @@ function CustomNavbar(props) {
       setVisible({ ...visible, top: true });
     }
 
-    if (matchMobileWebView && urlParams === '?m=1') {
+    if (matchMobileWebView && isWebView) {
       setVisible({ bottom: false, top: false });
     }
 

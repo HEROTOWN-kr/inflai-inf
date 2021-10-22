@@ -42,6 +42,10 @@ function Sns() {
 
   const [value, setValue] = useState(1);
 
+  const urlParams = window.location.search;
+  const searchParams = new URLSearchParams(urlParams);
+  const isWebView = searchParams.has('m');
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -59,18 +63,20 @@ function Sns() {
           </StyledText>
         </PageTitle>
       </Hidden>
-      <Box borderBottom="1px solid #eaeaea">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-        >
-          { menuLinks.map(item => (
-            <Tab key={item.value} label={item.label} component={Link} to={match.url + item.link} value={item.value} />
-          )) }
-        </Tabs>
-      </Box>
+      { isWebView ? null : (
+        <Box borderBottom="1px solid #eaeaea">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+          >
+            { menuLinks.map(item => (
+              <Tab key={item.value} label={item.label} component={Link} to={match.url + item.link} value={item.value} />
+            )) }
+          </Tabs>
+        </Box>
+      )}
       <Switch>
         <Route
           path={`${match.url}/Instagram`}

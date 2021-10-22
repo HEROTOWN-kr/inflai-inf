@@ -6,7 +6,12 @@ const storageName = 'userData';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { isAuthenticated } = useContext(AuthContext);
+  const urlParams = window.location.search;
+  const searchParams = new URLSearchParams(urlParams);
+  const paramsToken = searchParams.has('token');
+
   const data = JSON.parse(localStorage.getItem(storageName));
+  const { token } = data || {};
 
   return (
 
@@ -15,7 +20,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props => (
-        data && data.token
+        token || paramsToken
           ? <Component {...props} />
           : <Redirect to="/Login" />
       )}

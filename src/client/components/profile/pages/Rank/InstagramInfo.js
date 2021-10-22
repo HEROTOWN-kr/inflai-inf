@@ -28,7 +28,12 @@ function InstagramInfo() {
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   const [instaData, setInstaData] = useState({});
-  const { token } = useContext(AuthContext);
+
+  const urlParams = window.location.search;
+  const searchParams = new URLSearchParams(urlParams);
+  const paramsToken = searchParams.get('token');
+
+  const token = useContext(AuthContext).token || paramsToken;
 
   async function getInstaInfo() {
     try {

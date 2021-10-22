@@ -62,7 +62,12 @@ function NaverBlog(props) {
     dateArray: ['1', '2', '3', '4', '5']
   });
   const [isLoad, setIsLoad] = useState(false);
-  const { token } = useContext(AuthContext);
+
+  const urlParams = window.location.search;
+  const searchParams = new URLSearchParams(urlParams);
+  const paramsToken = searchParams.get('token');
+
+  const token = useContext(AuthContext).token || paramsToken;
 
   const data = {
     labels: blogInfo.dateArray,

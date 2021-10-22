@@ -18,7 +18,7 @@ import CampaignSearch from '../campaign/CampaignSearch';
 import Service from '../footer/Service';
 import Privacy from '../footer/Privacy';
 import YoutubeTest from '../login/YoutubeTest';
-import AddressSearch from "../profile/AddressSearch";
+import AddressSearch from '../profile/AddressSearch';
 
 
 function Main() {

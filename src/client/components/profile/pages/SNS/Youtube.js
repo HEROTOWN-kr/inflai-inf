@@ -37,7 +37,6 @@ function CardComponent(props) {
 
 function Youtube(props) {
   const { changeTab } = props;
-  const { token } = useContext(AuthContext);
   const [youtubeDialogOpen, setYoutubeDialogOpen] = useState(false);
   const [youtubeInfo, setYoutubeInfo] = useState({
     id: null,
@@ -52,6 +51,12 @@ function Youtube(props) {
   const theme = useTheme();
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+
+  const urlParams = window.location.search;
+  const searchParams = new URLSearchParams(urlParams);
+  const paramsToken = searchParams.get('token');
+
+  const token = useContext(AuthContext).token || paramsToken;
 
   function toggleYoutubeDialog() {
     setYoutubeDialogOpen(!youtubeDialogOpen);
