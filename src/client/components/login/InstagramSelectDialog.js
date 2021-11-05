@@ -46,7 +46,7 @@ function InstagramSelectDialog(props) {
         <Grid container spacing={2} justify="center">
           <Grid item xs={12} className="dialog-text">
             <Grid container spacing={1}>
-              <Grid item>선택한 인스타그램 계정 중 1개의 계정만 레뷰에 연결하실 수 있습니다.</Grid>
+              <Grid item>선택한 인스타그랩 계정 중 1개의 계정만 인플라이에 연동하실수 있습니다.</Grid>
               <Grid item>단, 이미 참여하고 있는 캠페인이 있는 경우 기존에 연결했던 인스타그램 계 정을 연결하셔야 정상</Grid>
               <Grid item>적으로 서비스를 이용하실 수 있습니다.</Grid>
               <Grid item>이 페이지를 나가실 경우, 연결이 완료되지 않습니다.</Grid>

@@ -24,7 +24,7 @@ function Profile(props) {
               <ProfileMenu {...props} />
             </Grid>
           </Hidden>
-          <Grid item xs>
+          <Grid item zeroMinWidth xs>
             <ProfileContent
               {...props}
               isMD={isMD}
