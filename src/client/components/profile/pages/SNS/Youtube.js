@@ -96,7 +96,10 @@ function Youtube(props) {
     if (!youtubeInfo.id) {
       if (isWebView) {
         if (window.ReactNativeWebView) {
-          window.ReactNativeWebView.bridgeGoogleLogin();
+          const jsonObject = {
+            function_name: 'bridgeGoogleLogin'
+          };
+          window.ReactNativeWebView.postMessage(JSON.stringify(jsonObject));
         } else {
           alert("it's not mobile webview");
         }
