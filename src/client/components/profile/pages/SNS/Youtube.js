@@ -55,6 +55,7 @@ function Youtube(props) {
   const urlParams = window.location.search;
   const searchParams = new URLSearchParams(urlParams);
   const paramsToken = searchParams.get('token');
+  const isWebView = searchParams.has('m');
 
   const token = useContext(AuthContext).token || paramsToken;
 
@@ -93,7 +94,15 @@ function Youtube(props) {
 
   function youtubeButtonClick() {
     if (!youtubeInfo.id) {
-      setYoutubeDialogOpen(!youtubeDialogOpen);
+      if (isWebView) {
+        if (window.ReactNativeWebView) {
+          window.ReactNativeWebView.bridgeGoogleLogin();
+        } else {
+          alert("it's not mobile webview");
+        }
+      } else {
+        setYoutubeDialogOpen(!youtubeDialogOpen);
+      }
     } else {
       axios.post('/api/TB_YOUTUBE/delete', {
         id: youtubeInfo.id
@@ -102,6 +111,18 @@ function Youtube(props) {
       }).catch(err => alert(err.message));
     }
   }
+
+  function appCallbackGoogle(googleToken, youtubecode) {
+    axios.post('/api/TB_YOUTUBE/add', {
+      code: youtubecode,
+      host: 'influencer.inflai.com',
+      token
+    }).then((res) => {
+      getChannelInfo();
+    }).catch(error => alert(error.response.data.message));
+  }
+
+  window.appCallbackGoogle = appCallbackGoogle;
 
   useEffect(() => {
     if (token) {
