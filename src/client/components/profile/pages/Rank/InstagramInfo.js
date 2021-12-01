@@ -21,6 +21,7 @@ import GenderGraph from '../Graphs/GenderGraph';
 import MapGraph from '../Graphs/MapGraph';
 import AuthContext from '../../../../context/AuthContext';
 import MapGraph2 from '../Graphs/MapGraph2';
+import AnalysisComponent from '../../../Analysis/AnalysisComponent';
 
 function InstagramInfo() {
   const theme = useTheme();
@@ -57,8 +58,9 @@ function InstagramInfo() {
 
   return (
     <Box>
-      {instaData.INS_ID ? (
-        <Grid container spacing={isMD ? 3 : 0}>
+      {instaData.INF_ID ? (
+        <AnalysisComponent INS_ID={instaData.INF_ID} />
+      /* <Grid container spacing={isMD ? 3 : 0}>
           <Grid item xs={12} lg={6}>
             <Grid container spacing={isMD ? 3 : 0}>
               <Grid item xs={12}>
@@ -279,19 +281,18 @@ function InstagramInfo() {
                   </Grid>
                   <Grid item xs={12}>
                     <MapGraph2 INS_ID={instaData.INS_ID} />
-                    {/* <MapGraph INS_ID={instaData.INS_ID} /> */}
+                    {/!* <MapGraph INS_ID={instaData.INS_ID} /> *!/}
                   </Grid>
                 </Grid>
               </Box>
             </WhiteBlock>
           </Grid>
-        </Grid>
+        </Grid> */
       ) : (
-        <Grid container justify="center">
-          <Grid item>
-            <StyledText>인스타 계정을 연결해주세요</StyledText>
-          </Grid>
-        </Grid>
+        <Box p={2} textAlign="center">
+          <Box>인스타 계정을 연결해주세요</Box>
+          <Box>회원정보수정 - 인스타그램 연결하기</Box>
+        </Box>
       )}
     </Box>
   );
