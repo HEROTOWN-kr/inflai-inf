@@ -12,6 +12,7 @@ import StyledText from '../../../../containers/StyledText';
 import StyledImage from '../../../../containers/StyledImage';
 import youtubeIcon from '../../../../img/youtube.png';
 import YoutubeDialog from '../../../login/YoutubeDialog';
+import YoutubeAnalysis from '../../../Analysis/Youtube/YoutubeAnalysis';
 
 const useStyles = makeStyles({
   root: {
@@ -164,17 +165,21 @@ function Youtube(props) {
       <Box mb={2}>
         <LabelComponent fontWeight="700" color="#000000" fontSize="15px" labelName="연동된 유튜브체널 정보" />
       </Box>
-      <Grid container spacing={isSM ? 2 : 1}>
-        <Grid item xs={6} sm="auto">
-          <CardComponent title="체널이름" data={youtubeInfo.channelName || '-'} />
-        </Grid>
-        <Grid item xs={6} sm="auto">
-          <CardComponent title="조회수" data={youtubeInfo.views || '-'} />
-        </Grid>
-        <Grid item xs={6} sm="auto">
-          <CardComponent title="구독자수" data={youtubeInfo.subs || '-'} />
-        </Grid>
-      </Grid>
+      {youtubeInfo.id ? (
+      /* <Grid container spacing={isSM ? 2 : 1}>
+          <Grid item xs={6} sm="auto">
+            <CardComponent title="체널이름" data={youtubeInfo.channelName || '-'} />
+          </Grid>
+          <Grid item xs={6} sm="auto">
+            <CardComponent title="조회수" data={youtubeInfo.views || '-'} />
+          </Grid>
+          <Grid item xs={6} sm="auto">
+            <CardComponent title="구독자수" data={youtubeInfo.subs || '-'} />
+          </Grid>
+        </Grid> */
+        <YoutubeAnalysis id={youtubeInfo.id} />
+      ) : null}
+
       {youtubeInfo.updated ? (
         <Box mt={4} fontSize="15px">
             업데이트 날짜
