@@ -21,6 +21,7 @@ import blogIcon from '../../img/icon_blog_url.png';
 import StyledCheckBox from '../../containers/StyledCheckBox';
 import AuthContext from '../../context/AuthContext';
 import TopMenu from './TopMenu';
+import StyledBackDrop from '../../containers/StyledBackDrop';
 
 function ApplyFormComponent(componentProps) {
   const { title, children } = componentProps;
@@ -43,6 +44,7 @@ function CampaignApply(props) {
   const [applyData, setApplyData] = useState({});
   const [addData, setAddData] = useState({ TB_PHOTO_ADs: [] });
   const [isSticky, setSticky] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const theme = useTheme();
   const { token } = useContext(AuthContext);
@@ -167,6 +169,8 @@ function CampaignApply(props) {
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
+
       const apiObj = {
         ...data,
         adId: match.params.id,
@@ -183,9 +187,12 @@ function CampaignApply(props) {
         }
       }).catch((err) => {
         alert(err.response.data.message);
+      }).then(() => {
+        setIsLoading(false);
       });
     } catch (err) {
       alert(err);
+      setIsLoading(false);
     }
   };
 
@@ -205,6 +212,10 @@ function CampaignApply(props) {
         <StyledText textAlign="center" fontSize="13px" color={color} fontWeight="bold">{text}</StyledText>
       </Box>
     );
+  }
+
+  function toggleLoading() {
+    setIsLoading(!isLoading);
   }
 
   return (
@@ -503,6 +514,7 @@ function CampaignApply(props) {
           <StyledButton variant="text" height={60} borderRadius="0" onClick={handleSubmit(onSubmit)}>신청하기</StyledButton>
         </Box>
       ) }
+      <StyledBackDrop open={isLoading} handleClose={toggleLoading} />
     </Box>
   );
 }
