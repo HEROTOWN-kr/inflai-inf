@@ -10,6 +10,7 @@ import IconYoutube from '../../img/icon_youtube_url.png';
 import IconBlog from '../../img/icon_blog_url.png';
 import MyPagination from '../../containers/MyPagination';
 import noFound from '../../img/notFound400_316.png';
+import StyledButton from '../../containers/StyledButton';
 
 function SelectedList(props) {
   const { adId, type, isMD } = props;
@@ -83,6 +84,27 @@ function SelectedList(props) {
                       </StyledText>
                     </Grid>
                   </Grid>
+                </Grid>
+                <Grid item xs={12} sm="auto">
+                  <Box mt="5px" ml="auto" width={{ xs: '100%', sm: '120px' }}>
+                    <StyledButton
+                      height="30px"
+                      padding="0 10px"
+                      background={Colors.green}
+                      hoverBackground={Colors.greenHover}
+                      onClick={() => window.open(item.PAR_REVIEW, '_blank')}
+                      disabled={!item.PAR_REVIEW}
+                    >
+                      리뷰 보기
+                    </StyledButton>
+                    {/* <Grid container spacing={1}>
+                      {item.PAR_REVIEW ? (
+                        <Grid item xs={6} sm={12}>
+
+                        </Grid>
+                      ) : null}
+                    </Grid> */}
+                  </Box>
                 </Grid>
               </Grid>
             </Box>
