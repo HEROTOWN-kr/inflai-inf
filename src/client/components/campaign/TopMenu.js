@@ -4,6 +4,15 @@ import { Colors } from '../../lib/Сonstants';
 
 function TopMenu(props) {
   const { history, title } = props;
+
+  function clickBack() {
+    if (history.length > 1) {
+      history.goBack();
+      return;
+    }
+    history.push('/');
+  }
+
   return (
     <Box height="45px" position="relative">
       <Box
@@ -20,7 +29,7 @@ function TopMenu(props) {
         <Grid container alignItems="center" style={{ height: '100%' }} justify="center">
           <Grid item>{title}</Grid>
         </Grid>
-        <Box position="absolute" left="11px" top="8px" onClick={() => { history.goBack(); }}>
+        <Box position="absolute" left="11px" top="8px" onClick={clickBack}>
           <span uk-icon="icon: chevron-left; ratio: 1.3" />
         </Box>
       </Box>
