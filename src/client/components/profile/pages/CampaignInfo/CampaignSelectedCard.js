@@ -55,7 +55,7 @@ function CampaignSelectedCard(props) {
           <Box width={{ xs: '100%', sm: '100px' }}>
             <Grid container spacing={1}>
               <Grid item xs={6} sm={12}>
-                <StyledButton height="30px" padding="0 10px" onClick={onClick}>보기</StyledButton>
+                <StyledButton height="30px" padding="0 10px" onClick={onClick}>가이드보기</StyledButton>
               </Grid>
               <Grid item xs={6} sm={12}>
                 <StyledButton
