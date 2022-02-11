@@ -18,10 +18,55 @@ import StyledButton from '../../containers/StyledButton';
 import instagramIcon from '../../img/instagram.png';
 import youtubeIcon from '../../img/youtube.png';
 import blogIcon from '../../img/icon_blog_url.png';
-import StyledCheckBox from '../../containers/StyledCheckBox';
 import AuthContext from '../../context/AuthContext';
 import TopMenu from './TopMenu';
 import StyledBackDrop from '../../containers/StyledBackDrop';
+
+const defaultValues = {
+  insta: false,
+  youtube: false,
+  naver: false,
+  name: '',
+  receiverName: '',
+  phone: '',
+  email: '',
+  postcode: '',
+  roadAddress: '',
+  detailAddress: '',
+  extraAddress: '',
+  delivery: ''
+};
+
+const adTypes = {
+  1: {
+    text: '인스타',
+    color: Colors.pink,
+  },
+  2: {
+    text: '유튜브',
+    color: Colors.red,
+  },
+  3: {
+    text: '블로그',
+    color: '#2ba406',
+  },
+  4: {
+    text: '기자단',
+    color: '#0027ff'
+  }
+};
+
+function SnsBlock({ item }) {
+  const { name, checked } = item;
+  if (!checked) return null;
+  return (
+    <Grid item xs={4}>
+      <Box p={1} border={`1px solid ${adTypes[`${name === 'instagram' ? '1' : '3'}`].color}`}>
+        <StyledText textAlign="center" fontSize="13px" color={adTypes[`${name === 'instagram' ? '1' : '3'}`].color} fontWeight="bold">{adTypes[`${name === 'instagram' ? '1' : '3'}`].text}</StyledText>
+      </Box>
+    </Grid>
+  );
+}
 
 function ApplyFormComponent(componentProps) {
   const { title, children } = componentProps;
@@ -42,7 +87,7 @@ function ApplyFormComponent(componentProps) {
 function CampaignApply(props) {
   const { match, history, setMessage } = props;
   const [applyData, setApplyData] = useState({});
-  const [addData, setAddData] = useState({ TB_PHOTO_ADs: [] });
+  const [addData, setAddData] = useState({ TB_PHOTO_ADs: [], AD_TYPE: '1' });
   const [isSticky, setSticky] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -89,21 +134,6 @@ function CampaignApply(props) {
       .required('이메일을 입력해주세요'),
   });
 
-  const defaultValues = {
-    insta: false,
-    youtube: false,
-    naver: false,
-    name: '',
-    receiverName: '',
-    phone: '',
-    email: '',
-    postcode: '',
-    roadAddress: '',
-    detailAddress: '',
-    extraAddress: '',
-    delivery: ''
-  };
-
   const {
     register, handleSubmit, reset, watch, errors, setValue, control, getValues
   } = useForm({
@@ -116,20 +146,18 @@ function CampaignApply(props) {
     setSticky(window.pageYOffset > 80);
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', () => handleScroll);
-    };
-  }, []);
 
   async function getAddInfo() {
     try {
       const response = await axios.get('/api/TB_AD/campaignDetail', { params: { id: match.params.id, } });
       const { data } = response.data;
-      if (data) {
-        setAddData(data);
+
+      const { AD_REPORT_TYPES, ...rest } = data;
+      const dataObj = { ...rest };
+      if (AD_REPORT_TYPES) dataObj.AD_REPORT_TYPES = JSON.parse(AD_REPORT_TYPES);
+
+      if (dataObj) {
+        setAddData(dataObj);
         setValue('delivery', data.AD_DELIVERY.toString());
       }
     } catch (err) {
@@ -196,27 +224,24 @@ function CampaignApply(props) {
     }
   };
 
+  function toggleLoading() {
+    setIsLoading(!isLoading);
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', () => handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     if (token) {
       getApplicantInfo();
       getAddInfo();
     }
   }, [token]);
-
-
-  function SnsBlock(props) {
-    const { color, text } = props;
-
-    return (
-      <Box p={1} border={`1px solid ${color}`}>
-        <StyledText textAlign="center" fontSize="13px" color={color} fontWeight="bold">{text}</StyledText>
-      </Box>
-    );
-  }
-
-  function toggleLoading() {
-    setIsLoading(!isLoading);
-  }
 
   return (
     <Box maxWidth="1160px" margin="0 auto" className="campaign-detail">
@@ -467,8 +492,26 @@ function CampaignApply(props) {
                         <Box py={3}><StyledText overflowHidden fontSize="20px" fontWeight="bold">{addData.AD_NAME}</StyledText></Box>
                         <StyledText overflowHidden fontSize="15px">{addData.AD_SHRT_DISC}</StyledText>
                         <Box pt={2}>
-                          <Grid container spacing={1}>
-                            <Grid item xs={4}>
+
+                          { addData.AD_TYPE !== '4' ? (
+                            <Box width="30%" p={1} border={`1px solid ${adTypes[addData.AD_TYPE].color}`}>
+                              <StyledText textAlign="center" fontSize="13px" color={adTypes[addData.AD_TYPE].color} fontWeight="bold">{adTypes[addData.AD_TYPE].text}</StyledText>
+                            </Box>
+                          ) : (
+                            <Grid container spacing={1}>
+                              { addData.AD_REPORT_TYPES.map(item => (
+                                <SnsBlock item={item} />
+                              ))}
+                            </Grid>
+                          /* <Grid item>
+                                <Grid container spacing={1}>
+                                  { addData.AD_REPORT_TYPES.map(item => (
+                                    <SnsBlock color={Colors.pink} type={item} />
+                                  ))}
+                                </Grid>
+                              </Grid> */
+                          )}
+                          {/* <Grid item xs={4}>
                               <SnsBlock color={Colors.pink} text="Instagram" />
                             </Grid>
                             <Grid item xs={4}>
@@ -476,8 +519,7 @@ function CampaignApply(props) {
                             </Grid>
                             <Grid item xs={4}>
                               <SnsBlock color="#00cdc5" text="Blog" />
-                            </Grid>
-                          </Grid>
+                            </Grid> */}
                         </Box>
                       </Grid>
                       <Grid item xs={12}>

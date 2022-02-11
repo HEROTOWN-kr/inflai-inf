@@ -16,9 +16,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import * as Scroll from 'react-scroll';
 import { Skeleton } from '@material-ui/lab';
 import MetaTags from 'react-meta-tags';
-import { Helmet } from 'react-helmet';
-import Common from '../../lib/common';
-import { Colors, campaignSteps, AdvertiseTypes } from '../../lib/Сonstants';
+import { Colors, AdvertiseTypes } from '../../lib/Сonstants';
 import IconYoutube from '../../img/icon_youtube_url.png';
 import IconInsta from '../../img/icon_instagram_url.png';
 import IconBlog from '../../img/icon_blog_url.png';
@@ -32,7 +30,6 @@ import TopMenu from './TopMenu';
 import MyPagination from '../../containers/MyPagination';
 import SelectedList from './SelectedList';
 import CampaignShareDialog from './CampaignShareDialog';
-import HelmetMetaData from '../../containers/HelmetMetaData';
 
 const useStyles = makeStyles({
   root: {
@@ -87,6 +84,42 @@ const RightMenuLinks = [
     link: 'info'
   },
 ];
+
+const adTypes = {
+  1: {
+    text: '인스타',
+    color: Colors.pink,
+    icon: IconInsta
+  },
+  2: {
+    text: '유튜브',
+    color: Colors.red,
+    icon: IconYoutube
+  },
+  3: {
+    text: '블로그',
+    color: '#2ba406',
+    icon: IconBlog
+  },
+  4: {
+    text: '기자단',
+    color: '#0027ff'
+  }
+};
+
+const SnsType = ({ item }) => {
+  const { name, checked } = item;
+  if (!checked) return null;
+  return (
+    <Grid item>
+      <StyledImage
+        width="21px"
+        height="21px"
+        src={adTypes[`${name === 'instagram' ? '1' : '3'}`].icon}
+      />
+    </Grid>
+  );
+};
 
 function TimeComponent(props) {
   const [seconds, setSeconds] = useState(0);
@@ -272,7 +305,8 @@ function CampaignDetail() {
     AD_DISC: '',
     TB_PHOTO_ADs: [],
     TB_PARTICIPANTs: [],
-    AD_CTG: 0
+    AD_CTG: 0,
+    AD_TYPE: '1'
   });
   const [currentImage, setCurrentImage] = useState('');
   const [isSticky, setSticky] = useState(false);
@@ -332,12 +366,17 @@ function CampaignDetail() {
       params: apiObj
     }).then((res) => {
       const { data } = res.data;
-      const { AD_LINKS } = data;
-      const links = AD_LINKS ? JSON.parse(AD_LINKS) : null;
-      setProductData({ ...data, AD_LINKS: links });
+      const { AD_LINKS, AD_REPORT_TYPES, ...rest } = data;
+      const dataObj = { ...rest };
+      if (AD_LINKS) dataObj.AD_LINKS = JSON.parse(AD_LINKS);
+      if (AD_REPORT_TYPES) dataObj.AD_REPORT_TYPES = JSON.parse(AD_REPORT_TYPES);
+
+      setProductData(dataObj);
       setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE_URL);
       setLoading(false);
-    }).catch(err => alert(err.response.data.message));
+    }).catch((err) => {
+      alert(err.response.data.message);
+    });
   }
 
   function sendRequest() {
@@ -373,7 +412,9 @@ function CampaignDetail() {
         } else {
           setLiked(false);
         }
-      }).catch(error => alert(error.response.data.message));
+      }).catch((error) => {
+        alert(error.response.data.message);
+      });
     }
   }
 
@@ -567,19 +608,17 @@ function CampaignDetail() {
                       <Grid item xs={12}>
                         <Grid container justify="space-between" alignItems="center">
                           <Grid item><StyledText fontWeight="bold">모집희망SNS</StyledText></Grid>
-                          <Grid item>
-                            <Grid container spacing={1}>
-                              {productData.AD_TYPE === '1' ? (
-                                <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
-                              ) : null}
-                              {productData.AD_TYPE === '2' ? (
-                                <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
-                              ) : null}
-                              {productData.AD_TYPE === '3' ? (
-                                <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
-                              ) : null}
+                          { productData.AD_TYPE !== '4' ? (
+                            <Grid item><StyledImage width="21px" height="21px" src={adTypes[productData.AD_TYPE].icon} /></Grid>
+                          ) : (
+                            <Grid item>
+                              <Grid container spacing={1}>
+                                { productData.AD_REPORT_TYPES.map(item => (
+                                  <SnsType item={item} />
+                                ))}
+                              </Grid>
                             </Grid>
-                          </Grid>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -747,18 +786,6 @@ function CampaignDetail() {
                             </Grid>
                           </Grid>
                         ) : null}
-                        {/* <Grid item xs={12}>
-                        <Grid container>
-                          <Grid item><Box width="65px" fontWeight="bold">연락처</Box></Grid>
-                          <Grid item xs>{productData.AD_TEL}</Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Grid container>
-                          <Grid item><Box width="65px" fontWeight="bold">이메일</Box></Grid>
-                          <Grid item xs>{productData.AD_EMAIL}</Grid>
-                        </Grid>
-                      </Grid> */}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -766,9 +793,6 @@ function CampaignDetail() {
               </Grid>
             </Box>
           </Grid>
-          {/* <Grid item xs>
-          <Box height="1000px" css={{ background: 'green' }}>test</Box>
-        </Grid> */}
           {isMD ? (
             <Grid item style={{ borderLeft: '1px solid #eee' }}>
               <Box width="300px" position="relative">
@@ -785,21 +809,9 @@ function CampaignDetail() {
                         <Box mb="15px">
                           <Grid container>
                             <Grid item>
-                              {productData.AD_TYPE === '1' ? (
-                                <Box fontSize="12px" mr="7px" p="2px 5px" color={Colors.pink} border={`solid 1px ${Colors.pink}`}>
-                                  인스타
-                                </Box>
-                              ) : null}
-                              {productData.AD_TYPE === '2' ? (
-                                <Box fontSize="12px" mr="7px" p="2px 5px" color={Colors.red} border={`solid 1px ${Colors.red}`}>
-                                    유튜브
-                                </Box>
-                              ) : null}
-                              {productData.AD_TYPE === '3' ? (
-                                <Box fontSize="12px" mr="7px" p="2px 5px" color="#2ba406" border="solid 1px #2ba406">
-                                    블로그
-                                </Box>
-                              ) : null}
+                              <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes[productData.AD_TYPE].color} border={`solid 1px ${adTypes[productData.AD_TYPE].color}`}>
+                                {adTypes[productData.AD_TYPE].text}
+                              </Box>
                             </Grid>
                             <Grid item>
                               <Box fontSize="12px" p="2px 5px" bgcolor="#efefef" border="solid 1px #dcdcdc">
