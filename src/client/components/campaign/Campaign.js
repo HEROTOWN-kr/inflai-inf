@@ -8,6 +8,7 @@ import Area from './pages/Area';
 import Product from './pages/Product';
 import Service from './pages/Service';
 import Seller from './pages/Seller';
+import Report from './pages/Report';
 
 
 function Campaign(props) {
@@ -39,6 +40,10 @@ function Campaign(props) {
         <Route
           path={`${match.path}/Service`}
           render={renderProps => <Service {...renderProps} />}
+        />
+        <Route
+          path={`${match.path}/Report`}
+          render={renderProps => <Report {...renderProps} />}
         />
         <Route
           path={`${match.path}/Seller`}

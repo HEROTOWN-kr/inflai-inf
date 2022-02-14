@@ -8,6 +8,21 @@ import StyledSvg from '../../containers/StyledSvg';
 import noImage from '../../img/noImage.png';
 import noFound from '../../img/notFound400_316.png';
 
+const snsTypes = {
+  1: {
+    text: 'Instagram',
+    color: Colors.pink
+  },
+  2: {
+    text: 'Youtube',
+    color: Colors.red
+  },
+  3: {
+    text: 'Blog',
+    color: Colors.green
+  }
+};
+
 function PeriodComponent(props) {
   const { srchEnd } = props;
   const currentDate = new Date();
@@ -15,9 +30,6 @@ function PeriodComponent(props) {
   const lastDate = new Date(srchEnd);
   if (lastDate < currentDate) {
     return null;
-    /* return (
-      <span style={{ fontWeight: 600 }}>&nbsp;&nbsp;발표기간</span>
-    ); */
   }
   const daysLag = Math.ceil(Math.abs(lastDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
   return ` D-${daysLag}`;
@@ -25,7 +37,8 @@ function PeriodComponent(props) {
 
 function CampaignCard(props) {
   const {
-    image, type, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD
+    image, type, report, srchEnd, name, shrtDisc,
+    participantsLength, cnt, proportion, onClick, isMD
   } = props;
 
   return (
@@ -34,20 +47,19 @@ function CampaignCard(props) {
       <Box borderTop="1px solid #eaeaea" p={isMD ? 3 : 1}>
         <Grid container spacing={isMD ? 2 : 1}>
           <Grid item xs={12}>
-            <StyledText overflowHidden lineHeight="1.3em">
-              {type === '1' ? (
-                <span style={{ color: Colors.pink, fontWeight: '600' }}>Instagram</span>
+            <Grid container>
+              { report === '1' ? (
+                <Grid item>
+                  <Box mr="4px" color="#0027ff" fontWeight="600">(기자단)</Box>
+                </Grid>
               ) : null}
-              {type === '2' ? (
-                <span style={{ color: Colors.red, fontWeight: '600' }}>YouTube</span>
-              ) : null}
-              {type === '3' ? (
-                <span style={{ color: Colors.green, fontWeight: '600' }}>Blog</span>
-              ) : null}
-              {/* <span style={{ color: Colors.pink }}>{`${AdvertiseTypes.mainType[ctg1]}/${AdvertiseTypes.subType[ctg1][ctg2]}`}</span> */}
-
-              <PeriodComponent srchEnd={srchEnd} />
-            </StyledText>
+              <Grid item>
+                <Box mr="4px" color={snsTypes[type].color} fontWeight="600">{snsTypes[type].text}</Box>
+              </Grid>
+              <Grid item>
+                <PeriodComponent srchEnd={srchEnd} />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <StyledText overflowHidden fontWeight="bold" fontSize="16px">
