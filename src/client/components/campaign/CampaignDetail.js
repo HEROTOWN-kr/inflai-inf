@@ -592,7 +592,18 @@ function CampaignDetail() {
                       <Grid item xs={12}>
                         <Grid container justify="space-between">
                           <Grid item><StyledText fontWeight="bold">카테고리</StyledText></Grid>
-                          <Grid item><StyledText>{`${AdvertiseTypes.mainType[productData.AD_CTG]}/${AdvertiseTypes.subType[productData.AD_CTG][productData.AD_CTG2]}`}</StyledText></Grid>
+                          <Grid item>
+                            <Grid container>
+                              { productData.AD_REPORT === '1' ? (
+                                <Grid item>
+                                  <StyledText color={adTypes['4'].color}>(기자단)&nbsp;</StyledText>
+                                </Grid>
+                              ) : null}
+                              <Grid item>
+                                <StyledText>{`${AdvertiseTypes.mainType[productData.AD_CTG]}/${AdvertiseTypes.subType[productData.AD_CTG][productData.AD_CTG2]}`}</StyledText>
+                              </Grid>
+                            </Grid>
+                          </Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={12}>
@@ -808,6 +819,13 @@ function CampaignDetail() {
                         </Box>
                         <Box mb="15px">
                           <Grid container>
+                            { productData.AD_REPORT === '1' ? (
+                              <Grid item>
+                                <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
+                                  기자단
+                                </Box>
+                              </Grid>
+                            ) : null}
                             <Grid item>
                               <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes[productData.AD_TYPE].color} border={`solid 1px ${adTypes[productData.AD_TYPE].color}`}>
                                 {adTypes[productData.AD_TYPE].text}
