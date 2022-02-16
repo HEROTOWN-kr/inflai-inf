@@ -19,6 +19,7 @@ import Service from '../footer/Service';
 import Privacy from '../footer/Privacy';
 import YoutubeTest from '../login/YoutubeTest';
 import AddressSearch from '../profile/AddressSearch';
+import Question from '../question/Question';
 
 
 function Main() {
@@ -73,6 +74,10 @@ function Main() {
       <Route
         path="/Campaign"
         render={renderProps => <Campaign {...renderProps} />}
+      />
+      <Route
+        path="/Question"
+        render={renderProps => <Question {...renderProps} />}
       />
       <Route
         path="/Process"
