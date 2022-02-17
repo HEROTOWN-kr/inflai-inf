@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { SupervisorAccount } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
 import StyledImage from '../../../../containers/StyledImage';
 import StyledText from '../../../../containers/StyledText';
 import { AdvertiseTypes, Colors } from '../../../../lib/Сonstants';
@@ -15,6 +16,8 @@ function CampaignSelectedCard(props) {
     writeReview, image, type, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD, review
   } = props;
 
+  const history = useHistory();
+
   function calculateDates(date) {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
@@ -24,6 +27,18 @@ function CampaignSelectedCard(props) {
     }
     const daysLag = Math.ceil(Math.abs(lastDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
     return daysLag;
+  }
+
+  function getQuestions() {
+    history.push({
+      pathname: '/Question',
+      state: {
+        campaignName: name,
+        shortDiscription: shrtDisc,
+        photo: image,
+        type,
+      }
+    });
   }
 
   return (
@@ -54,10 +69,10 @@ function CampaignSelectedCard(props) {
         <Grid item xs={12} sm="auto">
           <Box width={{ xs: '100%', sm: '100px' }}>
             <Grid container spacing={1}>
-              <Grid item xs={6} sm={12}>
+              <Grid item xs={4} sm={12}>
                 <StyledButton height="30px" padding="0 10px" onClick={onClick}>가이드보기</StyledButton>
               </Grid>
-              <Grid item xs={6} sm={12}>
+              <Grid item xs={4} sm={12}>
                 <StyledButton
                   height="30px"
                   padding="0 10px"
@@ -66,6 +81,17 @@ function CampaignSelectedCard(props) {
                   onClick={writeReview}
                 >
                   {review ? '리뷰 수정' : '리뷰 등록'}
+                </StyledButton>
+              </Grid>
+              <Grid item xs={4} sm={12}>
+                <StyledButton
+                  height="30px"
+                  padding="0 10px"
+                  background={Colors.green}
+                  hoverBackground={Colors.greenHover}
+                  onClick={getQuestions}
+                >
+                  문의
                 </StyledButton>
               </Grid>
             </Grid>
