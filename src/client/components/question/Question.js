@@ -5,7 +5,7 @@ import {
 import { Create } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AdvertiseTypes, Colors } from '../../lib/Сonstants';
 import StyledText from '../../containers/StyledText';
 import StyledButton from '../../containers/StyledButton';
@@ -74,7 +74,7 @@ const snsTypes = {
   }
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   campaignCard: {
     padding: '12px'
   },
@@ -82,9 +82,20 @@ const useStyles = makeStyles({
     color: '#8C3FFF',
     marginLeft: '5px',
   },
-});
+  image: {
+    width: '100%',
+    height: '276px',
+    objectFit: 'cover',
+    objectPosition: '50% 50%',
+    [theme.breakpoints.down('md')]: {
+      width: '60px',
+      height: '60px',
+    }
+  }
+}));
 
 const defaultCampaignInfo = {
+  adId: null,
   photo: '',
   campaignName: '캠페인 이름',
   shortDiscription: '캠페인 이름',
@@ -99,6 +110,7 @@ function Question(props) {
 
   const classes = useStyles();
   const { token } = useContext(AuthContext);
+  const history = useHistory();
   const location = useLocation();
   const {
     state
@@ -115,7 +127,7 @@ function Question(props) {
 
   function getQuestions() {
     axios.get('/api/TB_QUESTION/list', {
-      params: { AD_ID: '314', token, page: '1' }
+      params: { adId: campaignInfo.adId, token, page: '1' }
     }).then((res) => {
       const { data, countData } = res.data;
       setQuestions(data);
@@ -130,68 +142,56 @@ function Question(props) {
   }
 
   useEffect(() => {
-    if (token) getQuestions();
-    setCampaignInfo(state);
-  }, [token]);
+    if (campaignInfo.adId) getQuestions();
+  }, [campaignInfo]);
 
+  useEffect(() => {
+    if (state && state.adId) {
+      setCampaignInfo(state);
+    } else {
+      history.push('Profile/CampaignInfo/Selected');
+    }
+  }, []);
 
   return (
     <Box py="50px" bgcolor="#f5f5f5" minHeight="calc(100vh - 445px);">
       <Box px={2} maxWidth={1200} m="0 auto" boxSizing="border-box">
         <Grid container spacing={2}>
-          <Grid item>
-            <Box width="300px">
+          <Grid item xs={12} md="auto">
+            <Box width={{ xs: '100%', md: '300px' }}>
               <Paper className={classes.campaignCard}>
-                <StyledImage width="100%" height="300px" src={campaignInfo.photo || noImage} />
-                <Box py={3}><StyledText overflowHidden fontSize="20px" fontWeight="bold">{campaignInfo.campaignName}</StyledText></Box>
+                {/* <StyledImage className={classes.image} src={campaignInfo.photo || noImage} />
+                <Box my="13px">
+                  <StyledText overflowHidden fontSize="22px" fontWeight="bold" lineHeight="1.1em">
+                    {campaignInfo.campaignName}
+                  </StyledText>
+                </Box>
                 <StyledText overflowHidden fontSize="15px">{campaignInfo.shortDiscription}</StyledText>
                 <Box pt={2}>
                   <Box width="30%" p={1} border={`1px solid ${adTypes[campaignInfo.type].color}`}>
                     <StyledText textAlign="center" fontSize="13px" color={adTypes[campaignInfo.type].color} fontWeight="bold">{adTypes[campaignInfo.type].text}</StyledText>
                   </Box>
-                </Box>
-                {/* <Grid container>
-                  <Grid item xs="auto">
-                    <StyledImage
-                      width="80px"
-                      height="80px"
-                      src={campaignInfo.photo.length > 0 ? campaignInfo.photo[0].PHO_FILE_URL : noFound}
-                      onError={(e) => { e.target.onerror = null; e.target.src = `${defaultAccountImage}`; }}
-                    />
+                </Box> */}
+                <Grid container spacing={2}>
+                  <Grid item>
+                    <StyledImage className={classes.image} src={campaignInfo.photo || noImage} />
                   </Grid>
-                  <Grid item xs>
-                    <Box ml="14px" height="100%">
-                      <Grid container alignContent="space-between" style={{ height: '100%' }}>
-                        <Grid item xs={12}>
-                          <StyledText fontSize="14px" color="#222">
-                            {campaignInfo.campaignName}
-                          </StyledText>
-                          <StyledText fontSize="14px" color="#222">
-                            <Grid container spacing={1}>
-                              { campaignInfo.report ? (
-                                <Grid item>
-                                  <Box style={{ color: '#0027ff', fontWeight: '600' }}>(기자단)</Box>
-                                </Grid>
-                              ) : null}
-                              <Grid item>
-                                <Box style={{ color: snsTypes[campaignInfo.type].color, fontWeight: '600' }}>{snsTypes[campaignInfo.type].text}</Box>
-                              </Grid>
-                              <Grid item>
-                                <Box>
-                                  {` ${AdvertiseTypes.mainType[campaignInfo.category]} > ${AdvertiseTypes.subType[campaignInfo.category][campaignInfo.subcategory]}`}
-                                </Box>
-                              </Grid>
-                            </Grid>
-                          </StyledText>
-                        </Grid>
-                      </Grid>
+                  <Grid item xs zeroMinWidth>
+                    <Box mb="4px">
+                      <StyledText overflowHidden fontSize="15px" fontWeight="bold" lineHeight="1.1em">
+                        {campaignInfo.campaignName}
+                      </StyledText>
+                    </Box>
+                    <StyledText overflowHidden fontSize="13px">{campaignInfo.shortDiscription}</StyledText>
+                    <Box pt="6px">
+                      <StyledText fontSize="13px" color={adTypes[campaignInfo.type].color} fontWeight="bold">{adTypes[campaignInfo.type].text}</StyledText>
                     </Box>
                   </Grid>
-                </Grid> */}
+                </Grid>
               </Paper>
             </Box>
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12} md>
             <Box fontSize={22} fontWeight={600} mb="25px">1대1문의하기(Q&A)</Box>
             <Box mt={{ xs: '20px', sm: 0 }} mb={1}>
               <Grid container justify="flex-end">
@@ -245,7 +245,7 @@ function Question(props) {
           </Grid>
         </Grid>
       </Box>
-      <QuestionCreateDialog open={showDialog} closeDialog={toggleDialog} getQuestions={getQuestions} adId={314} token={token} />
+      <QuestionCreateDialog open={showDialog} closeDialog={toggleDialog} getQuestions={getQuestions} adId={campaignInfo.adId} token={token} />
       <QuestionDialog open={detailDialog} closeDialog={toggleDetailDialog} questionId={selected} />
     </Box>
   );

@@ -13,7 +13,9 @@ import ReviewInfoDialog from './ReviewInfoDialog';
 
 function CampaignSelectedCard(props) {
   const {
-    writeReview, image, type, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD, review
+    writeReview, image, type, ctg1, ctg2, srchEnd,
+    name, shrtDisc, participantsLength, cnt,
+    proportion, onClick, isMD, review, adId
   } = props;
 
   const history = useHistory();
@@ -33,6 +35,7 @@ function CampaignSelectedCard(props) {
     history.push({
       pathname: '/Question',
       state: {
+        adId,
         campaignName: name,
         shortDiscription: shrtDisc,
         photo: image,

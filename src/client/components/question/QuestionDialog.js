@@ -41,6 +41,7 @@ const useStyles = makeStyles({
 const defaultQuestionData = {
   QUE_TITLE: '',
   QUE_CONTENT: '',
+  QUE_ANSWER: '',
 };
 
 function QuestionCreateDialog(props) {
@@ -100,7 +101,7 @@ function QuestionCreateDialog(props) {
           <hr />
           <Box my={1}><StyledText color="#3f51b5">답변</StyledText></Box>
           <Box>
-            {questionData.QUE_CONTENT}
+            {questionData.QUE_ANSWER}
           </Box>
           <hr />
         </Box>

@@ -130,6 +130,7 @@ function SelectedCampaigns(props) {
                   return (
                     <Grid item xs={12} md="auto" key={AD_ID}>
                       <CampaignSelectedCard
+                        adId={AD_ID}
                         type={AD_TYPE}
                         image={TB_PHOTO_ADs[0].PHO_FILE_URL}
                         ctg1={AD_CTG}
