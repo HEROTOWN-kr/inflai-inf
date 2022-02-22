@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  Fragment, useContext, useEffect, useState
+} from 'react';
 import {
   Box, Grid, Paper, Table, TableBody, TableContainer, TableHead, TableRow, useMediaQuery, useTheme
 } from '@material-ui/core';
@@ -17,6 +19,7 @@ import AuthContext from '../../context/AuthContext';
 import QuestionCreateDialog from './QuestionCreateDialog';
 import QuestionDialog from './QuestionDialog';
 import noImage from '../../img/noImage.png';
+import MyPagination from '../../containers/MyPagination';
 
 const tableHeader = [
   {
@@ -107,6 +110,8 @@ function Question(props) {
   const [detailDialog, setDetailDialog] = useState(false);
   const [selected, setSelected] = useState(null);
   const [campaignInfo, setCampaignInfo] = useState(defaultCampaignInfo);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   const classes = useStyles();
   const { token } = useContext(AuthContext);
@@ -129,14 +134,19 @@ function Question(props) {
 
   function getQuestions() {
     axios.get('/api/TB_QUESTION/list', {
-      params: { adId: campaignInfo.adId, token, page: '1' }
+      params: { adId: campaignInfo.adId, token, page }
     }).then((res) => {
       const { data, countData } = res.data;
       setQuestions(data);
+      setCount(countData);
     }).catch((err) => {
       alert(err.response.message);
     });
   }
+
+  const changePage = (event, value) => {
+    setPage(value);
+  };
 
   function getDetail(value) {
     setSelected(value);
@@ -205,39 +215,55 @@ function Question(props) {
                 </Grid>
               </Grid>
             </Box>
-            <Box>
-              <TableContainer component={Paper}>
-                <Table aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
-                      {tableHeader.map(item => (
-                        <StyledTableCell key={item.text} align={item.align} width={item.width}>
-                          {item.text}
-                        </StyledTableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {questions.map(item => (
-                      <TableRow hover key={item.QUE_ID} onClick={() => getDetail(item.QUE_ID)}>
-                        <StyledTableCell align="center">
-                          {item.rownum}
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          {item.QUE_TITLE}
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          <Box color={item.QUE_STATE === '1' ? Colors.green : Colors.red}>{item.QUE_STATE === '1' ? '답변완료' : '대기중'}</Box>
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          {item.QUE_DT}
-                        </StyledTableCell>
+            {questions.length > 0 ? (
+              <Fragment>
+                <TableContainer component={Paper}>
+                  <Table aria-label="customized table">
+                    <TableHead>
+                      <TableRow>
+                        {tableHeader.map(item => (
+                          <StyledTableCell key={item.text} align={item.align} width={item.width}>
+                            {item.text}
+                          </StyledTableCell>
+                        ))}
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
+                    </TableHead>
+                    <TableBody>
+                      {questions.map(item => (
+                        <TableRow hover key={item.QUE_ID} onClick={() => getDetail(item.QUE_ID)}>
+                          <StyledTableCell align="center">
+                            {item.rownum}
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {item.QUE_TITLE}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            <Box color={item.QUE_STATE === '1' ? Colors.green : Colors.red}>{item.QUE_STATE === '1' ? '답변완료' : '대기중'}</Box>
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            {item.QUE_DT}
+                          </StyledTableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <Box py={4}>
+                  <Grid container justify="center">
+                    <Grid item>
+                      <MyPagination
+                        itemCount={count}
+                        page={page}
+                        changePage={changePage}
+                        perPage={10}
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Fragment>
+            ) : (
+              <Box textAlign="center">문의 없습니다</Box>
+            )}
           </Grid>
         </Grid>
       </Box>

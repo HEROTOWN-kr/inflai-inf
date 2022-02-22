@@ -50,7 +50,7 @@ function CampaignSelectedCard(props) {
         <Grid item xs="auto">
           <StyledImage width="90px" height="90px" src={image || noFound} onError={event => event.target.setAttribute('src', noFound)} />
         </Grid>
-        <Grid item xs>
+        <Grid item xs zeroMinWidth>
           <Box>
             <StyledText>
               {type === '1' ? (
@@ -66,7 +66,7 @@ function CampaignSelectedCard(props) {
               {` D-${calculateDates(srchEnd)}`}
             </StyledText>
             <StyledText lineHeight="1.2em" my="8px" fontWeight="bold" fontSize="16px">{name}</StyledText>
-            <StyledText lineHeight="1.2em" fontSize="13px">{shrtDisc}</StyledText>
+            <StyledText overflowHidden lineHeight="1.2em" fontSize="13px">{shrtDisc}</StyledText>
           </Box>
         </Grid>
         <Grid item xs={12} sm="auto">
