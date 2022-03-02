@@ -599,6 +599,11 @@ function CampaignDetail() {
                                   <StyledText color={adTypes['4'].color}>(기자단)&nbsp;</StyledText>
                                 </Grid>
                               ) : null}
+                              { productData.AD_CAM_TYPE === '2' ? (
+                                <Grid item>
+                                  <StyledText color={adTypes['4'].color}>[공동구매]&nbsp;</StyledText>
+                                </Grid>
+                              ) : null}
                               <Grid item>
                                 <StyledText>{`${AdvertiseTypes.mainType[productData.AD_CTG]}/${AdvertiseTypes.subType[productData.AD_CTG][productData.AD_CTG2]}`}</StyledText>
                               </Grid>
@@ -823,6 +828,13 @@ function CampaignDetail() {
                               <Grid item>
                                 <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
                                   기자단
+                                </Box>
+                              </Grid>
+                            ) : null}
+                            { productData.AD_CAM_TYPE === '2' ? (
+                              <Grid item>
+                                <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
+                                    공동구매
                                 </Box>
                               </Grid>
                             ) : null}
