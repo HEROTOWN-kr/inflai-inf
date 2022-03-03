@@ -692,6 +692,67 @@ function CampaignDetail() {
                 </Box>
               ) : null}
               <Grid container spacing={isMD ? 4 : 2} style={{ fontSize: isMD ? '16px' : '14px' }}>
+                { productData.AD_CAM_TYPE === '2' ? (
+                  <>
+                    <Grid item xs={12}>
+                      <Divider />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Grid container>
+                        <ElementLink name="provide" />
+                        <Grid item>
+                          <Box width="125px" fontWeight="bold" component="p">판매 방식</Box>
+                        </Grid>
+                        <Grid item xs={12} sm className="provide-info">
+                          {productData.AD_SELL_TYPE === '1' ? '사이트통해' : '직접판매'}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Grid container>
+                        <ElementLink name="provide" />
+                        <Grid item>
+                          <Box width="125px" fontWeight="bold" component="p">제품 가격</Box>
+                        </Grid>
+                        <Grid item xs={12} sm className="provide-info">
+                          {`${productData.AD_PROD_PRICE}원`}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Grid container>
+                        <ElementLink name="provide" />
+                        <Grid item>
+                          <Box width="125px" fontWeight="bold" component="p">수수료</Box>
+                        </Grid>
+                        <Grid item xs={12} sm className="provide-info">
+                          {`${productData.AD_PROD_DISCOUNT}원`}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Grid container>
+                        <ElementLink name="provide" />
+                        <Grid item>
+                          <Box width="125px" fontWeight="bold" component="p">판매 정보</Box>
+                        </Grid>
+                        <Grid item xs={12} sm className="provide-info">
+                          {productData.AD_PROD_INFO}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </>
+                ) : null}
+
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>

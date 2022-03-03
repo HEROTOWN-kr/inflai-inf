@@ -72,39 +72,38 @@ function CampaignAll(props) {
         </Grid>
       ) : (
         <React.Fragment>
-          {
-            campaigns.length > 0 ? (
-              <Grid container spacing={isMD ? 3 : 1}>
-                {campaigns.map((item) => {
-                  const {
-                    AD_ID, AD_TYPE, AD_CTG, AD_CTG2, AD_SRCH_END,
-                    AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT,
-                    proportion, TB_PHOTO_ADs, mainImage, AD_REPORT
-                  } = item;
+          { campaigns.length > 0 ? (
+            <Grid container spacing={isMD ? 3 : 1}>
+              {campaigns.map((item) => {
+                const {
+                  AD_ID, AD_TYPE, AD_CTG, AD_CTG2, AD_SRCH_END, AD_CAM_TYPE,
+                  AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT,
+                  proportion, TB_PHOTO_ADs, mainImage, AD_REPORT
+                } = item;
 
-                  return (
-                    <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
-                      <CampaignCard
-                        image={mainImage}
-                        type={AD_TYPE}
-                        report={AD_REPORT}
-                        srchEnd={AD_SRCH_END}
-                        name={AD_NAME}
-                        shrtDisc={AD_SHRT_DISC}
-                        participantsLength={TB_PARTICIPANTs.length}
-                        cnt={AD_INF_CNT}
-                        proportion={proportion}
-                        isMD={isMD}
-                        onClick={() => detailInfo(item.AD_ID)}
-                      />
-                    </Grid>
-                  );
-                })}
-              </Grid>
-            ) : (
-              <Box mt={4} textAlign="center">조회된 캠페인이 없습니다.</Box>
-            )
-          }
+                return (
+                  <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
+                    <CampaignCard
+                      image={mainImage}
+                      type={AD_TYPE}
+                      campaignType={AD_CAM_TYPE}
+                      report={AD_REPORT}
+                      srchEnd={AD_SRCH_END}
+                      name={AD_NAME}
+                      shrtDisc={AD_SHRT_DISC}
+                      participantsLength={TB_PARTICIPANTs.length}
+                      cnt={AD_INF_CNT}
+                      proportion={proportion}
+                      isMD={isMD}
+                      onClick={() => detailInfo(item.AD_ID)}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          ) : (
+            <Box mt={4} textAlign="center">조회된 캠페인이 없습니다.</Box>
+          ) }
         </React.Fragment>
       )}
     </React.Fragment>

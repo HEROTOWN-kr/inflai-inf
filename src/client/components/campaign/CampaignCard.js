@@ -37,7 +37,7 @@ function PeriodComponent(props) {
 
 function CampaignCard(props) {
   const {
-    image, type, report, srchEnd, name, shrtDisc,
+    image, type, report, srchEnd, name, shrtDisc, campaignType,
     participantsLength, cnt, proportion, onClick, isMD
   } = props;
 
@@ -51,6 +51,11 @@ function CampaignCard(props) {
               { report === '1' ? (
                 <Grid item>
                   <Box mr="4px" color="#0027ff" fontWeight="600">(기자단)</Box>
+                </Grid>
+              ) : null}
+              { campaignType === '2' ? (
+                <Grid item>
+                  <Box mr="4px" color="#00b605" fontWeight="600">[공동구매]</Box>
                 </Grid>
               ) : null}
               <Grid item>
