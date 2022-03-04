@@ -9,6 +9,7 @@ import Product from './pages/Product';
 import Service from './pages/Service';
 import Seller from './pages/Seller';
 import Report from './pages/Report';
+import GroupSell from './pages/GroupSell';
 
 
 function Campaign(props) {
@@ -47,7 +48,7 @@ function Campaign(props) {
         />
         <Route
           path={`${match.path}/Seller`}
-          render={renderProps => <Seller {...renderProps} />}
+          render={renderProps => <GroupSell {...renderProps} />}
         />
         <Route
           path={`${match.path}/apply/:id`}

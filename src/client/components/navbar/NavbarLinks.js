@@ -29,13 +29,14 @@ function NavbarLinks() {
       link: '/Campaign/Report'
     },
     {
+      text: '공동구매',
+      link: '/Campaign/Seller'
+    },
+    {
       text: '이용방법',
       link: '/Process'
     },
-    /* {
-      text: '셀러',
-      link: '/Campaign/Seller'
-    }, */
+
     /* {
       text: 'Activate',
       link: '/Activate/17d325b554fd95143e18be66cc172725:b1a7d695fdec720c92ceb32fbbda6da1'
