@@ -3,14 +3,14 @@ import { Box, Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import StyledImage from '../../../../containers/StyledImage';
 import StyledText from '../../../../containers/StyledText';
-import { Colors } from '../../../../lib/Сonstants';
+import { Colors, snsTypes } from '../../../../lib/Сonstants';
 import noFound from '../../../../img/notFound400_316.png';
 import StyledButton from '../../../../containers/StyledButton';
 
 function CampaignSelectedCard(props) {
   const {
     writeReview, image, type, srchEnd,
-    name, shrtDisc, onClick, review, adId
+    name, shrtDisc, onClick, review, adId, campaignType
   } = props;
 
   const history = useHistory();
@@ -48,15 +48,7 @@ function CampaignSelectedCard(props) {
         <Grid item xs zeroMinWidth>
           <Box>
             <StyledText>
-              {type === '1' ? (
-                <span style={{ color: Colors.pink, fontWeight: '600' }}>Instagram</span>
-              ) : null}
-              {type === '2' ? (
-                <span style={{ color: Colors.red, fontWeight: '600' }}>Youtube</span>
-              ) : null}
-              {type === '3' ? (
-                <span style={{ color: Colors.green, fontWeight: '600' }}>Blog</span>
-              ) : null}
+              <span style={{ color: snsTypes[type].color, fontWeight: '600' }}>{snsTypes[type].text}</span>
               {` D-${calculateDates(srchEnd)}`}
             </StyledText>
             <StyledText lineHeight="1.2em" my="8px" fontWeight="bold" fontSize="16px">{name}</StyledText>
@@ -98,12 +90,12 @@ function CampaignSelectedCard(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <StyledButton
-                    disabled
+                    disabled={campaignType !== '2'}
                     height="30px"
                     padding="0 10px"
                     background={Colors.green}
                     hoverBackground={Colors.greenHover}
-                    onClick={getQuestions}
+                    // onClick={getQuestions}
                   >
                     판매링크
                   </StyledButton>

@@ -213,3 +213,18 @@ export const AdvertiseTypes = {
 
 export const HOURS = [...Array(24).keys()];
 export const DAY_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토'];
+
+export const snsTypes = {
+  1: {
+    text: 'Instagram',
+    color: Colors.pink
+  },
+  2: {
+    text: 'Youtube',
+    color: Colors.red
+  },
+  3: {
+    text: 'Blog',
+    color: Colors.green
+  }
+};

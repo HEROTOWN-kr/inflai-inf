@@ -125,26 +125,22 @@ function SelectedCampaigns(props) {
               <Grid container spacing={isMD ? 3 : 1}>
                 {campaigns.map((item) => {
                   const {
-                    AD_ID, AD_TYPE, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC, TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs, PAR_REVIEW
+                    AD_ID, AD_TYPE, AD_SRCH_END, AD_NAME,
+                    AD_SHRT_DISC, TB_PHOTO_ADs, PAR_REVIEW, AD_CAM_TYPE
                   } = item;
                   return (
                     <Grid item xs={12} md="auto" key={AD_ID}>
                       <CampaignSelectedCard
                         adId={AD_ID}
                         type={AD_TYPE}
+                        campaignType={AD_CAM_TYPE}
                         image={TB_PHOTO_ADs[0].PHO_FILE_URL}
-                        ctg1={AD_CTG}
-                        ctg2={AD_CTG2}
                         srchEnd={AD_SRCH_END}
                         name={AD_NAME}
                         shrtDisc={AD_SHRT_DISC}
-                        participantsLength={TB_PARTICIPANTs.length}
-                        cnt={AD_INF_CNT}
-                        proportion={proportion}
                         review={PAR_REVIEW}
                         onClick={() => detailInfo(AD_ID)}
                         writeReview={() => writeReview(AD_ID, PAR_REVIEW)}
-                        isMD={isMD}
                       />
                     </Grid>
                   );
