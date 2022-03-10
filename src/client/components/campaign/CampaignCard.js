@@ -48,16 +48,6 @@ function CampaignCard(props) {
         <Grid container spacing={isMD ? 2 : 1}>
           <Grid item xs={12}>
             <Grid container>
-              { report === '1' ? (
-                <Grid item>
-                  <Box mr="4px" color="#0027ff" fontWeight="600">(기자단)</Box>
-                </Grid>
-              ) : null}
-              { campaignType === '2' ? (
-                <Grid item>
-                  <Box mr="4px" color="#00b605" fontWeight="600">[공동구매]</Box>
-                </Grid>
-              ) : null}
               <Grid item>
                 <Box mr="4px" color={snsTypes[type].color} fontWeight="600">{snsTypes[type].text}</Box>
               </Grid>
@@ -68,6 +58,12 @@ function CampaignCard(props) {
           </Grid>
           <Grid item xs={12}>
             <StyledText overflowHidden fontWeight="bold" fontSize="16px">
+              {campaignType === '2' ? (
+                <span style={{ color: '#00b605' }}>[공동구매] </span>
+              ) : null}
+              { report === '1' ? (
+                <span style={{ color: '#0027ff' }}>[기자단] </span>
+              ) : null}
               {name}
             </StyledText>
           </Grid>

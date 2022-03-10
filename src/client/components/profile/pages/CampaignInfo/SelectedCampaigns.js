@@ -12,6 +12,7 @@ import CampaignSelectedCard from './CampaignSelectedCard';
 import MyPagination from '../../../../containers/MyPagination';
 import AuthContext from '../../../../context/AuthContext';
 import ReviewInfoDialog from './ReviewInfoDialog';
+import SellUrlDialog from './SellUrlDialog';
 
 function SelectedCampaigns(props) {
   const { setTab } = props;
@@ -46,6 +47,7 @@ function SelectedCampaigns(props) {
   function toggleReviewDialog() {
     setReviewDialog(!reviewDialog);
   }
+
 
   function getCampaigns() {
     setLoading(true);
@@ -125,8 +127,8 @@ function SelectedCampaigns(props) {
               <Grid container spacing={isMD ? 3 : 1}>
                 {campaigns.map((item) => {
                   const {
-                    AD_ID, AD_TYPE, AD_SRCH_END, AD_NAME,
-                    AD_SHRT_DISC, TB_PHOTO_ADs, PAR_REVIEW, AD_CAM_TYPE
+                    AD_ID, AD_TYPE, AD_SRCH_END, AD_NAME, PAR_SELL_URL,
+                    AD_SHRT_DISC, TB_PHOTO_ADs, PAR_REVIEW, AD_CAM_TYPE, AD_REPORT
                   } = item;
                   return (
                     <Grid item xs={12} md="auto" key={AD_ID}>
@@ -134,11 +136,13 @@ function SelectedCampaigns(props) {
                         adId={AD_ID}
                         type={AD_TYPE}
                         campaignType={AD_CAM_TYPE}
+                        report={AD_REPORT}
                         image={TB_PHOTO_ADs[0].PHO_FILE_URL}
                         srchEnd={AD_SRCH_END}
                         name={AD_NAME}
                         shrtDisc={AD_SHRT_DISC}
                         review={PAR_REVIEW}
+                        sellUrl={PAR_SELL_URL}
                         onClick={() => detailInfo(AD_ID)}
                         writeReview={() => writeReview(AD_ID, PAR_REVIEW)}
                       />

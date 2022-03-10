@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useSnackbar } from 'notistack';
 import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
 import ReactFormText from '../../containers/ReactFormText';
@@ -85,11 +86,12 @@ function ApplyFormComponent(componentProps) {
 }
 
 function CampaignApply(props) {
-  const { match, history, setMessage } = props;
+  const { match, history } = props;
   const [applyData, setApplyData] = useState({});
   const [addData, setAddData] = useState({ TB_PHOTO_ADs: [], AD_TYPE: '1' });
   const [isSticky, setSticky] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const theme = useTheme();
   const { token } = useContext(AuthContext);
@@ -135,7 +137,7 @@ function CampaignApply(props) {
   });
 
   const {
-    register, handleSubmit, reset, watch, errors, setValue, control, getValues
+    register, handleSubmit, reset, errors, setValue, control
   } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(schema),
@@ -210,7 +212,7 @@ function CampaignApply(props) {
           alert(res.data.message);
           history.push(`/Campaign/detail/${match.params.id}`);
         } else {
-          setMessage({ type: 'success', open: true, text: '신청되었습니다' });
+          enqueueSnackbar('신청되었습니다', { variant: 'success' });
           history.push(`/Campaign/detail/${match.params.id}`);
         }
       }).catch((err) => {
@@ -492,7 +494,6 @@ function CampaignApply(props) {
                         <Box py={3}><StyledText overflowHidden fontSize="20px" fontWeight="bold">{addData.AD_NAME}</StyledText></Box>
                         <StyledText overflowHidden fontSize="15px">{addData.AD_SHRT_DISC}</StyledText>
                         <Box pt={2}>
-
                           { addData.AD_TYPE !== '4' ? (
                             <Box width="30%" p={1} border={`1px solid ${adTypes[addData.AD_TYPE].color}`}>
                               <StyledText textAlign="center" fontSize="13px" color={adTypes[addData.AD_TYPE].color} fontWeight="bold">{adTypes[addData.AD_TYPE].text}</StyledText>
@@ -503,23 +504,7 @@ function CampaignApply(props) {
                                 <SnsBlock item={item} />
                               ))}
                             </Grid>
-                          /* <Grid item>
-                                <Grid container spacing={1}>
-                                  { addData.AD_REPORT_TYPES.map(item => (
-                                    <SnsBlock color={Colors.pink} type={item} />
-                                  ))}
-                                </Grid>
-                              </Grid> */
                           )}
-                          {/* <Grid item xs={4}>
-                              <SnsBlock color={Colors.pink} text="Instagram" />
-                            </Grid>
-                            <Grid item xs={4}>
-                              <SnsBlock color="red" text="Youtube" />
-                            </Grid>
-                            <Grid item xs={4}>
-                              <SnsBlock color="#00cdc5" text="Blog" />
-                            </Grid> */}
                         </Box>
                       </Grid>
                       <Grid item xs={12}>

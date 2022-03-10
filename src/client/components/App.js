@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import {
-  Box, Grid, Hidden, makeStyles
+  Box, Button, Grid, Hidden, IconButton, makeStyles
 } from '@material-ui/core';
 import { matchPath, useLocation } from 'react-router-dom';
-import { Close } from '@material-ui/icons';
+import { Clear, Close } from '@material-ui/icons';
+import { SnackbarProvider } from 'notistack';
 import Main from './main/Main';
 import CustomNavBar from './navbar/Navbar';
 import Footer from './footer/Footer';
@@ -42,6 +43,9 @@ const useStyles = makeStyles({
     position: 'absolute',
     right: '8px',
     top: '14px'
+  },
+  snackbarCloseIcon: {
+    cursor: 'pointer'
   }
 });
 
@@ -74,8 +78,14 @@ function App() {
     show: false,
     url: 'https://www.inflai.com'
   });
+  const classes = useStyles();
   const isAuthenticated = !!token;
   const showFooter = window.location.pathname !== '/search_addr';
+
+  const snackbarRef = createRef();
+  const onClickDismiss = key => () => {
+    snackbarRef.current.closeSnackbar(key);
+  };
 
   function closeShowLink() {
     setMobileLink({ ...mobileLink, show: false });
@@ -118,20 +128,27 @@ function App() {
         token, login, logout, userDataUpdate, userPhoto, socialType, userName, isAuthenticated
       }}
       >
-        <div className="app-block">
-          <div className="app-header">
-            <CustomNavBar />
-          </div>
-          <div className="app-body">
-            <Main />
-          </div>
-          {showFooter ? (
-            <div className="app-footer">
-              <Footer />
+        <SnackbarProvider
+          ref={snackbarRef}
+          action={key => (
+            <Close className={classes.snackbarCloseIcon} onClick={onClickDismiss(key)} />
+          )}
+        >
+          <div className="app-block">
+            <div className="app-header">
+              <CustomNavBar />
             </div>
-          ) : null}
-          {mobileLink.show ? <MobileAppLink close={closeShowLink} mobileLink={mobileLink} /> : null}
-        </div>
+            <div className="app-body">
+              <Main />
+            </div>
+            {showFooter ? (
+              <div className="app-footer">
+                <Footer />
+              </div>
+            ) : null}
+            {mobileLink.show ? <MobileAppLink close={closeShowLink} mobileLink={mobileLink} /> : null}
+          </div>
+        </SnackbarProvider>
       </AuthContext.Provider>
     </React.Fragment>
   );

@@ -14,18 +14,6 @@ import GroupSell from './pages/GroupSell';
 
 function Campaign(props) {
   const { match } = props;
-  const [message, setMessage] = useState({
-    open: false,
-    text: '',
-    type: 'success'
-  });
-
-  const messageClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setMessage({ ...message, open: false });
-  };
 
   return (
     <div>
@@ -52,7 +40,7 @@ function Campaign(props) {
         />
         <Route
           path={`${match.path}/apply/:id`}
-          render={renderProps => <CampaignApply {...renderProps} setMessage={setMessage} />}
+          render={renderProps => <CampaignApply {...renderProps} />}
         />
         <Route
           path={`${match.path}/detail/:id`}
@@ -66,16 +54,6 @@ function Campaign(props) {
           )}
         />
       </Switch>
-      <Snackbar
-        open={message.open}
-        autoHideDuration={4000}
-        onClose={messageClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert onClose={messageClose} severity={message.type}>
-          {message.text}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

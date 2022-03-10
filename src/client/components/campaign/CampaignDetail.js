@@ -16,6 +16,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import * as Scroll from 'react-scroll';
 import { Skeleton } from '@material-ui/lab';
 import MetaTags from 'react-meta-tags';
+import { useSnackbar } from 'notistack';
 import { Colors, AdvertiseTypes } from '../../lib/Сonstants';
 import IconYoutube from '../../img/icon_youtube_url.png';
 import IconInsta from '../../img/icon_instagram_url.png';
@@ -316,8 +317,9 @@ function CampaignDetail() {
   const [shareDialog, setShareDialog] = useState(false);
   const [liked, setLiked] = useState(false);
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
-  const { token, userRole } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const theme = useTheme();
+  const { enqueueSnackbar } = useSnackbar();
   const Scroller = Scroll.scroller;
   const ElementLink = Scroll.Element;
 
@@ -380,22 +382,18 @@ function CampaignDetail() {
   }
 
   function sendRequest() {
-    if (token) {
-      axios.get('/api/TB_PARTICIPANT/checkParticipant', {
-        params: {
-          adId,
-          token
-        }
-      }).then((res) => {
-        if (res.status === 201) {
-          alert(res.data.data.message);
-        } else {
-          history.push(`/Campaign/apply/${adId}`);
-        }
-      }).catch(error => alert(error.response.data.message));
-    } else {
+    if (!token) {
       history.push('/Login');
     }
+    axios.get('/api/TB_PARTICIPANT/checkParticipant', {
+      params: { adId, token }
+    }).then((res) => {
+      if (res.status === 201) {
+        enqueueSnackbar(res.data.data.message, { variant: 'success' });
+      } else {
+        history.push(`/Campaign/apply/${adId}`);
+      }
+    }).catch(error => alert(error.response.data.message));
   }
 
   function checkFavorites() {
