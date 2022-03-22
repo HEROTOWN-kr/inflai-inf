@@ -127,7 +127,7 @@ function SelectedCampaigns(props) {
               <Grid container spacing={isMD ? 3 : 1}>
                 {campaigns.map((item) => {
                   const {
-                    AD_ID, AD_TYPE, AD_SRCH_END, AD_NAME, PAR_SELL_URL,
+                    AD_ID, AD_TYPE, AD_SRCH_END, AD_NAME, PAR_SELL_URL, SELL_LINK,
                     AD_SHRT_DISC, TB_PHOTO_ADs, PAR_REVIEW, AD_CAM_TYPE, AD_REPORT
                   } = item;
                   return (
@@ -142,7 +142,7 @@ function SelectedCampaigns(props) {
                         name={AD_NAME}
                         shrtDisc={AD_SHRT_DISC}
                         review={PAR_REVIEW}
-                        sellUrl={PAR_SELL_URL}
+                        sellUrl={SELL_LINK}
                         onClick={() => detailInfo(AD_ID)}
                         writeReview={() => writeReview(AD_ID, PAR_REVIEW)}
                       />
