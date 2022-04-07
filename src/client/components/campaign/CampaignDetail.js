@@ -188,7 +188,7 @@ function TabComponent(props) {
 
   return (
     <Box
-      padding="13px 20px"
+      padding={{ xs: '13px 5px', md: '13px 20px' }}
       borderBottom={styles.border}
       css={{ cursor: 'pointer' }}
       onClick={() => setTab(tabNumber)}
@@ -635,6 +635,46 @@ function CampaignDetail() {
                           )}
                         </Grid>
                       </Grid>
+
+                      { isMD ? null : (
+                        <>
+                          <Grid item xs={12}>
+                            <Divider />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Grid container justify="space-between">
+                              <Grid item><StyledText fontWeight="bold">리뷰어신청기간</StyledText></Grid>
+                              <Grid item>
+                                <StyledText>
+                                  {`${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}
+                                </StyledText>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Grid container justify="space-between">
+                              <Grid item><StyledText fontWeight="bold">선정자 발표</StyledText></Grid>
+                              <Grid item>
+                                <StyledText>
+                                  {`${productData.AD_SEL_START} ~ ${productData.AD_SEL_END}`}
+                                </StyledText>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Grid container justify="space-between">
+                              <Grid item><StyledText fontWeight="bold">리뷰 등록기간</StyledText></Grid>
+                              <Grid item>
+                                <StyledText>
+                                  {`${addDays(productData.AD_SEL_END, 1)} ~ ${addDays(productData.AD_SEL_END, 8)}`}
+                                </StyledText>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                        </>
+                      )}
+
+
                     </Grid>
                   </Box>
                 </Grid>
@@ -642,13 +682,13 @@ function CampaignDetail() {
               <Box mt={isMD ? 10 : 2} borderBottom={`1px solid ${Colors.grey7}`}>
                 <Grid container>
                   <ElementLink name="detail" />
-                  <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                  <Grid item xs={4} md="auto">
                     <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="상세정보" tabNumber={1} />
                   </Grid>
-                  <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                  <Grid item xs={4} md="auto">
                     <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
                   </Grid>
-                  <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                  <Grid item xs={4} md="auto">
                     <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={3} />
                   </Grid>
                 </Grid>
