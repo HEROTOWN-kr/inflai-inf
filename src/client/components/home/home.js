@@ -22,12 +22,15 @@ function Home(props) {
 
   return (
     <Box>
-      <HomeVideoTitle />
+
+
+      {/* <HomeVideoTitle /> */}
       {/* <ElementLink name="target" /> */}
-      <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 8 }} maxWidth="1920px" margin="0 auto">
+      <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 6 }} maxWidth="1920px" margin="0 auto">
+        <HomeBanners />
         <HomeCampaigns {...props} isMD={isMD} />
         <HomeSelectCampaigns {...props} isMD={isMD} />
-        <HomeBanners />
+
         {/* <HomePartners /> */}
       </Box>
     </Box>
