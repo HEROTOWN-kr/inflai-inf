@@ -12,6 +12,7 @@ import HomeBanners from './sections/HomeBanners';
 import HomePartners from './sections/HomePartners';
 import HomeVideoTitle from './sections/HomeVideoTitle';
 import HomeSelectCampaigns from './sections/HomeSelectCampaigns';
+import HomeIcons from './sections/HomeIcons';
 
 const ElementLink = Scroll.Element;
 
@@ -28,9 +29,9 @@ function Home(props) {
       {/* <ElementLink name="target" /> */}
       <Box px={{ xs: 2, md: 6 }} py={{ xs: 4, md: 6 }} maxWidth="1920px" margin="0 auto">
         <HomeBanners />
+        <HomeIcons />
         <HomeCampaigns {...props} isMD={isMD} />
         <HomeSelectCampaigns {...props} isMD={isMD} />
-
         {/* <HomePartners /> */}
       </Box>
     </Box>

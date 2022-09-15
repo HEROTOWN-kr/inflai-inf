@@ -151,7 +151,7 @@ function HomeBanners() {
   }
 
   return (
-    <Box padding="0 0 50px" margin="0 -8px">
+    <Box margin="0 -8px">
       <Slider {...settings}>
         {banners.map(item => (
           <Box key={item.id} width="100%">
@@ -162,7 +162,6 @@ function HomeBanners() {
         ))}
       </Slider>
     </Box>
-
   );
 }
 

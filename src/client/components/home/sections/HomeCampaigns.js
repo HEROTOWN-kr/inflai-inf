@@ -54,7 +54,7 @@ function HomeCampaigns(props) {
         <span style={{ color: Colors.pink }}>최근</span>
         {' 캠페인'}
       </StyledText>
-      <Box mt={{ xs: 2, md: 5 }}>
+      <Box mt={{ xs: 2, md: '20px' }}>
         <CampaignAll {...props} campaigns={campaigns} loading={loading} />
         {/* <CampaignAllNew
           {...props}
