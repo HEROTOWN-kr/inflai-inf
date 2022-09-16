@@ -27,15 +27,17 @@ function HomeSelectCampaigns(props) {
   }, []);
 
   return (
-    <React.Fragment>
-      <StyledText mt={6} fontSize="25px">
-        <span style={{ color: Colors.pink }}>완료된</span>
-        {' 캠페인'}
-      </StyledText>
-      <Box mt={{ xs: 2, md: 5 }}>
-        <CampaignAll {...props} campaigns={campaigns} loading={loading} />
-      </Box>
-    </React.Fragment>
+    campaigns.length > 0 ? (
+      <React.Fragment>
+        <StyledText mt={6} fontSize="25px">
+          <span style={{ color: Colors.pink }}>완료된</span>
+          {' 캠페인'}
+        </StyledText>
+        <Box mt={{ xs: 2, md: 5 }}>
+          <CampaignAll {...props} campaigns={campaigns} loading={loading} />
+        </Box>
+      </React.Fragment>
+    ) : null
   );
 }
 

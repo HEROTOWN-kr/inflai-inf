@@ -20,6 +20,7 @@ import Privacy from '../footer/Privacy';
 import YoutubeTest from '../login/YoutubeTest';
 import AddressSearch from '../profile/AddressSearch';
 import Question from '../question/Question';
+import Brand from '../brand/Brand';
 
 
 function Main() {
@@ -74,6 +75,10 @@ function Main() {
       <Route
         path="/Campaign"
         render={renderProps => <Campaign {...renderProps} />}
+      />
+      <Route
+        path="/Brand"
+        render={renderProps => <Brand {...renderProps} />}
       />
       <Route
         path="/Question"

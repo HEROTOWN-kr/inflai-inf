@@ -13,6 +13,7 @@ import HomePartners from './sections/HomePartners';
 import HomeVideoTitle from './sections/HomeVideoTitle';
 import HomeSelectCampaigns from './sections/HomeSelectCampaigns';
 import HomeIcons from './sections/HomeIcons';
+import HomeBrands from './sections/HomeBrands';
 
 const ElementLink = Scroll.Element;
 
@@ -32,6 +33,7 @@ function Home(props) {
         <HomeIcons />
         <HomeCampaigns {...props} isMD={isMD} />
         <HomeSelectCampaigns {...props} isMD={isMD} />
+        <HomeBrands />
         {/* <HomePartners /> */}
       </Box>
     </Box>

@@ -53,7 +53,7 @@ function HomeIcons(props) {
     <Box m="0 auto" my="80px" maxWidth={1000}>
       <Grid container justify="space-between">
         { icons.map(item => (
-          <Grid item>
+          <Grid item key={item.text}>
             <Box classes={{ root: classes.iconBox }} onClick={() => history.push(item.link)}>
               <StyledImage cursor="pointer" height="50px" src={item.icon} />
             </Box>
