@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
+
+const testImage = 'https://inflai-aws-bucket.s3.ap-northeast-2.amazonaws.com/campaign/483/j1pj4vbykz81q4te_820_648.jpg';
 
 const useStyles = makeStyles(theme => ({
   banner: {
@@ -10,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
     backgroundPosition: '50% 50%',
     backgroundAttachment: 'fixed',
-    backgroundImage: 'linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.85)), url(https://inflai-aws-bucket.s3.ap-northeast-2.amazonaws.com/campaign/483/j1pj4vbykz81q4te_820_648.jpg)',
+    backgroundImage: `linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.85)), url(${testImage})`,
     display: 'flex',
     alignItems: 'center'
   },
@@ -45,6 +47,21 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '30px',
     letterSpacing: '-.4px',
     wordBreak: 'keep-all',
+  },
+  card: {
+    border: '1px solid rgb(234, 234, 234)',
+    cursor: 'pointer',
+    overflow: 'hidden',
+    borderRadius: '10px',
+  },
+  cardTitle: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    marginTop: '6px',
+    fontSize: '17px',
+    fontWeight: '600',
+    color: '#222'
   }
 }));
 
@@ -60,10 +77,29 @@ function Brand(props) {
         </Box>
       </Box>
       <Box className={classes.imageHolder}>
-        <img className={classes.mainImage} src="https://inflai-aws-bucket.s3.ap-northeast-2.amazonaws.com/campaign/483/j1pj4vbykz81q4te_820_648.jpg" alt="noImage" />
+        <img className={classes.mainImage} src={testImage} alt="noImage" />
       </Box>
-      <Box mt="120px" component="h2">
-        포크빌의 캠페인
+      <Box mt="130px" mb="60px" px={8}>
+        <Box fontSize="26px" color="#222" mb="20px">포크빌의 캠페인</Box>
+        <Grid container spacing={2}>
+          {Array(6).fill('').map(item => (
+            <Grid item xs={2}>
+              <Box className={classes.card}>
+                <img src={testImage} alt="noImage" />
+                <Box p={3}>
+                  <Box display="flex">
+                    <Box fontWeight={600} marginRight="4px" color="#eb128c">Instagram</Box>
+                    <Box>D-3</Box>
+                  </Box>
+                  <Box className={classes.cardTitle}>포크빌 왕갈비 2팩 인플루언서 모집</Box>
+                  <Box mt="18px" fontSize="12px">포크빌 왕갈비 2팩 인플루언서 모집 </Box>
+                </Box>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+
+
       </Box>
 
 
