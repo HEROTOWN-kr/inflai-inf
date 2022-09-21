@@ -82,19 +82,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function DayCounter(props) {
-  const { date } = props;
+function DaysCounter(props) {
+  const { searchEndDate } = props;
 
-  const daysDiff = moment().diff(date, 'days');
+  const today = moment().format('YYYY-MM-DD');
+  const daysDiff = moment(today).diff(searchEndDate, 'days');
   const isPassed = daysDiff > 0;
 
   if (isPassed) {
     return (
-      <Box>종료됨</Box>
+      <Box fontWeight="500" color="#6d52ff">종료됨</Box>
     );
   }
 
-  return 'D-3';
+  const remainedDays = Math.abs(daysDiff);
+  return <Box>{remainedDays}</Box>;
 }
 
 function Brand(props) {
@@ -144,7 +146,7 @@ function Brand(props) {
                 <Box p={3}>
                   <Box display="flex">
                     <Box fontWeight={600} marginRight="4px" color={snsTypes[item.AD_TYPE].color}>{snsTypes[item.AD_TYPE].text}</Box>
-                    <Box>{getRemainDays(item.AD_SRCH_END)}</Box>
+                    <DaysCounter searchEndDate={item.AD_SRCH_END} />
                   </Box>
                   <Box className={classes.cardTitle}>{item.AD_NAME}</Box>
                   <Box className={classes.cardDisc}>{item.AD_SHRT_DISC}</Box>
