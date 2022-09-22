@@ -136,7 +136,7 @@ function HomeBanners() {
       {
         breakpoint: 960,
         settings: {
-          slidesToShow: 1, slidesToScroll: 1, arrows: false, dots: true
+          slidesToShow: 1, slidesToScroll: 1, arrows: false, dots: false
         }
       }
     ]

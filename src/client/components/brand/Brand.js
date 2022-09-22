@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Grid, makeStyles } from '@material-ui/core';
+import {
+  Box, Grid, makeStyles, useMediaQuery, useTheme
+} from '@material-ui/core';
 import axios from 'axios';
 import moment from 'moment';
+import { useHistory, useParams } from 'react-router-dom';
 import { Colors } from '../../lib/Сonstants';
 
 const defaultImage = 'https://inflai-aws-bucket.s3.ap-northeast-2.amazonaws.com/campaign/483/j1pj4vbykz81q4te_820_648.jpg';
@@ -24,7 +27,11 @@ const useStyles = makeStyles(theme => ({
     backgroundAttachment: 'fixed',
     backgroundImage: `${bgStyle}, url(${defaultImage})`,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+
+    [theme.breakpoints.down('md')]: {
+      height: '210px',
+    }
   },
   mainImage: {
     objectFit: 'cover',
@@ -50,6 +57,10 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '72px',
     letterSpacing: '-.4px',
     marginBottom: '16px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '38px',
+      textAlign: 'center'
+    }
   },
   title: {
     fontWeight: 400,
@@ -57,6 +68,9 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '30px',
     letterSpacing: '-.4px',
     wordBreak: 'keep-all',
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center'
+    }
   },
   card: {
     border: '1px solid rgb(234, 234, 234)',
@@ -107,10 +121,17 @@ function Brand(props) {
   const [loading, setLoading] = useState(false);
 
   const classes = useStyles();
+  const history = useHistory();
+  const routeParams = useParams();
+  const { id } = routeParams;
+
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
+
 
   function getCampaigns() {
     setLoading(true);
-    const params = { BRD_ID: 1 };
+    const params = { BRD_ID: id };
 
     axios.get('/api/TB_BRAND/getCampaigns', { params }).then((res) => {
       const { data } = res.data;
@@ -133,17 +154,19 @@ function Brand(props) {
           <Box className={classes.title}>{brandInfo.BRD_TITLE}</Box>
         </Box>
       </Box>
-      <Box className={classes.imageHolder}>
-        <img className={classes.mainImage} src={brandInfo.BRD_IMG} alt="noImage" />
-      </Box>
-      <Box mt="130px" mb="60px" px={8}>
+      {isMD ? (
+        <Box className={classes.imageHolder}>
+          <img className={classes.mainImage} src={brandInfo.BRD_IMG} alt="noImage" />
+        </Box>
+      ) : null}
+      <Box mt={{ xs: '30px', md: '130px' }} mb="60px" px={{ xs: 2, md: 8 }}>
         <Box fontSize="26px" color="#222" mb="20px">{`${brandInfo.BRD_NAME}의 캠페인`}</Box>
-        <Grid container spacing={2}>
+        <Grid container spacing={isMD ? 2 : 1}>
           {campaigns.map(item => (
-            <Grid item xs={2} key={item.AD_ID}>
-              <Box className={classes.card}>
+            <Grid item xs={6} md={2} key={item.AD_ID}>
+              <Box className={classes.card} onClick={() => history.push(`/Campaign/detail/${item.AD_ID}`)}>
                 <img src={item.AD_MAIN_IMG} alt="noImage" />
-                <Box p={3}>
+                <Box p={{ xs: '12px', md: 3 }}>
                   <Box display="flex">
                     <Box fontWeight={600} marginRight="4px" color={snsTypes[item.AD_TYPE].color}>{snsTypes[item.AD_TYPE].text}</Box>
                     <DaysCounter searchEndDate={item.AD_SRCH_END} />

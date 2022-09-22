@@ -77,7 +77,7 @@ function Main() {
         render={renderProps => <Campaign {...renderProps} />}
       />
       <Route
-        path="/Brand"
+        path="/Brand/:id"
         render={renderProps => <Brand {...renderProps} />}
       />
       <Route

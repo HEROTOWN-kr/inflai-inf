@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, Grid } from '@material-ui/core';
+import {
+  Box, Grid, useMediaQuery, useTheme
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import StyledImage from '../../../containers/StyledImage';
@@ -11,7 +13,7 @@ import Icon5 from '../../../img/icons/home/home_icon_5.png';
 import Icon6 from '../../../img/icons/home/home_icon_6.png';
 import Icon7 from '../../../img/icons/home/home_icon_7.png';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   iconBox: {
     width: '120px',
     height: '120px',
@@ -24,7 +26,12 @@ const useStyles = makeStyles({
 
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      height: '80px'
+    }
   },
   iconText: {
     fontSize: '15px',
@@ -34,7 +41,7 @@ const useStyles = makeStyles({
     marginTop: '10px',
     textAlign: 'center'
   }
-});
+}));
 
 const icons = [
   { icon: Icon4, text: '맛집', link: '/Campaign/Area/Food' },
@@ -49,13 +56,16 @@ function HomeIcons(props) {
   const classes = useStyles();
   const history = useHistory();
 
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
+
   return (
-    <Box m="0 auto" my="80px" maxWidth={1000}>
-      <Grid container justify="space-between">
+    <Box m="0 auto" my={{ xs: '50px', md: '80px' }} maxWidth={1000}>
+      <Grid container justify={isMD ? 'space-between' : 'center'} spacing={isMD ? 0 : 2}>
         { icons.map(item => (
-          <Grid item key={item.text}>
+          <Grid item xs={4} md="auto" key={item.text}>
             <Box classes={{ root: classes.iconBox }} onClick={() => history.push(item.link)}>
-              <StyledImage cursor="pointer" height="50px" src={item.icon} />
+              <StyledImage cursor="pointer" height={isMD ? '50px' : '35px'} src={item.icon} />
             </Box>
             <Box classes={{ root: classes.iconText }}>{item.text}</Box>
           </Grid>
