@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
 import { Colors } from '../../lib/Сonstants';
 import StyledText from '../../containers/StyledText';
 import StyledImage from '../../containers/StyledImage';
@@ -7,9 +7,23 @@ import defaultAccountImage from '../../img/default_account_image.png';
 import WhiteBlock from '../../containers/WhiteBlock';
 import AuthContext from '../../context/AuthContext';
 
+const useStyles = makeStyles(() => ({
+  checkButton: {
+    margin: '16px auto',
+    backgroundColor: '#d4eefc',
+    textAlign: 'center',
+    width: '100px',
+    borderRadius: '10px',
+    color: '#237af8',
+    padding: '7px',
+    cursor: 'pointer'
+  }
+}));
+
 function ProfileMenu(props) {
   const { history, match } = props;
   const { userName, userPhoto, socialType } = useContext(AuthContext);
+  const classes = useStyles();
 
   const links = [
     { text: '내정보 관리', link: '/UserInfo' },
@@ -48,8 +62,8 @@ function ProfileMenu(props) {
                 </Grid>
               </Grid>
             </Box>
-            <Box p={2}>
-                  받은쪽지
+            <Box className={classes.checkButton}>
+                  출석체크
             </Box>
           </WhiteBlock>
         </Grid>
