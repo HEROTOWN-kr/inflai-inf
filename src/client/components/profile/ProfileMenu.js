@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Grid, makeStyles } from '@material-ui/core';
+import axios from 'axios';
 import { Colors } from '../../lib/Сonstants';
 import StyledText from '../../containers/StyledText';
 import StyledImage from '../../containers/StyledImage';
@@ -21,8 +22,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 function ProfileMenu(props) {
+  const [checked, setChecked] = useState(false);
+
   const { history, match } = props;
-  const { userName, userPhoto, socialType } = useContext(AuthContext);
+  const {
+    userName, userPhoto, socialType, token
+  } = useContext(AuthContext);
   const classes = useStyles();
 
   const links = [
@@ -32,6 +37,22 @@ function ProfileMenu(props) {
     { text: '관심 캠페인', link: '/Favorite' },
     // { text: '랭킹', link: '/Rank' },
   ];
+
+  function getCheck() {
+    axios.post('/api/TB_CHECK/getCheck', { token }).then((res) => {
+
+    }).catch((err) => {
+      alert(err.response.data.message);
+    });
+  }
+
+  function handleCheck() {
+    axios.post('/api/TB_CHECK/check', { token }).then((res) => {
+      setChecked(true);
+    }).catch((err) => {
+      alert(err.response.data.message);
+    });
+  }
 
   return (
     <Box width={250}>
@@ -62,9 +83,16 @@ function ProfileMenu(props) {
                 </Grid>
               </Grid>
             </Box>
-            <Box className={classes.checkButton}>
+            { checked ? (
+              <Box className={classes.checkButton}>
+                  체크상황
+              </Box>
+            ) : (
+              <Box className={classes.checkButton} onClick={handleCheck}>
                   출석체크
-            </Box>
+              </Box>
+            )}
+
           </WhiteBlock>
         </Grid>
         <Grid item xs={12}>
