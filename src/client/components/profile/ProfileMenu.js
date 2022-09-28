@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Grid, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import { Colors } from '../../lib/Сonstants';
@@ -53,6 +53,10 @@ function ProfileMenu(props) {
       alert(err.response.data.message);
     });
   }
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <Box width={250}>
