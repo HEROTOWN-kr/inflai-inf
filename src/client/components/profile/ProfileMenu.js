@@ -39,8 +39,10 @@ function ProfileMenu(props) {
   ];
 
   function getCheck() {
-    axios.post('/api/TB_CHECK/getCheck', { token }).then((res) => {
-
+    axios.get('/api/TB_CHECK/getCheck', { params: { token } }).then((res) => {
+      if (res.status === 201) {
+        setChecked(true);
+      }
     }).catch((err) => {
       alert(err.response.data.message);
     });
@@ -55,7 +57,7 @@ function ProfileMenu(props) {
   }
 
   useEffect(() => {
-
+    getCheck();
   }, []);
 
   return (

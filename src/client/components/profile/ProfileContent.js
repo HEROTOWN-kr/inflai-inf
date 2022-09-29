@@ -7,6 +7,7 @@ import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 import MyPage from './MyPage';
 import Favorite from './pages/Favorite/Favorite';
 import Sns from './pages/SNS/Sns';
+import CheckInfo from './pages/CheckInfo/CheckInfo';
 
 function ProfileContent(props) {
   const {
@@ -35,6 +36,10 @@ function ProfileContent(props) {
         <Route
           path={`${match.path}/Sns`}
           render={renderProps => <Sns {...props} />}
+        />
+        <Route
+          path={`${match.path}/CheckInfo`}
+          render={renderProps => <CheckInfo {...props} />}
         />
         <Route
           exact
