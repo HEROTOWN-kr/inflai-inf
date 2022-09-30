@@ -90,7 +90,7 @@ function ProfileMenu(props) {
               </Grid>
             </Box>
             { checked ? (
-              <Box className={classes.checkButton}>
+              <Box className={classes.checkButton} onClick={() => history.push('/Profile/CheckInfo')}>
                   체크상황
               </Box>
             ) : (
