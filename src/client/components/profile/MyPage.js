@@ -17,8 +17,8 @@ const mainLinks = [
   },
   {
     icon: 'icon: mail; ratio: 1.2',
-    text: '받은메시지',
-    link: '/'
+    text: '출석체크',
+    link: '/Profile/CheckInfo'
   },
   {
     icon: 'icon: heart; ratio: 1.2',
