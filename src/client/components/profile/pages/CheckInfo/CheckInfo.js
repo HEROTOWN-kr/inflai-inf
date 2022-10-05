@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, Divider, Grid, Hidden, makeStyles
+  Box, Button, Divider, Grid, Hidden, makeStyles
 } from '@material-ui/core';
 import axios from 'axios';
 import PageTitle from '../../PageTitle';
@@ -46,7 +46,10 @@ function CheckInfo(props) {
     INF_RATING: 1,
     futureRating: 1,
     currentMonth: '01',
-    nextMonth: '02'
+    nextMonth: '02',
+    participateMin: 0,
+    checkMin: 0,
+    checked: false,
   });
 
   const { isMD } = props;
@@ -75,7 +78,7 @@ function CheckInfo(props) {
           </StyledText>
         </PageTitle>
       </Hidden>
-      <Box py={isMD ? 4 : 1} px={isMD ? 6 : 2}>
+      <Box py={isMD ? 4 : 2} px={isMD ? 6 : 0}>
         <Box maxWidth={660} m="0 auto" px={2}>
           <Box mb="40px" fontSize="18px" color={Colors.dark} fontWeight="300" textAlign="center">
             <Box>
@@ -92,24 +95,32 @@ function CheckInfo(props) {
               </span>
               입니다.
             </Box>
+            <Box mt={2}>
+              { stats.checked ? (
+                <Button variant="outlined" disabled>체크완료</Button>
+              ) : (
+                <Button variant="outlined" color="primary">출석체크</Button>
+              )}
+
+            </Box>
           </Box>
           <Box className={classes.stats}>
             <Grid container>
               <Grid item xs={6}>
-                <Box borderRight="1px solid #ddd" px="25px" py={1} display="flex" justifyContent="space-between">
+                <Box borderRight="1px solid #ddd" px={{ xs: '10px', md: '25px' }} py={1} display="flex" justifyContent="space-between">
                   <Box>{`${stats.currentMonth} 월 신청횟수`}</Box>
                   <Box>
                     <b style={{ color: Colors.pink3 }}>{stats.participateCount}</b>
-                    {' / 10'}
+                    {` / ${stats.participateMin}`}
                   </Box>
                 </Box>
               </Grid>
               <Grid item xs={6}>
-                <Box px="25px" py={1} display="flex" justifyContent="space-between">
+                <Box px={{ xs: '10px', md: '25px' }} py={1} display="flex" justifyContent="space-between">
                   <Box>{`${stats.currentMonth} 월 커뮤니티 출석`}</Box>
                   <Box>
                     <b style={{ color: Colors.pink3 }}>{stats.checkCount}</b>
-                    {' / 10'}
+                    {` / ${stats.checkMin}`}
                   </Box>
                 </Box>
               </Grid>

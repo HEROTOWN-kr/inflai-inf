@@ -1,11 +1,20 @@
 import React, { useContext } from 'react';
-import { Box, Grid } from '@material-ui/core';
+import {
+  Box, Button, Grid, makeStyles
+} from '@material-ui/core';
 import StyledImage from '../../containers/StyledImage';
 import defaultAccountImage from '../../img/default_account_image.png';
 import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
 import myPageBg from '../../img/myPageBg.jpg';
 import AuthContext from '../../context/AuthContext';
+
+const useStyles = makeStyles(() => ({
+  outlinedPrimary: {
+    borderColor: '#fff',
+    color: '#fff'
+  }
+}));
 
 const arrowIcon = 'icon: chevron-right; ratio: 1';
 
@@ -52,6 +61,8 @@ function MyPage(props) {
   const { logout } = useContext(AuthContext);
   const { Kakao, gapi, FB } = window;
 
+  const classes = useStyles();
+
   function clickLogout() {
     gapi.load('auth2', () => {
       const auth2 = gapi.auth2.getAuthInstance({
@@ -91,7 +102,8 @@ function MyPage(props) {
           </StyledText>
         </Box>
         <Box mt={6}>
-          <Grid container>
+          <Button onClick={() => history.push('/Profile/CheckInfo')} variant="outlined" color="primary" classes={{ outlinedPrimary: classes.outlinedPrimary }}>출석체크</Button>
+          {/* <Grid container>
             {mainLinks.map((item, index) => (
               <Grid key={item.text} item xs={4}>
                 <Box
@@ -105,7 +117,7 @@ function MyPage(props) {
                 </Box>
               </Grid>
             ))}
-          </Grid>
+          </Grid> */}
         </Box>
       </Box>
       <Box borderTop={`1px solid ${Colors.grey8}`} borderBottom={`1px solid ${Colors.grey8}`} css={{ background: '#fff' }}>
