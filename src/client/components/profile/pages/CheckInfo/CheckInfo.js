@@ -65,6 +65,14 @@ function CheckInfo(props) {
     });
   }
 
+  function check() {
+    axios.post('/api/TB_CHECK/check', { token }).then((res) => {
+      setStats({ ...stats, checked: true });
+    }).catch((err) => {
+      alert(err.response.data.message);
+    });
+  }
+
   useEffect(() => {
     if (token) getStats();
   }, [token]);
@@ -99,7 +107,7 @@ function CheckInfo(props) {
               { stats.checked ? (
                 <Button variant="outlined" disabled>체크완료</Button>
               ) : (
-                <Button variant="outlined" color="primary">출석체크</Button>
+                <Button variant="outlined" color="primary" onClick={check}>출석체크</Button>
               )}
 
             </Box>
