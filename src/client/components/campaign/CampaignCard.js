@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { SupervisorAccount } from '@material-ui/icons';
+import moment from 'moment';
 import StyledImage from '../../containers/StyledImage';
 import StyledText from '../../containers/StyledText';
 import { AdvertiseTypes, Colors } from '../../lib/Сonstants';
@@ -33,6 +34,12 @@ function PeriodComponent(props) {
   }
   const daysLag = Math.ceil(Math.abs(lastDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
   return ` D-${daysLag}`;
+}
+
+function isPassed(date) {
+  const today = moment().format('YYYY-MM-DD');
+  const daysDiff = moment(today).diff(date, 'days');
+  return daysDiff > 0;
 }
 
 function CampaignCard(props) {
@@ -72,35 +79,39 @@ function CampaignCard(props) {
               {shrtDisc}
             </StyledText>
           </Grid>
-          <Grid item xs={12}>
-            <Box pt={isMD ? 1 : 0}>
-              <Grid container alignItems="center" justify="space-between">
-                <Grid item>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <StyledSvg
-                      component={SupervisorAccount}
-                      color={Colors.grey5}
-                      fontSize="20px"
-                    />
-                    <StyledText overflowHidden fontSize="13px" color={Colors.grey5}>
-                      <span style={{ color: Colors.pink }}>{participantsLength}</span>
-                      {`/${cnt}명`}
-                    </StyledText>
-                  </div>
-                </Grid>
-                <Grid item>
-                  <StyledText overflowHidden fontSize="13px" color={Colors.grey5}>
-                    {`${proportion}%`}
-                  </StyledText>
-                </Grid>
+          { isPassed(srchEnd) ? null : (
+            <>
+              <Grid item xs={12}>
+                <Box pt={isMD ? 1 : 0}>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <StyledSvg
+                          component={SupervisorAccount}
+                          color={Colors.grey5}
+                          fontSize="20px"
+                        />
+                        <StyledText overflowHidden fontSize="13px" color={Colors.grey5}>
+                          <span style={{ color: Colors.pink }}>{participantsLength}</span>
+                          {`/${cnt}명`}
+                        </StyledText>
+                      </div>
+                    </Grid>
+                    <Grid item>
+                      <StyledText overflowHidden fontSize="13px" color={Colors.grey5}>
+                        {`${proportion}%`}
+                      </StyledText>
+                    </Grid>
+                  </Grid>
+                </Box>
               </Grid>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Box height="5px" borderRadius="50px" overflow="hidden" css={{ background: Colors.grey6 }}>
-              <Box height="4px" width={`${proportion}%`} css={{ background: Colors.pink2 }} />
-            </Box>
-          </Grid>
+              <Grid item xs={12}>
+                <Box height="5px" borderRadius="50px" overflow="hidden" css={{ background: Colors.grey6 }}>
+                  <Box height="4px" width={`${proportion}%`} css={{ background: Colors.pink2 }} />
+                </Box>
+              </Grid>
+            </>
+          )}
         </Grid>
       </Box>
     </Box>
