@@ -6,12 +6,7 @@ import axios from 'axios';
 import PageTitle from '../../PageTitle';
 import StyledText from '../../../../containers/StyledText';
 import WhiteBlock from '../../../../containers/WhiteBlock';
-import { Colors } from '../../../../lib/Сonstants';
-import ratingNew from '../../../../img/icons/clover-icon.png';
-import ratingBronze from '../../../../img/icons/medal-bronze.png';
-import ratingSilver from '../../../../img/icons/medal-silver.png';
-import ratingGold from '../../../../img/icons/medal-gold.png';
-import ratingPlatinum from '../../../../img/icons/medal-platinum.png';
+import { Colors, ratings } from '../../../../lib/Сonstants';
 import AuthContext from '../../../../context/AuthContext';
 
 const useStyles = makeStyles({
@@ -29,14 +24,6 @@ const useStyles = makeStyles({
     lineHeight: '22px'
   }
 });
-
-const ratings = {
-  1: { text: 'NEW', icon: ratingNew },
-  2: { text: 'BRONZE', icon: ratingBronze },
-  3: { text: 'SILVER', icon: ratingSilver },
-  4: { text: 'GOLD', icon: ratingGold },
-  5: { text: 'PLATINUM', icon: ratingPlatinum },
-};
 
 function CheckInfo(props) {
   const [stats, setStats] = useState({

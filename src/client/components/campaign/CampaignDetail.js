@@ -17,10 +17,15 @@ import * as Scroll from 'react-scroll';
 import { Skeleton } from '@material-ui/lab';
 import MetaTags from 'react-meta-tags';
 import { useSnackbar } from 'notistack';
-import { Colors, AdvertiseTypes } from '../../lib/Сonstants';
+import { Colors, AdvertiseTypes, ratings } from '../../lib/Сonstants';
 import IconYoutube from '../../img/icon_youtube_url.png';
 import IconInsta from '../../img/icon_instagram_url.png';
 import IconBlog from '../../img/icon_blog_url.png';
+import ratingNew from '../../img/icons/clover-icon.png';
+import ratingBronze from '../../img/icons/medal-bronze.png';
+import ratingSilver from '../../img/icons/medal-silver.png';
+import ratingGold from '../../img/icons/medal-gold.png';
+import ratingPlatinum from '../../img/icons/medal-platinum.png';
 import StyledText from '../../containers/StyledText';
 import StyledImage from '../../containers/StyledImage';
 import StyledSvg from '../../containers/StyledSvg';
@@ -250,6 +255,10 @@ function ParticipantList(props) {
                         <Grid item>
                           <StyledText fontSize="16px" fontWeight="bold">{item.PAR_NAME}</StyledText>
                         </Grid>
+                        <Grid item>
+                          <StyledImage width="21px" height="21px" src={ratings[item.INF_RATING].icon} />
+                        </Grid>
+
                         {item.PAR_INSTA ? (
                           <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
                         ) : null}
@@ -259,6 +268,7 @@ function ParticipantList(props) {
                         {item.PAR_NAVER ? (
                           <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
                         ) : null}
+
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -688,9 +698,11 @@ function CampaignDetail() {
                   <Grid item xs={4} md="auto">
                     <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
                   </Grid>
-                  <Grid item xs={4} md="auto">
-                    <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={3} />
-                  </Grid>
+                  {productData.AD_SEL_VIEW === '1' ? (
+                    <Grid item xs={4} md="auto">
+                      <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={3} />
+                    </Grid>
+                  ) : null}
                 </Grid>
               </Box>
               {tab === 1 ? (

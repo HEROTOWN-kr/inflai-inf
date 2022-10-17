@@ -1,3 +1,9 @@
+import ratingNew from '../img/icons/clover-icon.png';
+import ratingBronze from '../img/icons/medal-bronze.png';
+import ratingSilver from '../img/icons/medal-silver.png';
+import ratingGold from '../img/icons/medal-gold.png';
+import ratingPlatinum from '../img/icons/medal-platinum.png';
+
 export const city = ['시/도 선택', '서울특별시', '인천광역시', '대전광역시', '광주광역시', '대구광역시', '울산광역시', '부산광역시', '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도', '경상북도', '경상남도', '제주도'];
 export const area = [
   ['구/군 선택'],
@@ -228,4 +234,12 @@ export const snsTypes = {
     text: 'Blog',
     color: Colors.green
   }
+};
+
+export const ratings = {
+  1: { text: 'NEW', icon: ratingNew },
+  2: { text: 'BRONZE', icon: ratingBronze },
+  3: { text: 'SILVER', icon: ratingSilver },
+  4: { text: 'GOLD', icon: ratingGold },
+  5: { text: 'PLATINUM', icon: ratingPlatinum },
 };
