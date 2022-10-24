@@ -3,6 +3,9 @@ import ratingBronze from '../img/icons/medal-bronze.png';
 import ratingSilver from '../img/icons/medal-silver.png';
 import ratingGold from '../img/icons/medal-gold.png';
 import ratingPlatinum from '../img/icons/medal-platinum.png';
+import IconYoutube from '../img/icon_youtube_url.png';
+import IconInsta from '../img/icon_instagram_url.png';
+import IconBlog from '../img/icon_blog_url.png';
 
 export const city = ['시/도 선택', '서울특별시', '인천광역시', '대전광역시', '광주광역시', '대구광역시', '울산광역시', '부산광역시', '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도', '경상북도', '경상남도', '제주도'];
 export const area = [
@@ -183,6 +186,7 @@ export const Colors = {
   white: '#ffffff',
   blue: '#093c5e',
   blue2: '#409CFF',
+  blue3: '#0027ff',
   blue2Back: '#DDEFFF',
   blue2Hover: '#467fbd',
   orange: '#FF835D',
@@ -201,6 +205,7 @@ export const Colors = {
   grey7: '#e9e9e9',
   grey8: '#ddd',
   green: '#24d024',
+  green2: '#2ba406',
   greenHover: '#3bb13b',
   pink: '#eb128c',
   pink2: '#fec1e3',
@@ -224,16 +229,32 @@ export const DAY_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 export const snsTypes = {
   1: {
     text: 'Instagram',
-    color: Colors.pink
+    color: Colors.pink,
+    textKr: '인스타',
+    icon: IconInsta
   },
   2: {
     text: 'Youtube',
-    color: Colors.red
+    color: Colors.red,
+    textKr: '유튜브',
+    icon: IconYoutube
   },
   3: {
     text: 'Blog',
-    color: Colors.green
-  }
+    color: Colors.green2,
+    textKr: '블로그',
+    icon: IconBlog
+  },
+  4: {
+    text: 'Report',
+    color: Colors.blue3,
+    textKr: '기자단',
+  },
+  5: {
+    text: '리뷰어',
+    color: Colors.aqua,
+    textKr: '리뷰어',
+  },
 };
 
 export const ratings = {

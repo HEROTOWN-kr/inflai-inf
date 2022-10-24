@@ -17,15 +17,10 @@ import * as Scroll from 'react-scroll';
 import { Skeleton } from '@material-ui/lab';
 import MetaTags from 'react-meta-tags';
 import { useSnackbar } from 'notistack';
-import { Colors, AdvertiseTypes, ratings } from '../../lib/Сonstants';
+import { Colors, AdvertiseTypes, ratings, snsTypes } from '../../lib/Сonstants';
 import IconYoutube from '../../img/icon_youtube_url.png';
 import IconInsta from '../../img/icon_instagram_url.png';
 import IconBlog from '../../img/icon_blog_url.png';
-import ratingNew from '../../img/icons/clover-icon.png';
-import ratingBronze from '../../img/icons/medal-bronze.png';
-import ratingSilver from '../../img/icons/medal-silver.png';
-import ratingGold from '../../img/icons/medal-gold.png';
-import ratingPlatinum from '../../img/icons/medal-platinum.png';
 import StyledText from '../../containers/StyledText';
 import StyledImage from '../../containers/StyledImage';
 import StyledSvg from '../../containers/StyledSvg';
@@ -91,28 +86,6 @@ const RightMenuLinks = [
   },
 ];
 
-const adTypes = {
-  1: {
-    text: '인스타',
-    color: Colors.pink,
-    icon: IconInsta
-  },
-  2: {
-    text: '유튜브',
-    color: Colors.red,
-    icon: IconYoutube
-  },
-  3: {
-    text: '블로그',
-    color: '#2ba406',
-    icon: IconBlog
-  },
-  4: {
-    text: '기자단',
-    color: '#0027ff'
-  }
-};
-
 const SnsType = ({ item }) => {
   const { name, checked } = item;
   if (!checked) return null;
@@ -121,7 +94,7 @@ const SnsType = ({ item }) => {
       <StyledImage
         width="21px"
         height="21px"
-        src={adTypes[`${name === 'instagram' ? '1' : '3'}`].icon}
+        src={snsTypes[`${name === 'instagram' ? '1' : '3'}`]?.icon || defaultAccountImage}
       />
     </Grid>
   );
@@ -604,12 +577,12 @@ function CampaignDetail() {
                             <Grid container>
                               { productData.AD_REPORT === '1' ? (
                                 <Grid item>
-                                  <StyledText color={adTypes['4'].color}>(기자단)&nbsp;</StyledText>
+                                  <StyledText color={snsTypes['4'].color}>(기자단)&nbsp;</StyledText>
                                 </Grid>
                               ) : null}
                               { productData.AD_CAM_TYPE === '2' ? (
                                 <Grid item>
-                                  <StyledText color={adTypes['4'].color}>[공동구매]&nbsp;</StyledText>
+                                  <StyledText color={snsTypes['4'].color}>[공동구매]&nbsp;</StyledText>
                                 </Grid>
                               ) : null}
                               <Grid item>
@@ -633,7 +606,7 @@ function CampaignDetail() {
                         <Grid container justify="space-between" alignItems="center">
                           <Grid item><StyledText fontWeight="bold">모집희망SNS</StyledText></Grid>
                           { productData.AD_TYPE !== '4' ? (
-                            <Grid item><StyledImage width="21px" height="21px" src={adTypes[productData.AD_TYPE].icon} /></Grid>
+                            <Grid item><StyledImage width="21px" height="21px" src={snsTypes[productData.AD_TYPE]?.icon || defaultAccountImage} /></Grid>
                           ) : (
                             <Grid item>
                               <Grid container spacing={1}>
@@ -937,21 +910,21 @@ function CampaignDetail() {
                           <Grid container>
                             { productData.AD_REPORT === '1' ? (
                               <Grid item>
-                                <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
+                                <Box fontSize="12px" mr="7px" p="2px 5px" color={snsTypes['4'].color} border={`solid 1px ${snsTypes['4'].color}`}>
                                   기자단
                                 </Box>
                               </Grid>
                             ) : null}
                             { productData.AD_CAM_TYPE === '2' ? (
                               <Grid item>
-                                <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
+                                <Box fontSize="12px" mr="7px" p="2px 5px" color={snsTypes['4'].color} border={`solid 1px ${snsTypes['4'].color}`}>
                                     공동구매
                                 </Box>
                               </Grid>
                             ) : null}
                             <Grid item>
-                              <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes[productData.AD_TYPE].color} border={`solid 1px ${adTypes[productData.AD_TYPE].color}`}>
-                                {adTypes[productData.AD_TYPE].text}
+                              <Box fontSize="12px" mr="7px" p="2px 5px" color={snsTypes[productData.AD_TYPE].color} border={`solid 1px ${snsTypes[productData.AD_TYPE].color}`}>
+                                {snsTypes[productData.AD_TYPE].text}
                               </Box>
                             </Grid>
                             <Grid item>
