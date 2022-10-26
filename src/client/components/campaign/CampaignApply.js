@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSnackbar } from 'notistack';
 import StyledText from '../../containers/StyledText';
-import { Colors } from '../../lib/Сonstants';
+import { Colors, snsTypes } from '../../lib/Сonstants';
 import ReactFormText from '../../containers/ReactFormText';
 import DaumPostCode from '../../containers/DaumPostCode';
 import StyledImage from '../../containers/StyledImage';
@@ -38,32 +38,13 @@ const defaultValues = {
   delivery: ''
 };
 
-const adTypes = {
-  1: {
-    text: '인스타',
-    color: Colors.pink,
-  },
-  2: {
-    text: '유튜브',
-    color: Colors.red,
-  },
-  3: {
-    text: '블로그',
-    color: '#2ba406',
-  },
-  4: {
-    text: '기자단',
-    color: '#0027ff'
-  }
-};
-
 function SnsBlock({ item }) {
   const { name, checked } = item;
   if (!checked) return null;
   return (
     <Grid item xs={4}>
-      <Box p={1} border={`1px solid ${adTypes[`${name === 'instagram' ? '1' : '3'}`].color}`}>
-        <StyledText textAlign="center" fontSize="13px" color={adTypes[`${name === 'instagram' ? '1' : '3'}`].color} fontWeight="bold">{adTypes[`${name === 'instagram' ? '1' : '3'}`].text}</StyledText>
+      <Box p={1} border={`1px solid ${snsTypes[`${name === 'instagram' ? '1' : '3'}`].color}`}>
+        <StyledText textAlign="center" fontSize="13px" color={snsTypes[`${name === 'instagram' ? '1' : '3'}`].color} fontWeight="bold">{snsTypes[`${name === 'instagram' ? '1' : '3'}`].textKr}</StyledText>
       </Box>
     </Grid>
   );
@@ -495,8 +476,8 @@ function CampaignApply(props) {
                         <StyledText overflowHidden fontSize="15px">{addData.AD_SHRT_DISC}</StyledText>
                         <Box pt={2}>
                           { addData.AD_TYPE !== '4' ? (
-                            <Box width="30%" p={1} border={`1px solid ${adTypes[addData.AD_TYPE].color}`}>
-                              <StyledText textAlign="center" fontSize="13px" color={adTypes[addData.AD_TYPE].color} fontWeight="bold">{adTypes[addData.AD_TYPE].text}</StyledText>
+                            <Box width="30%" p={1} border={`1px solid ${snsTypes[addData.AD_TYPE].color}`}>
+                              <StyledText textAlign="center" fontSize="13px" color={snsTypes[addData.AD_TYPE].color} fontWeight="bold">{snsTypes[addData.AD_TYPE].textKr}</StyledText>
                             </Box>
                           ) : (
                             <Grid container spacing={1}>

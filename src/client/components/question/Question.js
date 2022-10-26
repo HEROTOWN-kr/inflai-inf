@@ -8,7 +8,7 @@ import { Create } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
-import { AdvertiseTypes, Colors } from '../../lib/Сonstants';
+import { AdvertiseTypes, Colors, snsTypes } from '../../lib/Сonstants';
 import StyledText from '../../containers/StyledText';
 import StyledButton from '../../containers/StyledButton';
 import StyledImage from '../../containers/StyledImage';
@@ -42,40 +42,6 @@ const tableHeader = [
     align: 'center'
   }
 ];
-
-const adTypes = {
-  1: {
-    text: '인스타',
-    color: Colors.pink,
-  },
-  2: {
-    text: '유튜브',
-    color: Colors.red,
-  },
-  3: {
-    text: '블로그',
-    color: '#2ba406',
-  },
-  4: {
-    text: '기자단',
-    color: '#0027ff'
-  }
-};
-
-const snsTypes = {
-  1: {
-    text: 'Instagram',
-    color: Colors.pink
-  },
-  2: {
-    text: 'Youtube',
-    color: Colors.red
-  },
-  3: {
-    text: 'Blog',
-    color: Colors.green
-  }
-};
 
 const useStyles = makeStyles(theme => ({
   campaignCard: {
@@ -185,11 +151,11 @@ function Question(props) {
                     <StyledText overflowHidden fontSize={isMD ? '15px' : '13px'}>{campaignInfo.shortDiscription}</StyledText>
                     <Box pt={{ xs: '6px', md: 2 }}>
                       {isMD ? (
-                        <Box width="30%" p={1} border={`1px solid ${adTypes[campaignInfo.type].color}`}>
-                          <StyledText textAlign="center" fontSize="13px" color={adTypes[campaignInfo.type].color} fontWeight="bold">{adTypes[campaignInfo.type].text}</StyledText>
+                        <Box width="30%" p={1} border={`1px solid ${snsTypes[campaignInfo.type].color}`}>
+                          <StyledText textAlign="center" fontSize="13px" color={snsTypes[campaignInfo.type].color} fontWeight="bold">{snsTypes[campaignInfo.type].textKr}</StyledText>
                         </Box>
                       ) : (
-                        <StyledText fontSize="13px" color={adTypes[campaignInfo.type].color} fontWeight="bold">{adTypes[campaignInfo.type].text}</StyledText>
+                        <StyledText fontSize="13px" color={snsTypes[campaignInfo.type].color} fontWeight="bold">{snsTypes[campaignInfo.type].textKr}</StyledText>
                       )}
                     </Box>
                   </Grid>

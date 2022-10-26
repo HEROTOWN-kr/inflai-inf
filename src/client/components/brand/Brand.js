@@ -5,16 +5,10 @@ import {
 import axios from 'axios';
 import moment from 'moment';
 import { useHistory, useParams } from 'react-router-dom';
-import { Colors } from '../../lib/Сonstants';
+import { snsTypes } from '../../lib/Сonstants';
 
 const defaultImage = 'https://inflai-aws-bucket.s3.ap-northeast-2.amazonaws.com/campaign/483/j1pj4vbykz81q4te_820_648.jpg';
 const bgStyle = 'linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.85))';
-
-const snsTypes = {
-  1: { text: 'Instagram', color: Colors.pink },
-  2: { text: 'Youtube', color: Colors.red },
-  3: { text: 'Blog', color: Colors.green },
-};
 
 const useStyles = makeStyles(theme => ({
   banner: {

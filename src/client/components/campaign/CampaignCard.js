@@ -4,12 +4,12 @@ import { SupervisorAccount } from '@material-ui/icons';
 import moment from 'moment';
 import StyledImage from '../../containers/StyledImage';
 import StyledText from '../../containers/StyledText';
-import { AdvertiseTypes, Colors } from '../../lib/Сonstants';
+import { AdvertiseTypes, Colors, snsTypes } from '../../lib/Сonstants';
 import StyledSvg from '../../containers/StyledSvg';
 import noImage from '../../img/noImage.png';
 import noFound from '../../img/notFound400_316.png';
 
-const snsTypes = {
+/* const snsTypes = {
   1: {
     text: 'Instagram',
     color: Colors.pink
@@ -22,7 +22,7 @@ const snsTypes = {
     text: 'Blog',
     color: Colors.green
   }
-};
+}; */
 
 function PeriodComponent(props) {
   const { srchEnd } = props;
