@@ -242,62 +242,50 @@ function CampaignApply(props) {
                 </Box>
               </React.Fragment>
             ) : null}
-            <Grid container alignItems="center">
-              <Grid item xs={12} md="auto">
-                <Box py={{ xs: 0, md: 5 }} width={{ xs: '115px', lg: '187px' }}>
-                  <StyledText fontWeight="bold" fontSize="16px">
-                    SNS
-                  </StyledText>
-                </Box>
-              </Grid>
-              <Grid item xs>
-                <Box py={{ xs: 2, md: 5 }} borderBottom={{ md: `1px solid ${Colors.grey7}` }}>
-                  <Grid container alignItems="center">
-                    {addData.AD_TYPE === '1' ? (
-                      <Grid item xs={12}>
-                        <Grid container alignItems="center">
-                          <Grid item>
-                            <Box p="4px" border="1px solid #e9ecef" borderRight="0">
-                              <Controller
-                                name="insta"
-                                control={control}
-                                render={checkBoxProps => (
-                                  <Checkbox
-                                    onChange={e => checkBoxProps.onChange(e.target.checked)}
-                                    checked={checkBoxProps.value}
-                                    disabled={!applyData.instaUserName || applyData.INS_STATUS === 0}
-                                  />
-                                )}
-                              />
-                            </Box>
-                          </Grid>
-                          <Grid item xs md={5}>
-                            <Box py={2} px={4} border="1px solid #e9ecef">
-                              <Grid container justify="center" spacing={1} alignItems="center">
-                                <Grid item>
-                                  <StyledImage width="18px" height="18px" src={instagramIcon} />
-                                </Grid>
-                                <Grid item>
-                                  <StyledText>{applyData.instaUserName || '인스타그램'}</StyledText>
-                                </Grid>
-                              </Grid>
-                            </Box>
-                          </Grid>
-                          { applyData.instaUserName ? null : (
+
+            {addData.AD_TYPE === '5' ? null : (
+              <Grid container alignItems="center">
+                <Grid item xs={12} md="auto">
+                  <Box py={{ xs: 0, md: 5 }} width={{ xs: '115px', lg: '187px' }}>
+                    <StyledText fontWeight="bold" fontSize="16px">
+                        SNS
+                    </StyledText>
+                  </Box>
+                </Grid>
+                <Grid item xs>
+                  <Box py={{ xs: 2, md: 5 }} borderBottom={{ md: `1px solid ${Colors.grey7}` }}>
+                    <Grid container alignItems="center">
+                      {addData.AD_TYPE === '1' ? (
+                        <Grid item xs={12}>
+                          <Grid container alignItems="center">
                             <Grid item>
-                              <Box
-                                padding="18px"
-                                border="1px solid #e9ecef"
-                                borderLeft="0"
-                                css={{ cursor: 'pointer' }}
-                                onClick={() => history.push('/Profile/UserInfo')}
-                              >
-                                <StyledText>연결하기</StyledText>
+                              <Box p="4px" border="1px solid #e9ecef" borderRight="0">
+                                <Controller
+                                  name="insta"
+                                  control={control}
+                                  render={checkBoxProps => (
+                                    <Checkbox
+                                      onChange={e => checkBoxProps.onChange(e.target.checked)}
+                                      checked={checkBoxProps.value}
+                                      disabled={!applyData.instaUserName || applyData.INS_STATUS === 0}
+                                    />
+                                  )}
+                                />
                               </Box>
                             </Grid>
-                          ) }
-                          { applyData.INS_STATUS === 0 ? (
-                            <React.Fragment>
+                            <Grid item xs md={5}>
+                              <Box py={2} px={4} border="1px solid #e9ecef">
+                                <Grid container justify="center" spacing={1} alignItems="center">
+                                  <Grid item>
+                                    <StyledImage width="18px" height="18px" src={instagramIcon} />
+                                  </Grid>
+                                  <Grid item>
+                                    <StyledText>{applyData.instaUserName || '인스타그램'}</StyledText>
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                            </Grid>
+                            { applyData.instaUserName ? null : (
                               <Grid item>
                                 <Box
                                   padding="18px"
@@ -306,136 +294,152 @@ function CampaignApply(props) {
                                   css={{ cursor: 'pointer' }}
                                   onClick={() => history.push('/Profile/UserInfo')}
                                 >
-                                  <StyledText>재연결</StyledText>
+                                  <StyledText>연결하기</StyledText>
                                 </Box>
                               </Grid>
-                              <Grid item xs={12}>
-                                <Box fontSize="14px" color="#da910c">페이스북 비번을 바꾸거나 인스타 연동 후 60일 지나거나 인스타 비즈니스 계정 취소할때 인스타 계정 재연결 해야 됩니다</Box>
-                              </Grid>
-                            </React.Fragment>
-                          ) : null }
+                            ) }
+                            { applyData.INS_STATUS === 0 ? (
+                              <React.Fragment>
+                                <Grid item>
+                                  <Box
+                                    padding="18px"
+                                    border="1px solid #e9ecef"
+                                    borderLeft="0"
+                                    css={{ cursor: 'pointer' }}
+                                    onClick={() => history.push('/Profile/UserInfo')}
+                                  >
+                                    <StyledText>재연결</StyledText>
+                                  </Box>
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <Box fontSize="14px" color="#da910c">페이스북 비번을 바꾸거나 인스타 연동 후 60일 지나거나 인스타 비즈니스 계정 취소할때 인스타 계정 재연결 해야 됩니다</Box>
+                                </Grid>
+                              </React.Fragment>
+                            ) : null }
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    ) : null}
-                    {addData.AD_TYPE === '2' ? (
-                      <Grid item xs={12}>
-                        <Grid container alignItems="center">
-                          <Grid item>
-                            <Box p="4px" border="1px solid #e9ecef" borderRight="0">
-                              <Controller
-                                name="youtube"
-                                control={control}
-                                render={checkBoxProps => (
-                                  <Checkbox
-                                    onChange={e => checkBoxProps.onChange(e.target.checked)}
-                                    checked={checkBoxProps.value}
-                                    disabled={!applyData.youtubeChannelName}
-                                  />
-                                )}
-                              />
-                            </Box>
-                          </Grid>
-                          <Grid item xs md={5}>
-                            <Box py={2} px={4} border="1px solid #e9ecef">
-                              <Grid container justify="center" spacing={1} alignItems="center">
-                                <Grid item>
-                                  <StyledImage width="18px" height="18px" src={youtubeIcon} />
-                                </Grid>
-                                <Grid item>
-                                  <StyledText>{applyData.youtubeChannelName || '유튜브'}</StyledText>
-                                </Grid>
-                              </Grid>
-                            </Box>
-                          </Grid>
-                          { applyData.youtubeChannelName ? null : (
+                      ) : null}
+                      {addData.AD_TYPE === '2' ? (
+                        <Grid item xs={12}>
+                          <Grid container alignItems="center">
                             <Grid item>
-                              <Box
-                                padding="18px"
-                                border="1px solid #e9ecef"
-                                borderLeft="0"
-                                css={{ cursor: 'pointer' }}
-                                onClick={() => history.push('/Profile/Sns/Youtube')}
-                              >
-                                <StyledText>연결하기</StyledText>
+                              <Box p="4px" border="1px solid #e9ecef" borderRight="0">
+                                <Controller
+                                  name="youtube"
+                                  control={control}
+                                  render={checkBoxProps => (
+                                    <Checkbox
+                                      onChange={e => checkBoxProps.onChange(e.target.checked)}
+                                      checked={checkBoxProps.value}
+                                      disabled={!applyData.youtubeChannelName}
+                                    />
+                                  )}
+                                />
                               </Box>
                             </Grid>
-                          ) }
-                        </Grid>
-                      </Grid>
-                    ) : null}
-                    {addData.AD_TYPE === '3' ? (
-                      <Grid item xs={12}>
-                        <Grid container alignItems="center">
-                          <Grid item>
-                            <Box p="4px" border="1px solid #e9ecef" borderRight="0">
-                              <Controller
-                                name="naver"
-                                control={control}
-                                render={checkBoxProps => (
-                                  <Checkbox
-                                    onChange={e => checkBoxProps.onChange(e.target.checked)}
-                                    checked={checkBoxProps.value}
-                                    disabled={!applyData.naverChannelName}
-                                  />
-                                )}
-                              />
-                            </Box>
-                          </Grid>
-                          <Grid item xs md={5}>
-                            <Box py={2} px={4} border="1px solid #e9ecef">
-                              <Grid container justify="center" spacing={1} alignItems="center">
-                                <Grid item>
-                                  <StyledImage width="18px" height="18px" src={blogIcon} />
+                            <Grid item xs md={5}>
+                              <Box py={2} px={4} border="1px solid #e9ecef">
+                                <Grid container justify="center" spacing={1} alignItems="center">
+                                  <Grid item>
+                                    <StyledImage width="18px" height="18px" src={youtubeIcon} />
+                                  </Grid>
+                                  <Grid item>
+                                    <StyledText>{applyData.youtubeChannelName || '유튜브'}</StyledText>
+                                  </Grid>
                                 </Grid>
-                                <Grid item>
-                                  <StyledText overflowHidden>{applyData.naverChannelName || '블로그'}</StyledText>
-                                </Grid>
-                              </Grid>
-                            </Box>
-                          </Grid>
-                          { applyData.naverChannelName ? null : (
-                            <Grid item>
-                              <Box
-                                padding="18px"
-                                border="1px solid #e9ecef"
-                                borderLeft="0"
-                                css={{ cursor: 'pointer' }}
-                                onClick={() => history.push('/Profile/Sns/NaverBlog')}
-                              >
-                                <StyledText>연결하기</StyledText>
                               </Box>
                             </Grid>
-                          ) }
+                            { applyData.youtubeChannelName ? null : (
+                              <Grid item>
+                                <Box
+                                  padding="18px"
+                                  border="1px solid #e9ecef"
+                                  borderLeft="0"
+                                  css={{ cursor: 'pointer' }}
+                                  onClick={() => history.push('/Profile/Sns/Youtube')}
+                                >
+                                  <StyledText>연결하기</StyledText>
+                                </Box>
+                              </Grid>
+                            ) }
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    ) : null}
-                    { errors.sns ? (
-                      <div className="error-message">
-                        {errors.sns.message}
-                      </div>
-                    ) : null }
-                    <input
-                      type="text"
-                      readOnly
-                      name="sns"
-                      ref={register}
-                      style={{
-                        opacity: '0', width: '0', padding: '0', border: '0', height: '0'
-                      }}
-                    />
-                    <input
-                      type="text"
-                      readOnly
-                      name="delivery"
-                      ref={register}
-                      style={{
-                        opacity: '0', width: '0', padding: '0', border: '0', height: '0'
-                      }}
-                    />
-                  </Grid>
-                </Box>
+                      ) : null}
+                      {addData.AD_TYPE === '3' ? (
+                        <Grid item xs={12}>
+                          <Grid container alignItems="center">
+                            <Grid item>
+                              <Box p="4px" border="1px solid #e9ecef" borderRight="0">
+                                <Controller
+                                  name="naver"
+                                  control={control}
+                                  render={checkBoxProps => (
+                                    <Checkbox
+                                      onChange={e => checkBoxProps.onChange(e.target.checked)}
+                                      checked={checkBoxProps.value}
+                                      disabled={!applyData.naverChannelName}
+                                    />
+                                  )}
+                                />
+                              </Box>
+                            </Grid>
+                            <Grid item xs md={5}>
+                              <Box py={2} px={4} border="1px solid #e9ecef">
+                                <Grid container justify="center" spacing={1} alignItems="center">
+                                  <Grid item>
+                                    <StyledImage width="18px" height="18px" src={blogIcon} />
+                                  </Grid>
+                                  <Grid item>
+                                    <StyledText overflowHidden>{applyData.naverChannelName || '블로그'}</StyledText>
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                            </Grid>
+                            { applyData.naverChannelName ? null : (
+                              <Grid item>
+                                <Box
+                                  padding="18px"
+                                  border="1px solid #e9ecef"
+                                  borderLeft="0"
+                                  css={{ cursor: 'pointer' }}
+                                  onClick={() => history.push('/Profile/Sns/NaverBlog')}
+                                >
+                                  <StyledText>연결하기</StyledText>
+                                </Box>
+                              </Grid>
+                            ) }
+                          </Grid>
+                        </Grid>
+                      ) : null}
+                      { errors.sns ? (
+                        <div className="error-message">
+                          {errors.sns.message}
+                        </div>
+                      ) : null }
+                      <input
+                        type="text"
+                        readOnly
+                        name="sns"
+                        ref={register}
+                        style={{
+                          opacity: '0', width: '0', padding: '0', border: '0', height: '0'
+                        }}
+                      />
+                      <input
+                        type="text"
+                        readOnly
+                        name="delivery"
+                        ref={register}
+                        style={{
+                          opacity: '0', width: '0', padding: '0', border: '0', height: '0'
+                        }}
+                      />
+                    </Grid>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
+            )}
+
             <ApplyFormComponent title="이름">
               <ReactFormText register={register} errors={errors} name="name" />
             </ApplyFormComponent>
