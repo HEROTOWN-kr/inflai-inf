@@ -76,8 +76,8 @@ function Footer() {
 
             </Box>
             <Box my="24px" className="info">
-              <div>대표 : 김무성 | 주소 : 경기도 고양시 덕양구 삼원로 83 광양프런티어밸리 6차 802호</div>
-              <div>대표전화 : 1522-7947  | Mail : info@inflai.com</div>
+              <div>대표 : 김무성 | 주소 : 경기도 고양시 덕양구 삼원로 83 광양프런티어밸리 6차 801-812호</div>
+              <div>대표전화 : 1522-7947  | Mail : inflai@naver.com</div>
               <div>사업자번호 : 695-81-00452</div>
             </Box>
             <Box>
