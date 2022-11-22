@@ -456,8 +456,8 @@ function CampaignDetail() {
     <React.Fragment>
       {/* <HelmetMetaData title={productData.AD_NAME} description={productData.AD_SHRT_DISC} image={currentImage} /> */}
       <MetaTags>
-        <title>Inflai</title>
-        <meta name="description" content="Inflai" />
+        <title>인플라이체험단 인플루언서 페이지</title>
+        <meta name="description" content="인플라이체험단 인플루언서 페이지" />
         <meta property="og:url" content={currentUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={productData.AD_NAME} />
