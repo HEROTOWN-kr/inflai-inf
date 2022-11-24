@@ -11,6 +11,7 @@ import Footer from './footer/Footer';
 import useAuth from '../hooks/auth.hook';
 import AuthContext from '../context/AuthContext';
 import MobileIcon from '../img/mobileIcon.png';
+import MainDialog from '../img/banners/mainDialog.png';
 
 const useStyles = makeStyles({
   AppLink: {
@@ -46,6 +47,28 @@ const useStyles = makeStyles({
   },
   snackbarCloseIcon: {
     cursor: 'pointer'
+  },
+
+  popMain: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    minHeight: '100%',
+  },
+  dialogContainer: {
+    position: 'absolute',
+    top: '110px',
+    left: '700px'
+  },
+  dialogImage: {
+    width: '500px',
+    height: '707px',
+  },
+  dialogFooter: {
+    padding: '7px 10px',
+    background: '#222',
+    textAlign: 'right'
   }
 });
 
@@ -66,6 +89,18 @@ function MobileAppLink(props) {
         </Grid>
       </Grid>
       <Close className={classes.closeIcon} onClick={close} />
+    </Box>
+  );
+}
+
+function StartDialog() {
+  const classes = useStyles();
+
+  return (
+    <Box className={classes.dialogContainer}>
+      <Box className={classes.dialogImage}>
+        <img src={MainDialog} alt="nofoto" />
+      </Box>
     </Box>
   );
 }
@@ -134,6 +169,11 @@ function App() {
             <Close className={classes.snackbarCloseIcon} onClick={onClickDismiss(key)} />
           )}
         >
+          <Box className={classes.popMain}>
+            <StartDialog />
+          </Box>
+
+
           <div className="app-block">
             <div className="app-header">
               <CustomNavBar />
