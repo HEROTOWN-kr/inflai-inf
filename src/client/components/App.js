@@ -13,7 +13,7 @@ import AuthContext from '../context/AuthContext';
 import MobileIcon from '../img/mobileIcon.png';
 import MainDialog from '../img/banners/mainDialog.png';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   AppLink: {
     position: 'fixed',
     bottom: '120px',
@@ -55,22 +55,40 @@ const useStyles = makeStyles({
     left: 0,
     width: '100%',
     minHeight: '100%',
+    zIndex: 999
   },
   dialogContainer: {
     position: 'absolute',
     top: '110px',
-    left: '700px'
+    left: '700px',
+    [theme.breakpoints.down('md')]: {
+      top: '78px !important',
+      left: '50% !important',
+      transform: 'translateX(-50%)',
+    }
   },
   dialogImage: {
-    width: '500px',
-    height: '707px',
+    /* width: '400px',
+    height: '500px', */
   },
   dialogFooter: {
     padding: '7px 10px',
     background: '#222',
     textAlign: 'right'
-  }
-});
+  },
+  imgFileMedia: {
+    width: '400px',
+    height: '500px',
+    objectFit: 'cover',
+    objectPosition: '50% 50%',
+    [theme.breakpoints.down('md')]: {
+      width: '96% !important',
+      minWidth: '275px',
+      minHeight: '300px',
+      height: 'auto !important',
+    }
+  },
+}));
 
 function MobileAppLink(props) {
   const { close, mobileLink } = props;
@@ -94,12 +112,18 @@ function MobileAppLink(props) {
 }
 
 function StartDialog() {
+  const [visible, setVisible] = useState(true);
   const classes = useStyles();
 
   return (
-    <Box className={classes.dialogContainer}>
-      <Box className={classes.dialogImage}>
-        <img src={MainDialog} alt="nofoto" />
+    <Box className={classes.popMain} style={{ display: visible ? 'block' : 'none' }}>
+      <Box className={classes.dialogContainer}>
+        <Box className={classes.dialogImage}>
+          <img className={classes.imgFileMedia} src={MainDialog} alt="nofoto" />
+        </Box>
+        <Box className={classes.dialogFooter}>
+          <button onClick={() => setVisible(false)}>닫기</button>
+        </Box>
       </Box>
     </Box>
   );
@@ -169,10 +193,7 @@ function App() {
             <Close className={classes.snackbarCloseIcon} onClick={onClickDismiss(key)} />
           )}
         >
-          <Box className={classes.popMain}>
-            <StartDialog />
-          </Box>
-
+          <StartDialog />
 
           <div className="app-block">
             <div className="app-header">
