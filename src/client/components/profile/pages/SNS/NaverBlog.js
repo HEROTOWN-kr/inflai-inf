@@ -1,19 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  Box, Grid, Hidden, useMediaQuery, useTheme
-} from '@material-ui/core';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import React, {useContext, useEffect, useState} from 'react';
+import {Box, Grid, useMediaQuery, useTheme} from '@material-ui/core';
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { Line } from 'react-chartjs-2';
-import PageTitle from '../../PageTitle';
-import StyledText from '../../../../containers/StyledText';
-import WhiteBlock from '../../../../containers/WhiteBlock';
+import {Line} from 'react-chartjs-2';
 import ReactFormText from '../../../../containers/ReactFormText';
 import LabelComponent from '../UserInfo/LabelComponent';
 import StyledButton from '../../../../containers/StyledButton';
-import { Colors } from '../../../../lib/Сonstants';
 import AuthContext from '../../../../context/AuthContext';
 import StyledBackDrop from '../../../../containers/StyledBackDrop';
 

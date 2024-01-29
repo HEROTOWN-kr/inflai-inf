@@ -1,10 +1,7 @@
-import React, { createRef, useEffect, useState } from 'react';
-import {
-  Box, Button, Grid, Hidden, IconButton, makeStyles
-} from '@material-ui/core';
-import { matchPath, useLocation } from 'react-router-dom';
-import { Clear, Close } from '@material-ui/icons';
-import { SnackbarProvider } from 'notistack';
+import React, {createRef, useEffect, useState} from 'react';
+import {Box, Grid, makeStyles} from '@material-ui/core';
+import {Close} from '@material-ui/icons';
+import {SnackbarProvider} from 'notistack';
 import Main from './main/Main';
 import CustomNavBar from './navbar/Navbar';
 import Footer from './footer/Footer';
@@ -193,7 +190,7 @@ function App() {
             <Close className={classes.snackbarCloseIcon} onClick={onClickDismiss(key)} />
           )}
         >
-          <StartDialog />
+          {/*<StartDialog />*/}
 
           <div className="app-block">
             <div className="app-header">
