@@ -72,27 +72,21 @@
     </script>-->
 
     <script>
-        var facebookID;
-        if (window.location.host === 'localhost:3002') {
-            // facebookID = '139193384125564';
-            facebookID = '516055359803896';
-        } else {
-            facebookID = '663450957780119';
-        }
+        let facebookID = window.location.host === 'localhost:3002' ? '516055359803896' : '663450957780119';
 
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : facebookID,
                 cookie     : true,
                 xfbml      : true,
-                version    : 'v15.0'
+                version    : 'v19.0'
             });
 
             FB.AppEvents.logPageView();
         };
 
         (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
+            let js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {return;}
             js = d.createElement(s); js.id = id;
             js.src = "https://connect.facebook.net/en_US/sdk.js";
@@ -102,11 +96,7 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
     <script type='text/javascript'>
-        //<![CDATA[
-        // Set JavaScript Key of current app.
         Kakao.init('621ae47398f559dd7479aaba4b841c4b');
-        // Create Kakao LoginNew button.
-        //]]>
     </script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
