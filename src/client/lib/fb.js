@@ -1,17 +1,15 @@
-const scopes = [
+const scope = [
   "pages_show_list",
   "business_management",
   "instagram_basic",
   "instagram_manage_insights",
 ].join(" , ");
 
-const config_id = "766776172298246";
-const fbLoginConfig = {
-  scope: scopes,
-};
-
 const isLocal = window.location.host === "localhost:3002";
-if (isLocal) fbLoginConfig.config_id = config_id;
+
+const config_id = isLocal ? "766776172298246" : "2630120640506408";
+
+const fbLoginConfig = { scope, config_id };
 
 export const fbLogin = () => {
   return new Promise((resolve, reject) => {
