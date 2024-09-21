@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Box, Grid } from "@material-ui/core";
+import { Box, CircularProgress, Grid } from "@material-ui/core";
 import axios from "axios";
 import GoogleLogin from "react-google-login";
 import StyledText from "../../../../containers/StyledText";
@@ -27,6 +27,7 @@ function Sns(props) {
   const [youtubeDialogOpen, setYoutubeDialogOpen] = useState(false);
   const [instaSelectDialogOpen, setInstaSelectDialogOpen] = useState(false);
   const [instaAccounts, setInstaAccounts] = useState([]);
+  const [instagramLoading, setInstagramLoading] = useState(false);
 
   const ua = navigator.userAgent || navigator.vendor || window.opera;
   const isInstagram = ua.indexOf("Instagram") > -1;
@@ -72,9 +73,13 @@ function Sns(props) {
         return;
       }
 
-      setInstaDialogOpen(!instaDialogOpen);
+      setInstagramLoading(true);
+      await facebookLogin();
+      // setInstaDialogOpen(!instaDialogOpen);
     } catch (e) {
       console.log(e.message);
+    } finally {
+      setInstagramLoading(false);
     }
   };
 
@@ -161,23 +166,30 @@ function Sns(props) {
             <Grid container spacing={1}>
               <Grid item xs md="auto">
                 <Box
-                  py={2}
-                  px={2}
+                  height={52}
+                  boxSizing={"border-box"}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
                   width={{ xs: "inherit", md: "250px" }}
                   border="1px solid #e9ecef"
                   css={{ cursor: "pointer" }}
                   onClick={() => instagramButtonClick()}
                 >
-                  <Grid container justify="center" spacing={1}>
-                    <Grid item>
-                      <StyledImage width="18px" height="18px" src={instagramIcon} />
+                  {instagramLoading ? (
+                    <CircularProgress size="20px" />
+                  ) : (
+                    <Grid container justify="center" spacing={1}>
+                      <Grid item>
+                        <StyledImage width="18px" height="18px" src={instagramIcon} />
+                      </Grid>
+                      <Grid item>
+                        <StyledText>
+                          {INS_ID ? "인스타그램 연결 해제" : "인스타그램 연결하기"}
+                        </StyledText>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <StyledText>
-                        {INS_ID ? "인스타그램 연결 해제" : "인스타그램 연결하기"}
-                      </StyledText>
-                    </Grid>
-                  </Grid>
+                  )}
                 </Box>
               </Grid>
               {INS_ID ? null : (

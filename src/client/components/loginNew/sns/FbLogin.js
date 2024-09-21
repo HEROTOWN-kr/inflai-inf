@@ -89,7 +89,7 @@ function FbLogin() {
   return (
     <React.Fragment>
       <SocialButtonNew
-        onClick={toggleInstaDialog}
+        onClick={facebookLogin}
         icon={FacebookIcon}
         text="페이스북 로그인"
         background="#3B5998"
