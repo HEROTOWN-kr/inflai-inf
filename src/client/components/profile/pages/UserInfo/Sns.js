@@ -50,7 +50,9 @@ function Sns(props) {
       }
 
       if (igAccounts?.length === 1) {
+        setInstagramLoading(true);
         await saveIgAccount(accessToken, userID, igAccounts[0]);
+        setInstagramLoading(false);
         return;
       }
 
@@ -73,13 +75,13 @@ function Sns(props) {
         return;
       }
 
-      setInstagramLoading(true);
-      await facebookLogin();
-      // setInstaDialogOpen(!instaDialogOpen);
+      // setInstagramLoading(true);
+      // await facebookLogin();
+      setInstaDialogOpen(!instaDialogOpen);
     } catch (e) {
       console.log(e.message);
     } finally {
-      setInstagramLoading(false);
+      // setInstagramLoading(false);
     }
   };
 
@@ -124,10 +126,13 @@ function Sns(props) {
         return 0;
       }
 
+      setInstagramLoading(true);
       const { accessToken, userID } = response.authResponse;
       await saveIgAccount(accessToken, userID, selectedId);
     } catch (e) {
       console.log(e.message);
+    } finally {
+      setInstagramLoading(false);
     }
   };
 
