@@ -37,8 +37,12 @@ function Sns(props) {
   }
 
   const saveIgAccount = async (facebookToken, facebookUserId, instaId) => {
-    await axios.post("/api/TB_INSTA/add", { facebookToken, facebookUserId, token, instaId });
-    getUserInfo();
+    try {
+      await axios.post("/api/TB_INSTA/add", { facebookToken, facebookUserId, token, instaId });
+      getUserInfo();
+    } catch (e) {
+      alert(e.response.data.message);
+    }
   };
 
   const findInstagramAccounts = async (accessToken, userID) => {
